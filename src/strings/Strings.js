@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://school-managment-system-pi.vercel.app/'
