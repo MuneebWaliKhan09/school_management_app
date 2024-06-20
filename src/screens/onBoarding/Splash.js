@@ -1,12 +1,50 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import {View, Text, StatusBar, Image, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import { SPLASH_COLOR, THEME_COLOR } from '../../strings/Colors';
+import {responsiveScreenWidth} from "react-native-responsive-dimensions"
+import LottieView from 'lottie-react-native';
+
 
 const Splash = () => {
-  return (
-    <View>
-      <Text>Splash</Text>
-    </View>
-  )
-}
+  const navigate = useNavigation();
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     navigate.navigate('Welcome');
+  //   }, 3000);
+  // }, []);
 
-export default Splash
+  return (
+    <View style={styles.container}>
+      {/* status bar is top layer where time,network,battery shows */}
+      <StatusBar barStyle={'light-content'} backgroundColor={THEME_COLOR} />
+      {/* <Image
+        source={require('../../images/splash.png')}
+        style={styles.logo}
+      /> */}
+      <View style={styles.welcome}>
+        <LottieView source={require("../../animations/9fw3seYPAO.json")} autoPlay loop />
+      </View>
+    </View>
+  );
+};
+
+export default Splash;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: SPLASH_COLOR,
+  },
+  logo: {
+    width: responsiveScreenWidth(85),
+    height: '50%',
+    resizeMode:'contain'
+  },
+  welcome:{
+    height:300,
+    aspectRatio:1
+  }
+});
