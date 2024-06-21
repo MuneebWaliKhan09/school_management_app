@@ -8,22 +8,19 @@ import LottieView from 'lottie-react-native';
 
 const Splash = () => {
   const navigate = useNavigation();
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     navigate.navigate('Welcome');
-  //   }, 3000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      navigate.navigate('Welcome');
+    }, 3000);
+  }, []);
 
   return (
     <View style={styles.container}>
       {/* status bar is top layer where time,network,battery shows */}
       <StatusBar barStyle={'light-content'} backgroundColor={THEME_COLOR} />
-      {/* <Image
-        source={require('../../images/splash.png')}
-        style={styles.logo}
-      /> */}
+      {/* <Image  style={styles.logo} source={require("../../images/splash.png")}/> */}
       <View style={styles.welcome}>
-        <LottieView source={require("../../animations/9fw3seYPAO.json")} autoPlay loop />
+        <LottieView style={{flex:1}} source={require("../../animations/9fw3seYPAO.json")} autoPlay loop />
       </View>
     </View>
   );
@@ -44,7 +41,8 @@ const styles = StyleSheet.create({
     resizeMode:'contain'
   },
   welcome:{
-    height:300,
+    height:responsiveScreenWidth(70),
     aspectRatio:1
-  }
+  },
+
 });
