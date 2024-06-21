@@ -16,8 +16,11 @@ import {
 import {TextInput} from 'react-native-paper';
 import {THEME_COLOR} from '../../strings/Colors';
 import {ScrollView} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
+  const nav = useNavigation();
+  
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'light-content'} backgroundColor={THEME_COLOR} />
@@ -68,8 +71,8 @@ const Login = () => {
       </KeyboardAvoidingView>
 
       <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-      <Text style={styles.forgotpass}>forgot password?</Text>
-      <Text style={styles.forgotpass}>SignUp?</Text>
+      <Text onPress={()=> nav.navigate("ForgotPassword")} style={styles.forgotpass}>forgot password?</Text>
+      <Text onPress={()=> nav.navigate("SignUp")} style={styles.forgotpass}>SignUp?</Text>
       </View>
       <TouchableOpacity style={styles.btn}>
         {/* login button */}
@@ -89,12 +92,16 @@ const styles = StyleSheet.create({
   logginBanner: {
     width: responsiveScreenWidth(92),
     height: responsiveScreenHeight(35),
+    alignSelf:"center"
   },
   title: {
     fontSize: 30,
     fontWeight: '900',
     textAlign: 'center',
     marginTop: 20,
+    color:THEME_COLOR,
+    fontFamily: 'Poppins-BoldItalic',
+
   },
   inputsContainer: {
     flexDirection: 'column',
@@ -105,9 +112,11 @@ const styles = StyleSheet.create({
   },
   textInputs: {
     margin: 10,
+    marginTop:5,
     height: 45,
     width: '90%',
     alignSelf: 'center',
+    backgroundColor:"white"
   },
   inputTitle: {
     marginLeft: 10,
@@ -121,8 +130,8 @@ const styles = StyleSheet.create({
   btn: {
     width: '90%',
     height: 45,
-    borderWidth: 1,
-    borderColor: 'gray',
+    borderWidth: 2,
+    borderColor: THEME_COLOR,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
