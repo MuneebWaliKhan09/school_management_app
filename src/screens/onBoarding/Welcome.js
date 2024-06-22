@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   title: {
-    fontSize: responsiveFontSize(4.6),
+    fontSize: responsiveFontSize(5),
     fontWeight: '900',
     textAlign: 'center',
     width: responsiveScreenWidth(100),
