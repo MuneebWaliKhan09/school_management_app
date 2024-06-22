@@ -19,6 +19,7 @@ import {ScrollView} from 'react-native';
 import {Formik as FormikLib} from 'formik';
 import {object, string} from 'yup';
 import {useNavigation} from '@react-navigation/native';
+import {useLoginUserMutation} from '../../store/features/userFeatures';
 
 let userSchema = object({
   username: string().required('Username is required !'),
@@ -28,8 +29,11 @@ let userSchema = object({
 
 const Login = () => {
   const nav = useNavigation();
+  const [loginUser, {isLoading, error, data: loginData}] =
+    useLoginUserMutation();
 
   const handleLogin = values => {
+    
     console.log(values);
   };
 
@@ -77,7 +81,7 @@ const Login = () => {
                         width: '90%',
                         alignSelf: 'center',
                         fontSize: 10,
-                        paddingLeft:2
+                        paddingLeft: 2,
                       }}>
                       {errors.username}
                     </Text>
@@ -102,7 +106,7 @@ const Login = () => {
                         width: '90%',
                         alignSelf: 'center',
                         fontSize: 10,
-                        paddingLeft:2
+                        paddingLeft: 2,
                       }}>
                       {errors.email}
                     </Text>
@@ -127,7 +131,7 @@ const Login = () => {
                         width: '90%',
                         alignSelf: 'center',
                         fontSize: 10,
-                        paddingLeft:2
+                        paddingLeft: 2,
                       }}>
                       {errors.password}
                     </Text>
@@ -203,7 +207,7 @@ const styles = StyleSheet.create({
     marginRight: 23,
     fontSize: 13,
     marginTop: 5,
-    color:THEME_COLOR
+    color: THEME_COLOR,
   },
   btn: {
     width: '90%',
