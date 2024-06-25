@@ -15,9 +15,9 @@ export const userApi = createApi({
     // registerUser:builder.query({
     //     query:()=> user_End_Points.register
     // }),
-    // logoutUser:builder.query({
-    //     query:()=> user_End_Points.logout
-    // }),
+    logoutUser:builder.query({
+        query:()=> user_End_Points.logout
+    }),
     // userDetails:builder.query({
     //     query:()=> user_End_Points.getUserDetails
     // }),

@@ -1,11 +1,11 @@
 export const BASE_URL = 'https://school-managment-system-pi.vercel.app';
 
 export const API_USER_URL = BASE_URL + `/api/v1/users`;
+export const API_ADMIN_URL = BASE_URL + `/api/v1/admin`;
 export const API_TEACHER_URL = BASE_URL + `/api/v1/teacher`;
 export const API_STUDENT_URL = BASE_URL + `/api/v1/student`;
 export const API_SUBJECT_URL = BASE_URL + `/api/v1/subject`;
 export const API_CLASS_URL = BASE_URL + `/api/v1/class`;
-export const API_ADMIN_URL = BASE_URL + `/api/v1/admin`;
 
 export const user_End_Points = {
     login: '/login',
