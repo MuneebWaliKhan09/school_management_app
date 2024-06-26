@@ -15,8 +15,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckTokenExp from '../../utils/CheckTokenExp';
 import {useNavigation} from '@react-navigation/native';
 import {useLoginUserMutation} from '../../store/features/userFeatures';
-import LinearGradient from 'react-native-linear-gradient';
-import {GHOST_WHITE, Half_WHITE, THEME_COLOR, WHITE_BG} from '../../strings/Colors';
+import {
+  GHOST_WHITE,
+  Half_WHITE,
+  THEME_COLOR,
+  WHITE_BG,
+} from '../../strings/Colors';
 import CustomDivider from '../CustomDivider';
 
 const AdminDrawer = props => {
@@ -27,10 +31,17 @@ const AdminDrawer = props => {
 
   useEffect(() => {
     const validateTokenAndFetchDetails = async () => {
-      const isValidToken = await CheckTokenExp(navigation);
-      if (isValidToken) {
-        getDetails();
-      }
+      const isValidToken = await CheckTokenExp(navigation)
+        .then(res => {
+          console.log(res);
+          getDetails();
+        })
+        .catch(async error => {
+          if (error) {
+            const logout = await logoutUser({});
+            console.log('logoutdata', logout.data);
+          }
+        });
     };
     validateTokenAndFetchDetails();
   }, [isFocused]);
@@ -43,15 +54,19 @@ const AdminDrawer = props => {
   };
 
   const handleLogout = async () => {
-    const logout = await logoutUser();
-    console.log('logoutdata', logout.data);
-    await AsyncStorage.clear();
-    props.navigation.navigate('Login'); // Navigate to your login screen
+    const logout = await logoutUser({})
+      .then(async res => {
+        console.log('logout res', res.data);
+        await AsyncStorage.clear();
+        props.navigation.navigate('Login');
+      })
+      .catch(error => {
+        console.log('logouterror', error);
+      });
   };
 
   return (
-    <View
-      style={styles.container}>
+    <View style={styles.container}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
@@ -148,7 +163,7 @@ const AdminDrawer = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:THEME_COLOR
+    backgroundColor: THEME_COLOR,
   },
   drawerContent: {
     flex: 1,
@@ -157,7 +172,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
-    marginBottom:7
+    marginBottom: 7,
   },
   title: {
     fontSize: 16,

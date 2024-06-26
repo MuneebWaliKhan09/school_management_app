@@ -12,9 +12,7 @@ const Splash = () => {
   const nav = useNavigation();
 
   useEffect(() => {
-    setTimeout(() => {
       verifyUserLogedIn();
-    }, 3000);
   }, [screenFocused]);
 
 

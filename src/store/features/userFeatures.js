@@ -4,7 +4,7 @@ import {API_USER_URL, user_End_Points} from '../../strings/Strings';
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({baseUrl: API_USER_URL}),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     loginUser: builder.mutation({
       query: data => ({
         url: user_End_Points.login,
@@ -15,8 +15,12 @@ export const userApi = createApi({
     // registerUser:builder.query({
     //     query:()=> user_End_Points.register
     // }),
-    logoutUser:builder.mutation({
-        query:()=> user_End_Points.logout
+    logoutUser: builder.mutation({
+      query: data => ({
+        url: user_End_Points.logout,
+        method: 'POST',
+        body: data,
+      }),
     }),
     // userDetails:builder.query({
     //     query:()=> user_End_Points.getUserDetails
@@ -33,4 +37,4 @@ export const userApi = createApi({
   }),
 });
 
-export const {useLoginUserMutation,useLogoutUserQuery} = userApi;
+export const {useLoginUserMutation, useLogoutUserQuery} = userApi;

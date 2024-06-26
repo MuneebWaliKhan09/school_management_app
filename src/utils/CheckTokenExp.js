@@ -13,8 +13,9 @@ const CheckTokenExp = async (navigation) => {
 
   // Check if token is expired
   if (decodedToken.exp < currentTime) {
+    console.log('logoutdataExp', logout.data);
     await AsyncStorage.clear();
-    navigation.navigate('Login');
+    navigation.navigate('Welcome');
   }
 
   return true; // Token is valid

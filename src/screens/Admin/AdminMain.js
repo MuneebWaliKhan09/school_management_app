@@ -74,6 +74,7 @@ const AdminMain = () => {
     }
   }, [isFocused]);
 
+  
   return (
     <ScrollView style={styles.container}>
       <SafeAreaView>
