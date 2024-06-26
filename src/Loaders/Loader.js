@@ -2,7 +2,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import LottieView from 'lottie-react-native';
 import {responsiveScreenWidth} from 'react-native-responsive-dimensions';
-import { SPLASH_COLOR } from '../strings/Colors';
+import {SPLASH_COLOR} from '../strings/Colors';
 
 const Loader = () => {
   return (

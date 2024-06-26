@@ -22,9 +22,9 @@ export const userApi = createApi({
         body: data,
       }),
     }),
-    // userDetails:builder.query({
-    //     query:()=> user_End_Points.getUserDetails
-    // }),
+    userDetails:builder.query({
+        query:()=> user_End_Points.getUserDetails
+    }),
     // changePasswordUser:builder.query({
     //     query:()=> user_End_Points.changePassword
     // }),
@@ -37,4 +37,4 @@ export const userApi = createApi({
   }),
 });
 
-export const {useLoginUserMutation, useLogoutUserQuery} = userApi;
+export const {useLoginUserMutation, useLogoutUserMutation,useUserDetailsQuery} = userApi;

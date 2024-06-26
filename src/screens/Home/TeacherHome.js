@@ -1,12 +1,46 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import AdminDrawer from '../../components/AdminDrawer/AdminDrawer';
+import Profile from '../Teacher/Profile/Profile';
+import {GHOST_WHITE, THEME_COLOR} from '../../strings/Colors';
+import CustomHeaderLeft from '../../components/CustomHeaderLeft';
+import TeacherMain from '../Teacher/TeacherMain';
+
+const Drawer = createDrawerNavigator();
+
+const options = {
+  headerShown: true,
+  headerTitle: 'My Profile',
+  headerStyle: {
+    backgroundColor: THEME_COLOR,
+  },
+  headerTintColor: GHOST_WHITE,
+  headerTitleStyle: {
+    fontWeight: 'semibold',
+  },
+  headerTitleAlign: 'center',
+};
 
 const TeacherHome = () => {
   return (
-    <View>
-      <Text>TeacherHome</Text>
-    </View>
-  )
-}
+    <Drawer.Navigator drawerContent={props => <AdminDrawer {...props} />}>
+      <Drawer.Screen
+        name="Dash-board"
+        options={{headerShown: false}}
+        component={TeacherMain}
+      />
+      <Drawer.Screen
+        name="Profile"
+        component={Profile}
+        options={({navigation}) => ({
+          ...options,
+          headerLeft: () => <CustomHeaderLeft navigation={navigation} />, // Custom header left component
+        })}
+      />
+    </Drawer.Navigator>
+  );
+};
+
+
 
 export default TeacherHome

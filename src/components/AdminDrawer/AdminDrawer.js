@@ -14,20 +14,16 @@ import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckTokenExp from '../../utils/CheckTokenExp';
 import {useNavigation} from '@react-navigation/native';
-import {useLoginUserMutation} from '../../store/features/userFeatures';
-import {
-  GHOST_WHITE,
-  Half_WHITE,
-  THEME_COLOR,
-  WHITE_BG,
-} from '../../strings/Colors';
+import {useLogoutUserMutation} from '../../store/features/userFeatures';
+import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomDivider from '../CustomDivider';
+import {ResetNavigations} from '../../utils/ResetNavigations';
 
 const AdminDrawer = props => {
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const isFocused = useIsFocused();
-  const [logoutUser] = useLoginUserMutation();
+  const [logoutUser] = useLogoutUserMutation();
 
   useEffect(() => {
     const validateTokenAndFetchDetails = async () => {
@@ -50,15 +46,17 @@ const AdminDrawer = props => {
     const userData = await AsyncStorage.getItem('userData');
     const token = await AsyncStorage.getItem('accessToken');
     setData(JSON.parse(userData));
-    console.log(token);
+    // console.log(token);
   };
+
 
   const handleLogout = async () => {
     const logout = await logoutUser({})
+      .unwrap()
       .then(async res => {
-        console.log('logout res', res.data);
         await AsyncStorage.clear();
-        props.navigation.navigate('Login');
+        ResetNavigations({navigation: navigation, routeName: 'Login'}); // reset the previous path route so wont go back
+        console.log('logout res', res.message);
       })
       .catch(error => {
         console.log('logouterror', error);

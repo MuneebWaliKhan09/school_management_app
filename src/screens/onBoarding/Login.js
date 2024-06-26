@@ -22,6 +22,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useLoginUserMutation} from '../../store/features/userFeatures';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '../../Loaders/Loader';
+import {ResetNavigations} from '../../utils/ResetNavigations';
 
 let userSchema = object({
   username: string().required('Username is required !'),
@@ -32,7 +33,6 @@ let userSchema = object({
 const Login = () => {
   const nav = useNavigation();
   const [loginUser, {isLoading, error}] = useLoginUserMutation();
-  
 
   const handleLogin = async values => {
     try {
@@ -46,12 +46,15 @@ const Login = () => {
       // Navigate based on user role
       switch (user.role) {
         case 'admin':
+          ResetNavigations({navigation: nav, routeName: 'AdminHome'});
           nav.navigate('AdminHome');
           break;
         case 'teacher':
+          ResetNavigations({navigation: nav, routeName: 'TeacherHome'});
           nav.navigate('TeacherHome');
           break;
         case 'student':
+          ResetNavigations({navigation: nav, routeName: 'StudentHome'});
           nav.navigate('StudentHome');
           break;
         default:
@@ -64,6 +67,7 @@ const Login = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle={'light-content'} backgroundColor={THEME_COLOR} />
       {isLoading ? (
         <Loader />
       ) : (
@@ -74,10 +78,6 @@ const Login = () => {
           validationSchema={userSchema}>
           {({handleChange, handleSubmit, handleBlur, values, errors}) => (
             <>
-              <StatusBar
-                barStyle={'light-content'}
-                backgroundColor={THEME_COLOR}
-              />
               <View>
                 <Image
                   style={styles.logginBanner}
