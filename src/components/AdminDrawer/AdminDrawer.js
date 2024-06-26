@@ -1,17 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper';
-import { useIsFocused } from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Image} from 'react-native';
+import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
+import {
+  Avatar,
+  Title,
+  Caption,
+  Drawer,
+  Text,
+  TouchableRipple,
+  Switch,
+} from 'react-native-paper';
+import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckTokenExp from '../../utils/CheckTokenExp';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {useLoginUserMutation} from '../../store/features/userFeatures';
+import LinearGradient from 'react-native-linear-gradient';
+import {GHOST_WHITE, Half_WHITE, THEME_COLOR, WHITE_BG} from '../../strings/Colors';
+import CustomDivider from '../CustomDivider';
 
-
-const AdminDrawer = (props) => {
+const AdminDrawer = props => {
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const isFocused = useIsFocused();
+  const [logoutUser] = useLoginUserMutation();
 
   useEffect(() => {
     const validateTokenAndFetchDetails = async () => {
@@ -31,12 +43,15 @@ const AdminDrawer = (props) => {
   };
 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('userData');
+    const logout = await logoutUser();
+    console.log('logoutdata', logout.data);
+    await AsyncStorage.clear();
     props.navigation.navigate('Login'); // Navigate to your login screen
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View
+      style={styles.container}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
@@ -51,68 +66,78 @@ const AdminDrawer = (props) => {
               {(data && data.email) || 'no email'}
             </Caption>
           </View>
-
-          <Drawer.Section style={styles.drawerSection}>
+          <CustomDivider />
+          <Drawer.Section showDivider={false} style={styles.drawerSection}>
             <DrawerItem
-              icon={({ size }) => (
+              icon={({size}) => (
                 <Image
                   source={require('../../images/icons/home.png')}
-                  style={{ width: size, height: size }}
+                  style={{width: size, height: size, tintColor: Half_WHITE}}
                 />
               )}
               label="Home"
+              labelStyle={{color: GHOST_WHITE}}
               onPress={() => {
-                props.navigation.navigate('Home');
+                props.navigation.navigate('Dash-board');
               }}
             />
             <DrawerItem
-              icon={({ size }) => (
+              icon={({size}) => (
                 <Image
                   source={require('../../images/icons/user.png')}
-                  style={{ width: size, height: size }}
+                  style={{width: size, height: size, tintColor: Half_WHITE}}
                 />
               )}
               label="Profile"
+              labelStyle={{color: GHOST_WHITE}}
               onPress={() => {
                 props.navigation.navigate('Profile');
               }}
             />
             <DrawerItem
-              icon={({ size }) => (
+              icon={({size}) => (
                 <Image
                   source={require('../../images/icons/settings.png')}
-                  style={{ width: size, height: size }}
+                  style={{width: size, height: size, tintColor: Half_WHITE}}
                 />
               )}
               label="Settings"
+              labelStyle={{color: GHOST_WHITE}}
               onPress={() => {
                 props.navigation.navigate('Settings');
               }}
             />
           </Drawer.Section>
+          <CustomDivider />
 
-          <Drawer.Section title="Preferences">
+          <Drawer.Section showDivider={false}>
+            <Title style={styles.preferencesTitle}>Preferences</Title>
             <TouchableRipple onPress={() => {}}>
               <View style={styles.preference}>
-                <Text>Dark Theme</Text>
+                <Text style={{color: Half_WHITE}}>Dark Theme</Text>
                 <View pointerEvents="none">
                   <Switch value={false} />
                 </View>
               </View>
             </TouchableRipple>
           </Drawer.Section>
+          <CustomDivider />
         </View>
       </DrawerContentScrollView>
-
-      <Drawer.Section style={styles.bottomDrawerSection}>
+      <CustomDivider />
+      <Drawer.Section
+        tion
+        showDivider={false}
+        style={styles.bottomDrawerSection}>
         <DrawerItem
-          icon={({ size }) => (
+          icon={({size}) => (
             <Image
               source={require('../../images/icons/logout.png')}
-              style={{ width: size, height: size }}
+              style={{width: size, height: size, tintColor: Half_WHITE}}
             />
           )}
           label="Logout"
+          labelStyle={{color: GHOST_WHITE}}
           onPress={handleLogout}
         />
       </Drawer.Section>
@@ -121,6 +146,10 @@ const AdminDrawer = (props) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor:THEME_COLOR
+  },
   drawerContent: {
     flex: 1,
   },
@@ -128,18 +157,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
+    marginBottom:7
   },
   title: {
     fontSize: 16,
     marginTop: 3,
     fontWeight: 'bold',
+    color: GHOST_WHITE,
   },
   caption: {
     fontSize: 14,
     lineHeight: 14,
+    color: Half_WHITE,
   },
   drawerSection: {
-    marginTop: 15,
+    marginTop: 5,
+  },
+  preferencesTitle: {
+    fontSize: 14,
+    marginLeft: 19,
+    fontWeight: '500',
+    color: GHOST_WHITE, // Customize the color here
   },
   preference: {
     flexDirection: 'row',
@@ -148,10 +186,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 19,
   },
   bottomDrawerSection: {
-    borderTopColor: '#f4f4f4',
-    borderTopWidth: 1,
-    borderBottomColor:"white",
-    marginBottom:0
+    borderBottomWidth: 0.5,
+    marginBottom: 0.5,
+    borderBottomColor: Half_WHITE,
   },
 });
 

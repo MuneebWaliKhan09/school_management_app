@@ -15,7 +15,7 @@ export const userApi = createApi({
     // registerUser:builder.query({
     //     query:()=> user_End_Points.register
     // }),
-    logoutUser:builder.query({
+    logoutUser:builder.mutation({
         query:()=> user_End_Points.logout
     }),
     // userDetails:builder.query({
@@ -33,4 +33,4 @@ export const userApi = createApi({
   }),
 });
 
-export const {useLoginUserMutation} = userApi;
+export const {useLoginUserMutation,useLogoutUserQuery} = userApi;

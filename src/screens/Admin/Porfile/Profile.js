@@ -1,12 +1,88 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import UserProfile from './UserProfile';
+import TeacherProfile from './TeacherProfile';
+import { THEME_COLOR } from '../../../strings/Colors';
+import { Divider } from 'react-native-paper';
+
+
 
 const Profile = () => {
-  return (
-    <View>
-      <Text>Profile</Text>
-    </View>
-  )
-}
+  const [selectedTab, setSelectedTab] = useState('user');
 
-export default Profile
+  const exampleUser = {
+    avatar: 'https://example.com/avatar.jpg',  
+    fullName: 'John Doe',                     
+    username: 'johndoe123',                
+    email: 'johndoe@example.com',            
+    role: 'Administrator'                    
+  };
+  
+  const exampleTeacher = {
+    avatar: 'https://example.com/avatar.jpg',
+    fullName: 'John Doe',
+    username: 'johndoe',
+    email: 'john.doe@example.com',
+    role: 'User',
+    school: 'Example High School',
+    subjects: ['Math', 'Science'],
+    bio: 'Experienced teacher with a passion for education.',
+  };
+  
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <Divider/>
+      <View style={styles.topNav}>
+        <TouchableOpacity
+          style={[
+            styles.navButton,
+            selectedTab === 'user' && styles.activeNavButton,
+          ]}
+          onPress={() => setSelectedTab('user')}
+        >
+          <Text style={styles.navButtonText}>User Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.navButton,
+            selectedTab === 'teacher' && styles.activeNavButton,
+          ]}
+          onPress={() => setSelectedTab('teacher')}
+        >
+          <Text style={styles.navButtonText}>Teacher Profile</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{ flex: 1 }}>
+        {selectedTab === 'user' ? (
+          <UserProfile exampleUser={exampleUser} />
+        ) : (
+          <TeacherProfile exampleTeacher={exampleTeacher} />
+        )}
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  topNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: THEME_COLOR,
+    paddingVertical: 10,
+  },
+  navButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  activeNavButton: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'white',
+  },
+  navButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});
+
+export default Profile;
