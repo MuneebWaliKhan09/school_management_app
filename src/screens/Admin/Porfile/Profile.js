@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 import UserProfile from './UserProfile';
-import { THEME_COLOR } from '../../../strings/Colors';
-import { Divider } from 'react-native-paper';
-import { useUserDetailsQuery } from '../../../store/features/userFeatures';
+import {THEME_COLOR} from '../../../strings/Colors';
+import {Divider} from 'react-native-paper';
+import {useUserDetailsQuery} from '../../../store/features/userFeatures';
 import {
   responsiveWidth,
   responsiveHeight,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
+import { useNavigation } from '@react-navigation/native';
 
 const Profile = () => {
-  const { data: userData, isLoading, isError } = useUserDetailsQuery();
+  const nav = useNavigation()
+  const {data: userData, isLoading, isError} = useUserDetailsQuery();
   const [dataUser, setDataUser] = useState(null);
-
 
   useEffect(() => {
     if (userData) {
@@ -21,13 +28,25 @@ const Profile = () => {
     }
   }, [userData]);
 
+  const onEditProfile = () => {
+    nav.navigate('ActionsAdminProfile', { screen: 'EditProfileAdmin'});
+  };
+
+  const onUpdatePassword = () => {
+    nav.navigate('ActionsAdminProfile', { screen: 'EditPasswordAdmin' });
+  };
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <Divider />
-      <View style={styles.topNav}>
-      </View>
-      <View style={{ flex: 1 }}>
-        <UserProfile dataUser={dataUser} isLoading={isLoading} />
+      <View style={styles.topNav}></View>
+      <View style={{flex: 1}}>
+        <UserProfile
+          dataUser={dataUser}
+          isLoading={isLoading}
+          onEditProfile={onEditProfile}
+          onUpdatePassword={onUpdatePassword}
+        />
       </View>
     </SafeAreaView>
   );

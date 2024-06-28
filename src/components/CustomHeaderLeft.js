@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
-import { GHOST_WHITE } from '../strings/Colors';
+import {GHOST_WHITE} from '../strings/Colors';
 
 const CustomHeaderLeft = ({navigation}) => (
   <TouchableOpacity onPress={() => navigation.openDrawer()}>

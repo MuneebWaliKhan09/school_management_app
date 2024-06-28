@@ -10,7 +10,6 @@ const Drawer = createDrawerNavigator();
 
 const options = {
   headerShown: true,
-  headerTitle: 'My Profile',
   headerStyle: {
     backgroundColor: THEME_COLOR,
   },
@@ -22,7 +21,6 @@ const options = {
 };
 
 const AdminHome = () => {
-
 
 
   return (
@@ -37,7 +35,8 @@ const AdminHome = () => {
         component={Profile}
         options={({navigation}) => ({
           ...options,
-          headerLeft: () => <CustomHeaderLeft navigation={navigation} />, // Custom header left component
+          headerTitle: 'My Profile',
+          headerLeft: () => <CustomHeaderLeft navigation={navigation}/>, // Custom header left component
         })}
       />
     </Drawer.Navigator>
