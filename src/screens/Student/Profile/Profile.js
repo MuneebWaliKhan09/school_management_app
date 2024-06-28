@@ -7,11 +7,11 @@ import {
   SafeAreaView,
 } from 'react-native';
 import UserProfile from './UserProfile';
-import TeacherProfile from './StudentProfile';
+import StudentProfile from './StudentProfile';
 import {THEME_COLOR} from '../../../strings/Colors';
 import {Divider} from 'react-native-paper';
 import {useUserDetailsQuery} from '../../../store/features/userFeatures';
-import { useTeacherDetailsQuery } from '../../../store/features/teacherFeatures';
+import { useStudentDetailsQuery } from '../../../store/features/studentFeatures';
 import {
   responsiveWidth,
   responsiveHeight,
@@ -21,18 +21,18 @@ import {
 const Profile = () => {
   const [selectedTab, setSelectedTab] = useState('user');
   const {data: userData, isLoading, isError} = useUserDetailsQuery();
-  const {data: teacherDetails, isError: teacherErrorProfile} = useTeacherDetailsQuery();
+  const {data: studentDetails, isError: studentErrorProfile} = useStudentDetailsQuery();
   const [dataUser, setdataUser] = useState(null);
-  const [teacherData, setteacherData] = useState(null);
+  const [studentData, setstudentData] = useState(null);
 
   useEffect(() => {
-    if (teacherDetails) {
-      setteacherData(teacherDetails && teacherDetails?.data);
+    if (studentDetails) {
+      setstudentData(studentDetails && studentDetails?.data);
     }
     if (userData) {
       setdataUser(userData && userData?.data);
     }
-  }, [userData, teacherDetails]);
+  }, [userData, studentDetails]);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -49,17 +49,17 @@ const Profile = () => {
         <TouchableOpacity
           style={[
             styles.navButton,
-            selectedTab === 'teacher' && styles.activeNavButton,
+            selectedTab === 'student' && styles.activeNavButton,
           ]}
-          onPress={() => setSelectedTab('teacher')}>
-          <Text style={styles.navButtonText}>Teacher Profile</Text>
+          onPress={() => setSelectedTab('student')}>
+          <Text style={styles.navButtonText}>Student Profile</Text>
         </TouchableOpacity>
       </View>
       <View style={{flex: 1}}>
         {selectedTab === 'user' ? (
-          <UserProfile dataUser={dataUser} />
+          <UserProfile dataUser={dataUser} isLoading={isLoading} />
         ) : (
-          <TeacherProfile teacherData={teacherData} />
+          <StudentProfile studentData={studentData} />
         )}
       </View>
     </SafeAreaView>

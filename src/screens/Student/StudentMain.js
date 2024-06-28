@@ -122,7 +122,7 @@ const StudentMain = () => {
                   opacity: animations.welcomeText,
                 },
               ]}>
-              <Text style={styles.welcomeText}>Welcome Teacher 👋</Text>
+              <Text style={styles.welcomeText}>Welcome Student 👋</Text>
             </Animated.View>
           </View>
 

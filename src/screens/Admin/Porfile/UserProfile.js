@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
-import { Half_gray, WHITE_BG } from '../../../strings/Colors';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { Half_gray, WHITE_BG, THEME_COLOR } from '../../../strings/Colors';
 import CustomDivider from '../../../components/CustomDivider';
 import {
   responsiveWidth,
@@ -8,7 +8,7 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 
-const UserProfile = ({ dataUser }) => {
+const UserProfile = ({ dataUser, onEditProfile, onUpdatePassword }) => {
   const userData = dataUser ? dataUser : null;
 
   return (
@@ -64,6 +64,14 @@ const UserProfile = ({ dataUser }) => {
             <Text style={styles.label}>Account Status: </Text>
             <Text style={styles.value}>{userData?.isActive ? 'Active' : 'Inactive'}</Text>
           </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={onEditProfile}>
+            <Text style={styles.buttonText}>Edit Profile</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={onUpdatePassword}>
+            <Text style={styles.buttonText}>Update Password</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -135,6 +143,25 @@ const styles = StyleSheet.create({
   },
   value: {
     color: Half_gray,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: responsiveHeight(2),
+    position:"relative",
+  },
+  button: {
+    flex: 1,
+    height:40,
+    marginHorizontal: responsiveWidth(2),
+    backgroundColor: THEME_COLOR,
+    paddingVertical: responsiveHeight(1.5),
+    borderRadius: responsiveWidth(2),
+  },
+  buttonText: {
+    color: WHITE_BG,
+    fontSize: responsiveFontSize(1.8),
+    textAlign: 'center',
   },
 });
 

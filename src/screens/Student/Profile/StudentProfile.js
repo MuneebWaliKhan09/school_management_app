@@ -8,28 +8,26 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 
-const StudentProfile = ({teacherData}) => {
-  const teacher = teacherData?.[0];
-  const teacherOfClass = teacherData?.[1];
-
+const StudentProfile = ({studentData}) => {
+  const student = studentData ? studentData : null;
   return (
     <ScrollView style={styles.container}>
       <Card style={styles.card}>
         <Card.Title
           style={styles.cardTitle}
           title={
-            teacher.fullName[0].toUpperCase() +
-            teacher.fullName.substr(1, teacher.fullName.length)
+            student.fullName[0].toUpperCase() +
+            student.fullName.substr(1, student.fullName.length)
           }
           titleStyle={styles.title}
-          subtitle={teacher.designation + " , " + teacherOfClass.toLowerCase()}
+          subtitle={"St, " + student?.className?.className.toLowerCase()}
           subtitleStyle={styles.subtitle}
           left={() => (
             <Avatar.Image
               size={responsiveWidth(20)}
               source={{
                 uri:
-                  teacher.avatar ||
+                  student.avatar ||
                   require('../../../images/icons/profile.png'),
               }}
             />
@@ -41,7 +39,7 @@ const StudentProfile = ({teacherData}) => {
             <Divider />
             <List.Item
               title="Email"
-              description={teacher.email}
+              description={student.email}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -51,7 +49,7 @@ const StudentProfile = ({teacherData}) => {
             />
             <List.Item
               title="Phone"
-              description={teacher.phone}
+              description={student.phone}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -61,7 +59,7 @@ const StudentProfile = ({teacherData}) => {
             />
             <List.Item
               title="Address"
-              description={teacher.address}
+              description={student.address}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -71,7 +69,7 @@ const StudentProfile = ({teacherData}) => {
             />
             <List.Item
               title="DOB"
-              description={new Date(teacher.DOB).toDateString()}
+              description={new Date(student.DOB).toDateString()}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -81,7 +79,7 @@ const StudentProfile = ({teacherData}) => {
             />
             <List.Item
               title="Gender"
-              description={teacher.gender}
+              description={student.gender}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -91,11 +89,31 @@ const StudentProfile = ({teacherData}) => {
             />
             <List.Item
               title="Blood Group"
-              description={teacher.bloodGroup}
+              description={student.bloodGroup}
               left={() => (
                 <Image
                   style={styles.icon}
                   source={require('../../../images/icons/usericons/blood-group.png')}
+                />
+              )}
+            />
+            <List.Item
+              title="Father's Name"
+              description={student.fatherName}
+              left={() => (
+                <Image
+                  style={styles.icon}
+                  source={require('../../../images/icons/usericons/man.png')}
+                />
+              )}
+            />
+            <List.Item
+              title="Age"
+              description={student.age}
+              left={() => (
+                <Image
+                  style={styles.icon}
+                  source={require('../../../images/icons/usericons/age.png')}
                 />
               )}
             />
@@ -106,7 +124,7 @@ const StudentProfile = ({teacherData}) => {
             <Divider />
             <List.Item
               title="Joining Date"
-              description={new Date(teacher.joiningDate).toDateString()}
+              description={new Date(student.joiningDate).toDateString()}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -115,38 +133,8 @@ const StudentProfile = ({teacherData}) => {
               )}
             />
             <List.Item
-              title="Leaving Date"
-              description={new Date(teacher.leavingDate).toDateString()}
-              left={() => (
-                <Image
-                  style={styles.icon}
-                  source={require('../../../images/icons/usericons/leave.png')}
-                />
-              )}
-            />
-            <List.Item
-              title="Status"
-              description={teacher.status}
-              left={() => (
-                <Image
-                  style={styles.icon}
-                  source={require('../../../images/icons/usericons/check-list.png')}
-                />
-              )}
-            />
-            <List.Item
-              title="Subject"
-              description={teacher.subject}
-              left={() => (
-                <Image
-                  style={styles.icon}
-                  source={require('../../../images/icons/usericons/books.png')}
-                />
-              )}
-            />
-            <List.Item
-              title="Classes Taught"
-              description={teacher.classesTaught?.map((cls)=> cls?.className + ', ')}
+              title="Admission Class"
+              description={student.admissionClass}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -155,12 +143,42 @@ const StudentProfile = ({teacherData}) => {
               )}
             />
             <List.Item
-              title="Salary"
-              description={`$${teacher.sallary}`}
+              title="Roll Number"
+              description={student.rollNo}
               left={() => (
                 <Image
                   style={styles.icon}
-                  source={require('../../../images/icons/usericons/payroll.png')}
+                  source={require('../../../images/icons/usericons/id-card.png')}
+                />
+              )}
+            />
+            <List.Item
+              title="Monthly Fee"
+              description={`$${student.monthlyFee}`}
+              left={() => (
+                <Image
+                  style={styles.icon}
+                  source={require('../../../images/icons/usericons/money.png')}
+                />
+              )}
+            />
+            <List.Item
+              title="Lab Fee"
+              description={`$${student.labFee}`}
+              left={() => (
+                <Image
+                  style={styles.icon}
+                  source={require('../../../images/icons/usericons/money.png')}
+                />
+              )}
+            />
+            <List.Item
+              title="Security Fee"
+              description={`$${student.securityFee}`}
+              left={() => (
+                <Image
+                  style={styles.icon}
+                  source={require('../../../images/icons/usericons/money.png')}
                 />
               )}
             />
@@ -197,7 +215,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginLeft: responsiveWidth(10),
-    lineHeight: responsiveHeight(1.5),
+    lineHeight: responsiveHeight(1.7),
     fontSize: responsiveFontSize(1.6),
     fontWeight: '600',
     color: Half_gray,
