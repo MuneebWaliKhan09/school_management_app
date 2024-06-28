@@ -8,7 +8,7 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 
-const TeacherProfile = ({teacherData}) => {
+const StudentProfile = ({teacherData}) => {
   const teacher = teacherData?.[0];
   const teacherOfClass = teacherData?.[1];
 
@@ -213,4 +213,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TeacherProfile;
+export default StudentProfile;

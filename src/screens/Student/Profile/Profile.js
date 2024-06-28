@@ -7,7 +7,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import UserProfile from './UserProfile';
-import TeacherProfile from './TeacherProfile';
+import TeacherProfile from './StudentProfile';
 import {THEME_COLOR} from '../../../strings/Colors';
 import {Divider} from 'react-native-paper';
 import {useUserDetailsQuery} from '../../../store/features/userFeatures';

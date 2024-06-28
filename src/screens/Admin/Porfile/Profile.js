@@ -1,65 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import UserProfile from './UserProfile';
-import TeacherProfile from './TeacherProfile';
 import { THEME_COLOR } from '../../../strings/Colors';
 import { Divider } from 'react-native-paper';
 import { useUserDetailsQuery } from '../../../store/features/userFeatures';
-
-
+import {
+  responsiveWidth,
+  responsiveHeight,
+  responsiveFontSize,
+} from 'react-native-responsive-dimensions';
 
 const Profile = () => {
-  const [selectedTab, setSelectedTab] = useState('user');
-  const {data: userData,isLoading, isError} = useUserDetailsQuery()
-  const [dataUser, setdataUser] = useState(null)
+  const { data: userData, isLoading, isError } = useUserDetailsQuery();
+  const [dataUser, setDataUser] = useState(null);
 
-  useEffect(()=>{
-    if(userData){
-      setdataUser(userData?.data)
+
+  useEffect(() => {
+    if (userData) {
+      setDataUser(userData?.data);
     }
-  },[userData])
-  
-  const exampleTeacher = {
-    avatar: 'https://example.com/avatar.jpg',
-    fullName: 'John Doe',
-    username: 'johndoe',
-    email: 'john.doe@example.com',
-    role: 'User',
-    school: 'Example High School',
-    subjects: ['Math', 'Science'],
-    bio: 'Experienced teacher with a passion for education.',
-  };
-  
+  }, [userData]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Divider/>
+      <Divider />
       <View style={styles.topNav}>
-        <TouchableOpacity
-          style={[
-            styles.navButton,
-            selectedTab === 'user' && styles.activeNavButton,
-          ]}
-          onPress={() => setSelectedTab('user')}
-        >
-          <Text style={styles.navButtonText}>User Profile</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.navButton,
-            selectedTab === 'teacher' && styles.activeNavButton,
-          ]}
-          onPress={() => setSelectedTab('teacher')}
-        >
-          <Text style={styles.navButtonText}>Teacher Profile</Text>
-        </TouchableOpacity>
       </View>
       <View style={{ flex: 1 }}>
-        {selectedTab === 'user' ? (
-          <UserProfile dataUser={dataUser} />
-        ) : (
-          <TeacherProfile exampleTeacher={exampleTeacher} />
-        )}
+        <UserProfile dataUser={dataUser} isLoading={isLoading} />
       </View>
     </SafeAreaView>
   );
@@ -70,19 +38,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     backgroundColor: THEME_COLOR,
-    paddingVertical: 10,
   },
   navButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: responsiveHeight(1.5),
+    paddingHorizontal: responsiveWidth(5),
   },
   activeNavButton: {
-    borderBottomWidth: 1,
+    borderBottomWidth: responsiveWidth(0.5),
     borderBottomColor: 'white',
   },
   navButtonText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: responsiveFontSize(2),
   },
 });
 

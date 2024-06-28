@@ -13,6 +13,7 @@ import StudentHome from './screens/Home/StudentHome'
 const Stack = createStackNavigator()
 
 const MainNavigator = () => {
+
   return (
     <NavigationContainer>
       <Stack.Navigator>

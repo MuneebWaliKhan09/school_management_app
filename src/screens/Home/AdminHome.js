@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import AdminMain from '../Admin/AdminMain';
 import AdminDrawer from '../../components/AdminDrawer/AdminDrawer';
@@ -22,6 +22,9 @@ const options = {
 };
 
 const AdminHome = () => {
+
+
+
   return (
     <Drawer.Navigator drawerContent={props => <AdminDrawer {...props} />}>
       <Drawer.Screen

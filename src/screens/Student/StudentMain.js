@@ -33,10 +33,9 @@ import teacherIcon from '../../images/icons/teacher.png';
 import usersIcon from '../../images/icons/users.png';
 import subjectsIcon from '../../images/icons/subjects.png';
 
-const AdminMain = () => {
+const StudentMain = () => {
   const nav = useNavigation();
   const isFocused = useIsFocused();
-
   const animations = {
     welcomeText: useRef(new Animated.Value(0)).current,
     avatar: useRef(new Animated.Value(0)).current,
@@ -123,7 +122,7 @@ const AdminMain = () => {
                   opacity: animations.welcomeText,
                 },
               ]}>
-              <Text style={styles.welcomeText}>Welcome Admin 👋</Text>
+              <Text style={styles.welcomeText}>Welcome Teacher 👋</Text>
             </Animated.View>
           </View>
 
@@ -241,4 +240,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdminMain;
+
+export default StudentMain

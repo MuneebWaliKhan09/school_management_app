@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import AdminDrawer from '../../components/AdminDrawer/AdminDrawer';
 import Profile from '../Teacher/Profile/Profile';
 import {GHOST_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomHeaderLeft from '../../components/CustomHeaderLeft';
 import TeacherMain from '../Teacher/TeacherMain';
+import TeacherDrawer from '../../components/TeacherDrawer/TeacherDrawer';
 
 const Drawer = createDrawerNavigator();
 
@@ -22,8 +22,9 @@ const options = {
 };
 
 const TeacherHome = () => {
+
   return (
-    <Drawer.Navigator drawerContent={props => <AdminDrawer {...props} />}>
+    <Drawer.Navigator drawerContent={props => <TeacherDrawer {...props} />}>
       <Drawer.Screen
         name="Dash-board"
         options={{headerShown: false}}
@@ -41,6 +42,4 @@ const TeacherHome = () => {
   );
 };
 
-
-
-export default TeacherHome
+export default TeacherHome;

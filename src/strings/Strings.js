@@ -18,7 +18,7 @@ export const user_End_Points = {
 }
 
 
-const teacher_End_Points = {
+export const teacher_End_Points = {
     teacherProfile: '/teacher-profile',
     allStudentsOfClass: '/all-students-class',
     singleStudentDetail: '/single-student-detail/',
@@ -48,7 +48,7 @@ const teacher_End_Points = {
 };
 
 
-const student_End_Points = {
+export const student_End_Points = {
     studentProfile: '/student-profile',
     studentAttendanceRecord: '/student-attendance-record',
     studentClassAssignments: '/student-class-assigments',

@@ -18,18 +18,21 @@ import {useLogoutUserMutation, useUserDetailsQuery} from '../../store/features/u
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomDivider from '../CustomDivider';
 import {ResetNavigations} from '../../utils/ResetNavigations';
+import { useTeacherDetailsQuery } from '../../store/features/teacherFeatures';
 
-const AdminDrawer = props => {
+const TeacherDrawer = props => {
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const isFocused = useIsFocused();
   const [logoutUser] = useLogoutUserMutation();
   const {refetch: refetchUser} = useUserDetailsQuery();
+  const {refetch: refetchTeacher} = useTeacherDetailsQuery();
 
   useEffect(()=>{
     refetchUser();
+    refetchTeacher()
   },[])
-  console.log("admin drawer");
+
   useEffect(() => {
     const validateTokenAndFetchDetails = async () => {
       const isValidToken = await CheckTokenExp(navigation)
@@ -53,7 +56,6 @@ const AdminDrawer = props => {
     setData(JSON.parse(userData));
     // console.log(token);
   };
-
 
   const handleLogout = async () => {
     const logout = await logoutUser({})
@@ -178,7 +180,7 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
   title: {
-    fontSize: 16,
+    fontSize: 14,
     marginTop: 3,
     fontWeight: 'bold',
     color: GHOST_WHITE,
@@ -210,4 +212,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdminDrawer;
+export default TeacherDrawer;

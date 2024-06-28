@@ -4,6 +4,7 @@ import {API_USER_URL, user_End_Points} from '../../strings/Strings';
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({baseUrl: API_USER_URL}),
+  tagTypes: ['User'],
   endpoints: builder => ({
     loginUser: builder.mutation({
       query: data => ({
@@ -11,6 +12,7 @@ export const userApi = createApi({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ["User"]
     }),
     // registerUser:builder.query({
     //     query:()=> user_End_Points.register
@@ -21,9 +23,11 @@ export const userApi = createApi({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags:["User"]
     }),
     userDetails:builder.query({
-        query:()=> user_End_Points.getUserDetails
+        query:()=> user_End_Points.getUserDetails,
+        providesTags:["User"]
     }),
     // changePasswordUser:builder.query({
     //     query:()=> user_End_Points.changePassword

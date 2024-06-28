@@ -19,10 +19,14 @@ import {ScrollView} from 'react-native';
 import {Formik as FormikLib} from 'formik';
 import {object, string} from 'yup';
 import {useNavigation} from '@react-navigation/native';
-import {useLoginUserMutation} from '../../store/features/userFeatures';
+import {
+  useLoginUserMutation,
+  useUserDetailsQuery,
+} from '../../store/features/userFeatures';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '../../Loaders/Loader';
 import {ResetNavigations} from '../../utils/ResetNavigations';
+import {useTeacherDetailsQuery} from '../../store/features/teacherFeatures';
 
 let userSchema = object({
   username: string().required('Username is required !'),
@@ -32,7 +36,9 @@ let userSchema = object({
 
 const Login = () => {
   const nav = useNavigation();
-  const [loginUser, {isLoading, error}] = useLoginUserMutation();
+  const [loginUser, {isLoading}] = useLoginUserMutation();
+  const {refetch: refetchUser} = useUserDetailsQuery();
+  const {refetch: refetchTeacher} = useTeacherDetailsQuery();
 
   const handleLogin = async values => {
     try {
@@ -42,7 +48,9 @@ const Login = () => {
       // Store access token and user data in AsyncStorage or SecureStore
       await AsyncStorage.setItem('accessToken', accessToken);
       await AsyncStorage.setItem('userData', JSON.stringify(user));
-
+      refetchUser();
+      refetchTeacher();
+      console.log("login page");
       // Navigate based on user role
       switch (user.role) {
         case 'admin':
