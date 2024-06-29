@@ -1,6 +1,13 @@
 import React from 'react';
-import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
-import { Half_gray, WHITE_BG } from '../../../strings/Colors';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import { Half_gray, WHITE_BG, THEME_COLOR } from '../../../strings/Colors';
 import CustomDivider from '../../../components/CustomDivider';
 import {
   responsiveWidth,
@@ -8,15 +15,15 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 
-const UserProfile = ({ dataUser }) => {
+const UserProfile = ({ dataUser, onEditProfile, onUpdatePassword }) => {
   const userData = dataUser ? dataUser : null;
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.card}>
-        <View style={styles.header}>
-          {
-            userData?.avatar ? (
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.card}>
+          <View style={styles.header}>
+            {userData?.avatar ? (
               <Image
                 style={styles.avatar}
                 source={{
@@ -26,47 +33,66 @@ const UserProfile = ({ dataUser }) => {
             ) : (
               <Image
                 style={styles.avatar}
-                source={require("../../../images/icons/profile.png")}
+                source={require('../../../images/icons/profile.png')}
               />
-            )
-          }
-          <View style={styles.headerText}>
-            <Text style={styles.title}>
-              {userData?.fullName[0].toUpperCase() + userData?.fullName.substr(1)}
-            </Text>
-            <Text style={styles.subtitle}>@{userData?.username}</Text>
+            )}
+            <View style={styles.headerText}>
+              <Text style={styles.title}>
+                {userData?.fullName[0].toUpperCase() +
+                  userData?.fullName.substr(1)}
+              </Text>
+              <Text style={styles.subtitle}>@{userData?.username}</Text>
+            </View>
+          </View>
+          <View style={styles.content}>
+            <Text style={styles.sectionTitle}>Personal Information</Text>
+            <CustomDivider bgColor={'gray'} marginTopBtm={5} />
+            <View style={styles.infoItem}>
+              <Image
+                style={styles.icon}
+                source={require('../../../images/icons/usericons/email.png')}
+              />
+              <Text style={styles.label}>Email: </Text>
+              <Text style={styles.value}>{userData?.email}</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <Image
+                style={styles.icon}
+                source={require('../../../images/icons/usericons/teachings.png')}
+              />
+              <Text style={styles.label}>Role: </Text>
+              <Text style={styles.value}>{userData?.role}</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <Image
+                style={styles.icon}
+                source={require('../../../images/icons/usericons/check-list.png')}
+              />
+              <Text style={styles.label}>Account Status: </Text>
+              <Text style={styles.value}>
+                {userData?.isActive ? 'Active' : 'Inactive'}
+              </Text>
+            </View>
           </View>
         </View>
-        <View style={styles.content}>
-          <Text style={styles.sectionTitle}>Personal Information</Text>
-          <CustomDivider bgColor={'gray'} marginTopBtm={5} />
-          <View style={styles.infoItem}>
-            <Image
-              style={styles.icon}
-              source={require('../../../images/icons/usericons/email.png')}
-            />
-            <Text style={styles.label}>Email: </Text>
-            <Text style={styles.value}>{userData?.email}</Text>
-          </View>
-          <View style={styles.infoItem}>
-            <Image
-              style={styles.icon}
-              source={require('../../../images/icons/usericons/teachings.png')}
-            />
-            <Text style={styles.label}>Role: </Text>
-            <Text style={styles.value}>{userData?.role}</Text>
-          </View>
-          <View style={styles.infoItem}>
-            <Image
-              style={styles.icon}
-              source={require('../../../images/icons/usericons/check-list.png')}
-            />
-            <Text style={styles.label}>Account Status: </Text>
-            <Text style={styles.value}>{userData?.isActive ? 'Active' : 'Inactive'}</Text>
-          </View>
-        </View>
+      </ScrollView>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={onEditProfile}>
+          <Image
+            style={styles.buttonIcon}
+            source={require('../../../images/icons/edit.png')}
+          />
+          <Text style={styles.buttonText}>Edit Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={onUpdatePassword}>
+          <Image
+            style={styles.buttonIcon}
+            source={require('../../../images/icons/password.png')}
+          />
+          <Text style={styles.buttonText}>Edit Password</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -74,6 +100,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: WHITE_BG,
+  },
+  scrollView: {
+    flex: 1,
   },
   card: {
     padding: responsiveWidth(5),
@@ -135,6 +164,35 @@ const styles = StyleSheet.create({
   },
   value: {
     color: Half_gray,
+  },
+  buttonContainer: {
+    flex:1/9,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: responsiveWidth(5),
+    width: '100%',
+    backgroundColor: WHITE_BG,
+  },
+  button: {
+    width:responsiveWidth(38),
+    height: responsiveHeight(5.5),
+    marginHorizontal: responsiveWidth(2),
+    backgroundColor: THEME_COLOR,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: responsiveWidth(2),
+    flexDirection: 'row',
+  },
+  buttonIcon: {
+    width: responsiveWidth(5),
+    height: responsiveHeight(2.5),
+    marginRight: responsiveWidth(2),
+    resizeMode: 'contain',
+    tintColor:WHITE_BG
+  },
+  buttonText: {
+    color: WHITE_BG,
+    fontSize: responsiveFontSize(1.8),
   },
 });
 

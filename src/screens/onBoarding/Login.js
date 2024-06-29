@@ -41,7 +41,7 @@ const Login = () => {
 
       // Store access token in AsyncStorage
       await AsyncStorage.setItem('accessToken', accessToken);
-      await AsyncStorage.setItem('userData',JSON.stringify(user));
+      await AsyncStorage.setItem('userData', JSON.stringify(user));
 
       // Navigate based on user role
       switch (user.role) {
@@ -65,130 +65,129 @@ const Login = () => {
     }
   };
 
+  if(isLoading) return <Loader />;
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'light-content'} backgroundColor={THEME_COLOR} />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <FormikLib
-          initialValues={{email: '', username: '', password: ''}}
-          onSubmit={handleLogin}
-          enableReinitialize={false}
-          validationSchema={userSchema}>
-          {({handleChange, handleSubmit, handleBlur, values, errors}) => (
-            <>
-              <View>
-                <Image
-                  style={styles.logginBanner}
-                  source={require('../../images/login.png')}
-                />
-              </View>
-              <Text style={styles.title}>Login</Text>
-              <KeyboardAvoidingView
-                style={styles.inputsContainer}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 50} // Adjust as needed
-              >
-                <ScrollView>
-                  <View style={styles.inputBox}>
-                    <TextInput
-                      onChangeText={handleChange('username')}
-                      onBlur={handleBlur('username')}
-                      style={styles.textInputs}
-                      label="Username"
-                      value={values.username}
-                      mode="outlined"
-                      outlineColor={THEME_COLOR}
-                      activeOutlineColor={THEME_COLOR}
-                      placeholder="Enter your Username"
-                    />
-                    {errors.username && (
-                      <Text
-                        style={{
-                          color: 'red',
-                          width: '90%',
-                          alignSelf: 'center',
-                          fontSize: 10,
-                          paddingLeft: 2,
-                        }}>
-                        {errors.username}
-                      </Text>
-                    )}
-                  </View>
-                  <View style={styles.inputBox}>
-                    <TextInput
-                      onChangeText={handleChange('email')}
-                      onBlur={handleBlur('email')}
-                      style={styles.textInputs}
-                      value={values.email}
-                      label="Email"
-                      mode="outlined"
-                      outlineColor={THEME_COLOR}
-                      activeOutlineColor={THEME_COLOR}
-                      placeholder="Enter your Email"
-                    />
-                    {errors.email && (
-                      <Text
-                        style={{
-                          color: 'red',
-                          width: '90%',
-                          alignSelf: 'center',
-                          fontSize: 10,
-                          paddingLeft: 2,
-                        }}>
-                        {errors.email}
-                      </Text>
-                    )}
-                  </View>
-                  <View style={styles.inputBox}>
-                    <TextInput
-                      onChangeText={handleChange('password')}
-                      onBlur={handleBlur('password')}
-                      value={values.password}
-                      style={styles.textInputs}
-                      label="Password"
-                      mode="outlined"
-                      outlineColor={THEME_COLOR}
-                      activeOutlineColor={THEME_COLOR}
-                      placeholder="Enter your Password"
-                    />
-                    {errors.password && (
-                      <Text
-                        style={{
-                          color: 'red',
-                          width: '90%',
-                          alignSelf: 'center',
-                          fontSize: 10,
-                          paddingLeft: 2,
-                        }}>
-                        {errors.password}
-                      </Text>
-                    )}
-                  </View>
-                </ScrollView>
-              </KeyboardAvoidingView>
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text
-                  onPress={() => nav.navigate('ForgotPassword')}
-                  style={styles.forgotpass}>
-                  forgot password?
-                </Text>
-                <Text
-                  onPress={() => nav.navigate('SignUp')}
-                  style={styles.forgotpass}>
-                  SignUp?
-                </Text>
-              </View>
-              <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
-                {/* login button */}
-                <Text style={styles.btntext}>Login</Text>
-              </TouchableOpacity>
-            </>
-          )}
-        </FormikLib>
-      )}
+
+      <FormikLib
+        initialValues={{email: '', username: '', password: ''}}
+        onSubmit={handleLogin}
+        enableReinitialize={false}
+        validationSchema={userSchema}>
+        {({handleChange, handleSubmit, handleBlur, values, errors}) => (
+          <>
+            <View>
+              <Image
+                style={styles.logginBanner}
+                source={require('../../images/login.png')}
+              />
+            </View>
+            <Text style={styles.title}>Login</Text>
+            <KeyboardAvoidingView
+              style={styles.inputsContainer}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 50} // Adjust as needed
+            >
+              <ScrollView>
+                <View style={styles.inputBox}>
+                  <TextInput
+                    onChangeText={handleChange('username')}
+                    onBlur={handleBlur('username')}
+                    style={styles.textInputs}
+                    label="Username"
+                    value={values.username}
+                    mode="outlined"
+                    outlineColor={THEME_COLOR}
+                    activeOutlineColor={THEME_COLOR}
+                    placeholder="Enter your Username"
+                  />
+                  {errors.username && (
+                    <Text
+                      style={{
+                        color: 'red',
+                        width: '90%',
+                        alignSelf: 'center',
+                        fontSize: 10,
+                        paddingLeft: 2,
+                      }}>
+                      {errors.username}
+                    </Text>
+                  )}
+                </View>
+                <View style={styles.inputBox}>
+                  <TextInput
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    style={styles.textInputs}
+                    value={values.email}
+                    label="Email"
+                    mode="outlined"
+                    outlineColor={THEME_COLOR}
+                    activeOutlineColor={THEME_COLOR}
+                    placeholder="Enter your Email"
+                  />
+                  {errors.email && (
+                    <Text
+                      style={{
+                        color: 'red',
+                        width: '90%',
+                        alignSelf: 'center',
+                        fontSize: 10,
+                        paddingLeft: 2,
+                      }}>
+                      {errors.email}
+                    </Text>
+                  )}
+                </View>
+                <View style={styles.inputBox}>
+                  <TextInput
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                    style={styles.textInputs}
+                    label="Password"
+                    mode="outlined"
+                    outlineColor={THEME_COLOR}
+                    activeOutlineColor={THEME_COLOR}
+                    placeholder="Enter your Password"
+                  />
+                  {errors.password && (
+                    <Text
+                      style={{
+                        color: 'red',
+                        width: '90%',
+                        alignSelf: 'center',
+                        fontSize: 10,
+                        paddingLeft: 2,
+                      }}>
+                      {errors.password}
+                    </Text>
+                  )}
+                </View>
+              </ScrollView>
+            </KeyboardAvoidingView>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text
+                onPress={() => nav.navigate('ForgotPassword')}
+                style={styles.forgotpass}>
+                forgot password?
+              </Text>
+              <Text
+                onPress={() => nav.navigate('SignUp')}
+                style={styles.forgotpass}>
+                SignUp?
+              </Text>
+            </View>
+            <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
+              {/* login button */}
+              <Text style={styles.btntext}>Login</Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </FormikLib>
     </SafeAreaView>
   );
 };

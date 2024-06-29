@@ -39,7 +39,7 @@ const Profile = () => {
   const onEditProfile = () => {
     nav.navigate('ActionsTeacherProfile', {
       screen: 'EditProfileTeacher',
-      params: {userData: dataUser}, // Pass userData as params
+      params: {userData: dataUser},
     });
   };
 

@@ -23,8 +23,8 @@ const TeacherDrawer = props => {
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const isFocused = useIsFocused();
-  const [logoutUser] = useLogoutUserMutation();
-  const {data: userData,isLoading} = useUserDetailsQuery();
+  const [logoutUser,{isLoading}] = useLogoutUserMutation();
+  const {data: userData} = useUserDetailsQuery();
 
   useEffect(() => {
     const validateTokenAndFetchDetails = async () => {
@@ -145,7 +145,7 @@ const TeacherDrawer = props => {
               style={{width: size, height: size, tintColor: Half_WHITE}}
             />
           )}
-          label="Logout"
+          label={isLoading ? "Loading..": "Logout"}
           labelStyle={{color: GHOST_WHITE}}
           onPress={handleLogout}
         />

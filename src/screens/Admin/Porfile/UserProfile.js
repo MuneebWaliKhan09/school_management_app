@@ -17,7 +17,6 @@ import {
 
 const UserProfile = ({ dataUser, onEditProfile, onUpdatePassword }) => {
   const userData = dataUser ? dataUser : null;
-
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>

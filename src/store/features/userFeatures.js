@@ -29,12 +29,18 @@ export const userApi = createApi({
     userDetails: builder.query({
       query: () => user_End_Points.getUserDetails,
       providesTags: ['User'],
-      keepUnusedDataFor: 0
+      keepUnusedDataFor: 0,
     }),
 
-    // changePasswordUser:builder.query({
-    //     query:()=> user_End_Points.changePassword
-    // }),
+    changePasswordUser: builder.mutation({
+      query: data => ({
+        url: user_End_Points.changePassword,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['User'],
+    }),
+
     updateProfile: builder.mutation({
       query: data => ({
         url: user_End_Points.updateProfile,
@@ -43,6 +49,7 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+
     // updateUserAvatar:builder.query({
     //     query:()=> user_End_Points.updateUserAvatar
     // })
@@ -53,5 +60,6 @@ export const {
   useLoginUserMutation,
   useLogoutUserMutation,
   useUserDetailsQuery,
-  useUpdateProfileMutation
+  useUpdateProfileMutation,
+  useChangePasswordUserMutation
 } = userApi;

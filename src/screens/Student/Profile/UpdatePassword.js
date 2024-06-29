@@ -7,6 +7,7 @@ import { useChangePasswordUserMutation } from '../../../store/features/userFeatu
 
 const UpdatePassword = () => {
   const [changePasswordUser, {isLoading}] = useChangePasswordUserMutation();
+
   const initialValues = {
     oldPassword: '',
     newPassword: '',

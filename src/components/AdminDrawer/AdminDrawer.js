@@ -26,7 +26,7 @@ const AdminDrawer = props => {
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const isFocused = useIsFocused();
-  const [logoutUser] = useLogoutUserMutation();
+  const [logoutUser,{isLoading}] = useLogoutUserMutation();
   const {data: userData} = useUserDetailsQuery();
 
   useEffect(() => {
@@ -62,6 +62,7 @@ const AdminDrawer = props => {
       });
   };
 
+
   return (
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>
@@ -72,10 +73,10 @@ const AdminDrawer = props => {
               size={80}
             />
             <Title style={styles.title}>
-              {(data && data?.username) || 'no username'}
+              {(data && data?.username) || ''}
             </Title>
             <Caption style={styles.caption}>
-              {(data && data?.email) || 'no email'}
+              {(data && data?.email) || ''}
             </Caption>
           </View>
           <CustomDivider />
@@ -148,7 +149,7 @@ const AdminDrawer = props => {
               style={{width: size, height: size, tintColor: Half_WHITE}}
             />
           )}
-          label="Logout"
+          label={isLoading ? "Loading..": "Logout"}
           labelStyle={{color: GHOST_WHITE}}
           onPress={handleLogout}
         />

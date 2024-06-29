@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, ScrollView, StyleSheet} from 'react-native';
-import {Avatar, Card, List, Divider} from 'react-native-paper';
+import {Avatar, Card, List, Divider, Text} from 'react-native-paper';
 import {GHOST_WHITE, Half_gray, WHITE_BG} from '../../../strings/Colors';
 import {
   responsiveWidth,
@@ -16,20 +16,26 @@ const StudentProfile = ({studentData}) => {
         <Card.Title
           style={styles.cardTitle}
           title={
-            student.fullName[0].toUpperCase() +
-            student.fullName.substr(1, student.fullName.length)
+            <Text style={styles.title}>
+              {student?.fullName[0].toUpperCase() +
+                student?.fullName.substr(1, student?.fullName.length)}
+            </Text>
           }
           titleStyle={styles.title}
-          subtitle={"St, " + student?.className?.className.toLowerCase()}
+          subtitle={
+            <Text style={styles.subtitle}>
+              {'St, ' + student?.className?.className.toLowerCase()}
+            </Text>
+          }
           subtitleStyle={styles.subtitle}
           left={() => (
             <Avatar.Image
               size={responsiveWidth(20)}
-              source={{
-                uri:
-                  student.avatar ||
-                  require('../../../images/icons/profile.png'),
-              }}
+              source={
+                student?.avatar
+                  ? {uri: student?.avatar}
+                  : require('../../../images/icons/profile.png')
+              }
             />
           )}
         />
@@ -39,7 +45,7 @@ const StudentProfile = ({studentData}) => {
             <Divider />
             <List.Item
               title="Email"
-              description={student.email}
+              description={student?.email}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -49,7 +55,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="Phone"
-              description={student.phone}
+              description={student?.phone}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -59,7 +65,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="Address"
-              description={student.address}
+              description={student?.address}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -69,7 +75,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="DOB"
-              description={new Date(student.DOB).toDateString()}
+              description={new Date(student?.DOB).toDateString()}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -79,7 +85,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="Gender"
-              description={student.gender}
+              description={student?.gender}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -89,7 +95,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="Blood Group"
-              description={student.bloodGroup}
+              description={student?.bloodGroup}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -99,7 +105,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="Father's Name"
-              description={student.fatherName}
+              description={student?.fatherName}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -109,7 +115,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="Age"
-              description={student.age}
+              description={student?.age}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -124,7 +130,7 @@ const StudentProfile = ({studentData}) => {
             <Divider />
             <List.Item
               title="Joining Date"
-              description={new Date(student.joiningDate).toDateString()}
+              description={new Date(student?.joiningDate).toDateString()}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -134,7 +140,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="Admission Class"
-              description={student.admissionClass}
+              description={student?.admissionClass}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -144,7 +150,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="Roll Number"
-              description={student.rollNo}
+              description={student?.rollNo}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -154,7 +160,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="Monthly Fee"
-              description={`$${student.monthlyFee}`}
+              description={`$${student?.monthlyFee}`}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -164,7 +170,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="Lab Fee"
-              description={`$${student.labFee}`}
+              description={`$${student?.labFee}`}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -174,7 +180,7 @@ const StudentProfile = ({studentData}) => {
             />
             <List.Item
               title="Security Fee"
-              description={`$${student.securityFee}`}
+              description={`$${student?.securityFee}`}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -215,7 +221,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginLeft: responsiveWidth(10),
-    lineHeight: responsiveHeight(1.7),
+    lineHeight: responsiveHeight(1.8),
     fontSize: responsiveFontSize(1.6),
     fontWeight: '600',
     color: Half_gray,

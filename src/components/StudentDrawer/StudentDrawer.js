@@ -18,26 +18,18 @@ import {useLogoutUserMutation, useUserDetailsQuery} from '../../store/features/u
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomDivider from '../CustomDivider';
 import {ResetNavigations} from '../../utils/ResetNavigations';
-import { useStudentDetailsQuery } from '../../store/features/studentFeatures';
 
 const StudentDrawer = props => {
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const isFocused = useIsFocused();
-  const [logoutUser] = useLogoutUserMutation();
-  const {refetch: refetchUser} = useUserDetailsQuery();
-  const {refetch: refetchStudent} = useStudentDetailsQuery();
-
-  useEffect(()=>{
-    refetchUser();
-    refetchStudent()
-  },[])
+  const [logoutUser,{isLoading}] = useLogoutUserMutation();
+  const {data: userData} = useUserDetailsQuery();
 
   useEffect(() => {
     const validateTokenAndFetchDetails = async () => {
       const isValidToken = await CheckTokenExp(navigation)
         .then(res => {
-          console.log(res);
           getDetails();
         })
         .catch(async error => {
@@ -48,13 +40,10 @@ const StudentDrawer = props => {
         });
     };
     validateTokenAndFetchDetails();
-  }, [isFocused]);
+  }, [isFocused,userData]);
 
-  const getDetails = async () => {
-    const userData = await AsyncStorage.getItem('userData');
-    const token = await AsyncStorage.getItem('accessToken');
-    setData(JSON.parse(userData));
-    // console.log(token);
+  const getDetails = () => {
+    setData(userData?.data);
   };
 
   const handleLogout = async () => {
@@ -80,10 +69,10 @@ const StudentDrawer = props => {
               size={80}
             />
             <Title style={styles.title}>
-              {(data && data.username) || 'no username'}
+              {(data && data?.username) || 'no username'}
             </Title>
             <Caption style={styles.caption}>
-              {(data && data.email) || 'no email'}
+              {(data && data?.email) || 'no email'}
             </Caption>
           </View>
           <CustomDivider />
@@ -156,7 +145,7 @@ const StudentDrawer = props => {
               style={{width: size, height: size, tintColor: Half_WHITE}}
             />
           )}
-          label="Logout"
+          label={isLoading ? "Loading..": "Logout"}
           labelStyle={{color: GHOST_WHITE}}
           onPress={handleLogout}
         />

@@ -11,17 +11,20 @@ import StudentProfile from './StudentProfile';
 import {THEME_COLOR} from '../../../strings/Colors';
 import {Divider} from 'react-native-paper';
 import {useUserDetailsQuery} from '../../../store/features/userFeatures';
-import { useStudentDetailsQuery } from '../../../store/features/studentFeatures';
+import {useStudentDetailsQuery} from '../../../store/features/studentFeatures';
 import {
   responsiveWidth,
   responsiveHeight,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
+import {useNavigation} from '@react-navigation/native';
 
 const Profile = () => {
+  const nav = useNavigation();
   const [selectedTab, setSelectedTab] = useState('user');
   const {data: userData, isLoading, isError} = useUserDetailsQuery();
-  const {data: studentDetails, isError: studentErrorProfile} = useStudentDetailsQuery();
+  const {data: studentDetails, isError: studentErrorProfile} =
+    useStudentDetailsQuery();
   const [dataUser, setdataUser] = useState(null);
   const [studentData, setstudentData] = useState(null);
 
@@ -33,6 +36,17 @@ const Profile = () => {
       setdataUser(userData && userData?.data);
     }
   }, [userData, studentDetails]);
+
+  const onEditProfile = () => {
+    nav.navigate('ActionsStudentProfile', {
+      screen: 'EditProfileStudent',
+      params: {userData: dataUser},
+    });
+  };
+
+  const onUpdatePassword = () => {
+    nav.navigate('ActionsStudentProfile', {screen: 'EditPasswordStudent'});
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -57,7 +71,12 @@ const Profile = () => {
       </View>
       <View style={{flex: 1}}>
         {selectedTab === 'user' ? (
-          <UserProfile dataUser={dataUser} isLoading={isLoading} />
+          <UserProfile
+            dataUser={dataUser}
+            isLoading={isLoading}
+            onEditProfile={onEditProfile}
+            onUpdatePassword={onUpdatePassword}
+          />
         ) : (
           <StudentProfile studentData={studentData} />
         )}
