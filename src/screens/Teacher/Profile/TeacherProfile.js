@@ -1,6 +1,6 @@
 import React from 'react';
-import {Image, ScrollView, StyleSheet} from 'react-native';
-import {Avatar, Card, List, Divider} from 'react-native-paper';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {Card, List, Divider, Text} from 'react-native-paper';
 import {GHOST_WHITE, Half_gray, WHITE_BG} from '../../../strings/Colors';
 import {
   responsiveWidth,
@@ -8,7 +8,7 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 
-const TeacherProfile = ({teacherData}) => {
+const TeacherProfile = ({teacherData, loadingTeacherData}) => {
   const teacher = teacherData?.[0];
   const teacherOfClass = teacherData?.[1];
 
@@ -18,20 +18,24 @@ const TeacherProfile = ({teacherData}) => {
         <Card.Title
           style={styles.cardTitle}
           title={
-            teacher.fullName[0].toUpperCase() +
-            teacher.fullName.substr(1, teacher.fullName.length)
+            <Text style={styles.title}>
+              {teacher?.fullName[0].toUpperCase() +
+                teacher?.fullName.substr(1, teacher?.fullName.length)}
+            </Text>
           }
-          titleStyle={styles.title}
-          subtitle={teacher.designation + " , " + teacherOfClass.toLowerCase()}
-          subtitleStyle={styles.subtitle}
+          subtitle={
+            <Text style={styles.subtitle}>
+              {teacher?.designation + ' , ' + teacherOfClass?.toLowerCase()}
+            </Text>
+          }
           left={() => (
-            <Avatar.Image
-              size={responsiveWidth(20)}
-              source={{
-                uri:
-                  teacher.avatar ||
-                  require('../../../images/icons/profile.png'),
-              }}
+            <Image
+              style={styles.avatar}
+              source={
+                teacher?.avatar
+                  ? {uri: teacher.avatar}
+                  : require('../../../images/icons/profile.png')
+              }
             />
           )}
         />
@@ -41,7 +45,7 @@ const TeacherProfile = ({teacherData}) => {
             <Divider />
             <List.Item
               title="Email"
-              description={teacher.email}
+              description={teacher?.email}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -51,7 +55,7 @@ const TeacherProfile = ({teacherData}) => {
             />
             <List.Item
               title="Phone"
-              description={teacher.phone}
+              description={teacher?.phone}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -61,7 +65,7 @@ const TeacherProfile = ({teacherData}) => {
             />
             <List.Item
               title="Address"
-              description={teacher.address}
+              description={teacher?.address}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -71,7 +75,7 @@ const TeacherProfile = ({teacherData}) => {
             />
             <List.Item
               title="DOB"
-              description={new Date(teacher.DOB).toDateString()}
+              description={new Date(teacher?.DOB).toDateString()}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -81,7 +85,7 @@ const TeacherProfile = ({teacherData}) => {
             />
             <List.Item
               title="Gender"
-              description={teacher.gender}
+              description={teacher?.gender}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -91,7 +95,7 @@ const TeacherProfile = ({teacherData}) => {
             />
             <List.Item
               title="Blood Group"
-              description={teacher.bloodGroup}
+              description={teacher?.bloodGroup}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -106,7 +110,7 @@ const TeacherProfile = ({teacherData}) => {
             <Divider />
             <List.Item
               title="Joining Date"
-              description={new Date(teacher.joiningDate).toDateString()}
+              description={new Date(teacher?.joiningDate).toDateString()}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -116,7 +120,7 @@ const TeacherProfile = ({teacherData}) => {
             />
             <List.Item
               title="Leaving Date"
-              description={new Date(teacher.leavingDate).toDateString()}
+              description={new Date(teacher?.leavingDate).toDateString()}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -126,7 +130,7 @@ const TeacherProfile = ({teacherData}) => {
             />
             <List.Item
               title="Status"
-              description={teacher.status}
+              description={teacher?.status}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -136,7 +140,7 @@ const TeacherProfile = ({teacherData}) => {
             />
             <List.Item
               title="Subject"
-              description={teacher.subject}
+              description={teacher?.subject}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -146,7 +150,9 @@ const TeacherProfile = ({teacherData}) => {
             />
             <List.Item
               title="Classes Taught"
-              description={teacher.classesTaught?.map((cls)=> cls?.className + ', ')}
+              description={teacher?.classesTaught
+                ?.map(cls => cls?.className)
+                .join(', ')}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -156,7 +162,7 @@ const TeacherProfile = ({teacherData}) => {
             />
             <List.Item
               title="Salary"
-              description={`$${teacher.sallary}`}
+              description={`$${teacher?.sallary}`}
               left={() => (
                 <Image
                   style={styles.icon}
@@ -185,6 +191,12 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     backgroundColor: WHITE_BG,
   },
+  avatar: {
+    width: responsiveWidth(19),
+    height: responsiveWidth(19),
+    borderRadius: responsiveWidth(19),
+    resizeMode: 'cover',
+  },
   cardTitle: {
     marginBottom: responsiveHeight(1.5),
   },
@@ -197,7 +209,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginLeft: responsiveWidth(10),
-    lineHeight: responsiveHeight(1.5),
+    lineHeight: responsiveHeight(1.8),
     fontSize: responsiveFontSize(1.6),
     fontWeight: '600',
     color: Half_gray,

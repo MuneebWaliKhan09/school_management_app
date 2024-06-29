@@ -17,11 +17,13 @@ import {
   responsiveHeight,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
+import { useNavigation } from '@react-navigation/native';
 
 const Profile = () => {
+  const nav = useNavigation()
   const [selectedTab, setSelectedTab] = useState('user');
-  const {data: userData, isLoading, isError} = useUserDetailsQuery();
-  const {data: teacherDetails, isError: teacherErrorProfile} = useTeacherDetailsQuery();
+  const {data: userData, isLoading:loadingUserData, isError} = useUserDetailsQuery();
+  const {data: teacherDetails, isError: teacherErrorProfile,isLoading:loadingTeacherData} = useTeacherDetailsQuery();
   const [dataUser, setdataUser] = useState(null);
   const [teacherData, setteacherData] = useState(null);
 
@@ -33,6 +35,18 @@ const Profile = () => {
       setdataUser(userData && userData?.data);
     }
   }, [userData, teacherDetails]);
+
+  const onEditProfile = () => {
+    nav.navigate('ActionsTeacherProfile', {
+      screen: 'EditProfileTeacher',
+      params: {userData: dataUser}, // Pass userData as params
+    });
+  };
+
+  const onUpdatePassword = () => {
+    nav.navigate('ActionsTeacherProfile', {screen: 'EditPasswordTeacher'});
+  };
+
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -57,9 +71,9 @@ const Profile = () => {
       </View>
       <View style={{flex: 1}}>
         {selectedTab === 'user' ? (
-          <UserProfile dataUser={dataUser} />
+          <UserProfile dataUser={dataUser} onEditProfile={onEditProfile} onUpdatePassword={onUpdatePassword}/>
         ) : (
-          <TeacherProfile teacherData={teacherData} />
+          <TeacherProfile teacherData={teacherData} loadingTeacherData={loadingTeacherData}/>
         )}
       </View>
     </SafeAreaView>

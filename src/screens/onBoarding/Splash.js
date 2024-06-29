@@ -20,7 +20,7 @@ const Splash = () => {
     const accessToken = await AsyncStorage.getItem('accessToken');
     const userData = await AsyncStorage.getItem('userData');
 
-    if (accessToken && userData) {
+    if (accessToken) {
       switch (JSON.parse(userData).role) {
         case 'admin':
           nav.navigate('AdminHome');
@@ -47,7 +47,7 @@ const Splash = () => {
       <View style={styles.welcome}>
         <LottieView
           style={{flex: 1}}
-          source={require('../../animations/animation3.json')}
+          source={require('../../animations/9fw3seYPAO.json')}
           autoPlay
           loop
         />

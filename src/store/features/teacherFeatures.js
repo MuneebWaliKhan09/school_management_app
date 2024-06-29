@@ -8,7 +8,8 @@ export const teacherApi = createApi({
   endpoints: builder => ({
     teacherDetails:builder.query({
         query:()=> teacher_End_Points.teacherProfile,
-        providesTags:["Teacher"]
+        providesTags:["Teacher"],
+        keepUnusedDataFor: 0
     }),
   }),
 });

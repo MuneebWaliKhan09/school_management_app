@@ -18,26 +18,18 @@ import {useLogoutUserMutation, useUserDetailsQuery} from '../../store/features/u
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomDivider from '../CustomDivider';
 import {ResetNavigations} from '../../utils/ResetNavigations';
-import { useTeacherDetailsQuery } from '../../store/features/teacherFeatures';
 
 const TeacherDrawer = props => {
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const isFocused = useIsFocused();
   const [logoutUser] = useLogoutUserMutation();
-  const {refetch: refetchUser} = useUserDetailsQuery();
-  const {refetch: refetchTeacher} = useTeacherDetailsQuery();
-
-  useEffect(()=>{
-    refetchUser();
-    refetchTeacher()
-  },[])
+  const {data: userData,isLoading} = useUserDetailsQuery();
 
   useEffect(() => {
     const validateTokenAndFetchDetails = async () => {
       const isValidToken = await CheckTokenExp(navigation)
         .then(res => {
-          console.log(res);
           getDetails();
         })
         .catch(async error => {
@@ -48,13 +40,10 @@ const TeacherDrawer = props => {
         });
     };
     validateTokenAndFetchDetails();
-  }, [isFocused]);
+  }, [isFocused,userData]);
 
-  const getDetails = async () => {
-    const userData = await AsyncStorage.getItem('userData');
-    const token = await AsyncStorage.getItem('accessToken');
-    setData(JSON.parse(userData));
-    // console.log(token);
+  const getDetails = () => {
+    setData(userData?.data);
   };
 
   const handleLogout = async () => {

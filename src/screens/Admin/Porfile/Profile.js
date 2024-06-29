@@ -15,10 +15,10 @@ import {
   responsiveHeight,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const Profile = () => {
-  const nav = useNavigation()
+  const nav = useNavigation();
   const {data: userData, isLoading, isError} = useUserDetailsQuery();
   const [dataUser, setDataUser] = useState(null);
 
@@ -29,11 +29,14 @@ const Profile = () => {
   }, [userData]);
 
   const onEditProfile = () => {
-    nav.navigate('ActionsAdminProfile', { screen: 'EditProfileAdmin'});
+    nav.navigate('ActionsAdminProfile', {
+      screen: 'EditProfileAdmin',
+      params: {userData: dataUser}, // Pass userData as params
+    });
   };
 
   const onUpdatePassword = () => {
-    nav.navigate('ActionsAdminProfile', { screen: 'EditPasswordAdmin' });
+    nav.navigate('ActionsAdminProfile', {screen: 'EditPasswordAdmin'});
   };
 
   return (

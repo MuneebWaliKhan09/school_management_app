@@ -14,7 +14,10 @@ import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckTokenExp from '../../utils/CheckTokenExp';
 import {useNavigation} from '@react-navigation/native';
-import {useLogoutUserMutation, useUserDetailsQuery} from '../../store/features/userFeatures';
+import {
+  useLogoutUserMutation,
+  useUserDetailsQuery,
+} from '../../store/features/userFeatures';
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomDivider from '../CustomDivider';
 import {ResetNavigations} from '../../utils/ResetNavigations';
@@ -24,16 +27,12 @@ const AdminDrawer = props => {
   const [data, setData] = useState(null);
   const isFocused = useIsFocused();
   const [logoutUser] = useLogoutUserMutation();
-  const {refetch: refetchUser} = useUserDetailsQuery();
+  const {data: userData} = useUserDetailsQuery();
 
-  useEffect(()=>{
-    refetchUser();
-  },[])
   useEffect(() => {
     const validateTokenAndFetchDetails = async () => {
       const isValidToken = await CheckTokenExp(navigation)
-        .then(res => {
-          console.log(res);
+        .then(async res => {
           getDetails();
         })
         .catch(async error => {
@@ -44,15 +43,11 @@ const AdminDrawer = props => {
         });
     };
     validateTokenAndFetchDetails();
-  }, [isFocused]);
+  }, [isFocused,userData]);
 
-  const getDetails = async () => {
-    const userData = await AsyncStorage.getItem('userData');
-    const token = await AsyncStorage.getItem('accessToken');
-    setData(JSON.parse(userData));
-    // console.log(token);
+  const getDetails = () => {
+    setData(userData?.data);
   };
-
 
   const handleLogout = async () => {
     const logout = await logoutUser({})
@@ -77,10 +72,10 @@ const AdminDrawer = props => {
               size={80}
             />
             <Title style={styles.title}>
-              {(data && data.username) || 'no username'}
+              {(data && data?.username) || 'no username'}
             </Title>
             <Caption style={styles.caption}>
-              {(data && data.email) || 'no email'}
+              {(data && data?.email) || 'no email'}
             </Caption>
           </View>
           <CustomDivider />

@@ -10,6 +10,7 @@ import AdminHome from './screens/Home/AdminHome'
 import TeacherHome from './screens/Home/TeacherHome'
 import StudentHome from './screens/Home/StudentHome'
 import Actions from './screens/Admin/Porfile/Actions'
+import TeacherActions from './screens/Teacher/Profile/TeacherActions'
 
 const Stack = createStackNavigator()
 
@@ -27,6 +28,7 @@ const MainNavigator = () => {
         <Stack.Screen name="TeacherHome" options={{headerShown:false}} component={TeacherHome} />
         <Stack.Screen name="StudentHome" options={{headerShown:false}} component={StudentHome} />
         <Stack.Screen name="ActionsAdminProfile" options={{headerShown:false}} component={Actions} />
+        <Stack.Screen name="ActionsTeacherProfile" options={{headerShown:false}} component={TeacherActions} />
       </Stack.Navigator>
     </NavigationContainer>
   )

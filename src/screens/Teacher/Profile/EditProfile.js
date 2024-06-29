@@ -32,9 +32,7 @@ const EditProfile = () => {
     await updateProfile(values)
       .then(async res => {
         console.log("res",res.data);
-        // await refetchUser().then(res => {
           navigation.goBack();
-        // });
       })
       .catch(error => {
         console.log(error);

@@ -12,7 +12,7 @@ export const userApi = createApi({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ["User"]
+      invalidatesTags: ['User'],
     }),
     // registerUser:builder.query({
     //     query:()=> user_End_Points.register
@@ -23,22 +23,35 @@ export const userApi = createApi({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags:["User"]
+      invalidatesTags: ['User'],
     }),
-    userDetails:builder.query({
-        query:()=> user_End_Points.getUserDetails,
-        providesTags:["User"]
+
+    userDetails: builder.query({
+      query: () => user_End_Points.getUserDetails,
+      providesTags: ['User'],
+      keepUnusedDataFor: 0
     }),
+
     // changePasswordUser:builder.query({
     //     query:()=> user_End_Points.changePassword
     // }),
-    // updateProfile:builder.query({
-    //     query:()=> user_End_Points.updateProfile
-    // }),
+    updateProfile: builder.mutation({
+      query: data => ({
+        url: user_End_Points.updateProfile,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['User'],
+    }),
     // updateUserAvatar:builder.query({
     //     query:()=> user_End_Points.updateUserAvatar
     // })
   }),
 });
 
-export const {useLoginUserMutation, useLogoutUserMutation,useUserDetailsQuery} = userApi;
+export const {
+  useLoginUserMutation,
+  useLogoutUserMutation,
+  useUserDetailsQuery,
+  useUpdateProfileMutation
+} = userApi;
