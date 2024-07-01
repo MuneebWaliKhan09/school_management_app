@@ -8,8 +8,10 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   useUpdateProfileMutation,
 } from '../../../store/features/userFeatures';
+import { useToast } from '../../../context/ToastContext';
 
 const EditProfile = () => {
+  const {showToast} = useToast();
   const navigation = useNavigation();
   const route = useRoute();
   const dataUser = route?.params?.userData;
@@ -31,8 +33,9 @@ const EditProfile = () => {
   const handleSubmit = async values => {
     await updateProfile(values)
       .then(async res => {
-        console.log("res",res.data);
+          showToast(res?.data?.message, 'success');
           navigation.goBack();
+          
       })
       .catch(error => {
         console.log(error);
@@ -128,12 +131,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   inputContainer: {
-    marginBottom: 15,
+    marginBottom: 25,
   },
   label: {
     marginBottom: 5,
     fontWeight: 'bold',
     color: '#333',
+    marginLeft:10
   },
   input: {
     height: 40,
@@ -144,6 +148,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginTop: 5,
+    marginLeft:10
   },
   button: {
     marginTop: 20,

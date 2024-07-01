@@ -122,7 +122,7 @@ const StudentMain = () => {
                   opacity: animations.welcomeText,
                 },
               ]}>
-              <Text style={styles.welcomeText}>Welcome Student 👋</Text>
+              <Text style={styles.welcomeText}>Welcome Teacher 👋</Text>
             </Animated.View>
           </View>
 
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     marginBottom: responsiveHeight(1.25),
     width: responsiveWidth(20),
     height: responsiveWidth(20),
-    borderRadius: responsiveWidth(12.5),
+    resizeMode: "cover",
     marginTop: 20,
   },
   welcomeText: {
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     marginBottom: responsiveHeight(1.25),
     textAlign: 'center',
     color: 'white',
-    marginTop: responsiveHeight(0.9),
+    marginTop: responsiveHeight(2),
   },
   welcomeMessage: {
     alignItems: 'center',
@@ -234,8 +234,8 @@ const styles = StyleSheet.create({
     color: GHOST_WHITE,
   },
   cardIcons: {
-    width: responsiveWidth(10),
-    height: responsiveWidth(10),
+    width: responsiveWidth(9),
+    height: responsiveWidth(9),
     tintColor: Half_WHITE,
   },
 });

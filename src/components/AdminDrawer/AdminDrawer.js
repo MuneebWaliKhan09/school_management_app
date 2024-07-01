@@ -62,6 +62,9 @@ const AdminDrawer = props => {
       });
   };
 
+  const handleThemeChange = ()=>{
+    navigation.navigate("AdminStack", {screen: "ThemeChangerAdmin"})
+  }
 
   return (
     <View style={styles.container}>
@@ -125,12 +128,9 @@ const AdminDrawer = props => {
 
           <Drawer.Section showDivider={false}>
             <Title style={styles.preferencesTitle}>Preferences</Title>
-            <TouchableRipple onPress={() => {}}>
+            <TouchableRipple onPress={handleThemeChange}>
               <View style={styles.preference}>
-                <Text style={{color: Half_WHITE}}>Dark Theme</Text>
-                <View pointerEvents="none">
-                  <Switch value={false} />
-                </View>
+                <Text style={{color: Half_WHITE}}>Theme</Text>
               </View>
             </TouchableRipple>
           </Drawer.Section>
