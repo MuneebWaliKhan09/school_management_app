@@ -59,6 +59,11 @@ const TeacherDrawer = props => {
       });
   };
 
+  const handleThemeChange = ()=>{
+    navigation.navigate("TeacherStack", {screen: "ThemeChangerTeacher"})
+  }
+
+
   return (
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>
@@ -121,12 +126,9 @@ const TeacherDrawer = props => {
 
           <Drawer.Section showDivider={false}>
             <Title style={styles.preferencesTitle}>Preferences</Title>
-            <TouchableRipple onPress={() => {}}>
+            <TouchableRipple onPress={handleThemeChange}>
               <View style={styles.preference}>
                 <Text style={{color: Half_WHITE}}>Dark Theme</Text>
-                <View pointerEvents="none">
-                  <Switch value={false} />
-                </View>
               </View>
             </TouchableRipple>
           </Drawer.Section>

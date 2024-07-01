@@ -32,8 +32,10 @@ import studentsIcon from '../../images/icons/students.png';
 import teacherIcon from '../../images/icons/teacher.png';
 import usersIcon from '../../images/icons/users.png';
 import subjectsIcon from '../../images/icons/subjects.png';
+import { useSelector } from 'react-redux';
 
 const StudentMain = () => {
+  const theme = useSelector((state)=> state.theme)
   const nav = useNavigation();
   const isFocused = useIsFocused();
   const animations = {
@@ -77,10 +79,10 @@ const StudentMain = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <StatusBar barStyle={'light-content'} backgroundColor={THEME_COLOR} />
+      <StatusBar barStyle={'light-content'} backgroundColor={theme?.background} />
       <SafeAreaView>
         {/* Top Section */}
-        <View style={styles.topSection}>
+        <View style={[styles.topSection, {backgroundColor: theme.background}]}>
           <TouchableOpacity onPress={() => nav.openDrawer()}>
             <Image
               style={styles.headerIcons}
@@ -122,7 +124,7 @@ const StudentMain = () => {
                   opacity: animations.welcomeText,
                 },
               ]}>
-              <Text style={styles.welcomeText}>Welcome Teacher 👋</Text>
+              <Text style={styles.welcomeText}>Welcome Student 👋</Text>
             </Animated.View>
           </View>
 
@@ -148,7 +150,7 @@ const StudentMain = () => {
             <Animated.View
               key={index}
               style={{opacity: animations.cards[index]}}>
-              <Card key={index} style={styles.card}>
+              <Card key={index} style={[styles.card, {backgroundColor:theme.background}]}>
                 <Card.Content>
                   <TouchableOpacity style={styles.cardContent}>
                     <Image source={item.source} style={styles.cardIcons} />

@@ -1,41 +1,45 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeTheme } from '../../../store/Theme/ThemeSlice';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {changeTheme} from '../../../store/Theme/ThemeSlice';
 
 const colors = [
-  { label: 'Default', value: { background: '#ffffff', text: '#000000' } },
-  { label: 'Theme 1', value: { background: 'rgba(144, 12, 63, 0.9)', text: '#ffffff' } },
-  { label: 'Theme 2', value: { background: 'rgba(88, 24, 69, 0.9)', text: '#ffffff' } },
-  { label: 'Theme 3', value: { background: 'rgba(32, 9, 6, 0.9)', text: '#ffffff' } },
-  { label: 'Theme 4', value: { background: 'rgba(6, 57, 112, 0.9)', text: '#ffffff' } },
-  { label: 'Theme 5', value: { background: 'rgba(71, 116, 255, 0.9)', text: '#ffffff' } },
+  {label: 'Theme 1', value: {background: '#4774FF'}},
+  {label: 'Theme 2', value: {background: '#900C3F'}},
+  {label: 'Theme 3', value: {background: '#581845'}},
+  {label: 'Theme 4', value: {background: '#200906'}},
+  {label: 'Theme 5', value: {background: '#063970'}},
 ];
 
 const ThemeChangerAdmin = () => {
   const dispatch = useDispatch();
-  const theme = useSelector((state) => state.theme);
+  const theme = useSelector(state => state.theme);
 
-  const handleColorChange = (value) => {
+  const handleColorChange = value => {
     dispatch(changeTheme(value));
   };
 
-  const renderColorSwatch = ({ item }) => (
+  const renderColorSwatch = ({item}) => (
     <TouchableOpacity
       key={item.label}
-      style={[styles.colorSwatch, { backgroundColor: item.value.background }]}
+      style={[styles.colorSwatch, {backgroundColor: item.value.background}]}
       onPress={() => handleColorChange(item.value)}
     />
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Text style={[styles.title, { color: theme.text }]}>Select Theme Color:</Text>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
+      <Text style={[styles.title, {color: theme.text}]}>
+        Select Theme Color:
+      </Text>
       <View style={styles.palette}>
-        {colors.map((color) => (
+        {colors.map(color => (
           <TouchableOpacity
             key={color.label}
-            style={[styles.colorSwatch, { backgroundColor: color.value.background }]}
+            style={[
+              styles.colorSwatch,
+              {backgroundColor: color.value.background},
+            ]}
             onPress={() => handleColorChange(color.value)}
           />
         ))}

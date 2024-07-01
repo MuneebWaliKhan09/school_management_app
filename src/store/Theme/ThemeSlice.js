@@ -1,24 +1,47 @@
-import { createSlice } from "@reduxjs/toolkit";
+// themeSlice.js
 
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const initialStateTheme = {
+  background: '#063970',
+};
 
+const saveThemeToStorage = async theme => {
+  try {
+    await AsyncStorage.setItem('theme', JSON.stringify(theme));
+  } catch (error) {
+    console.error('Error saving theme to AsyncStorage:', error);
+  }
+};
 
+export const loadTheme = createAsyncThunk('theme/loadTheme', async () => {
+  try {
+    const theme = await AsyncStorage.getItem('theme');
+    return theme ? JSON.parse(theme) : initialStateTheme;
+  } catch (error) {
+    console.error('Error loading theme from AsyncStorage:', error);
+    return initialStateTheme;
+  }
+});
 
 const themeSlice = createSlice({
-    name:"theme",
-    initialState:{
-        background: '#ffffff',
-        text: '#000000',
+  name: 'theme',
+  initialState: initialStateTheme,
+  reducers: {
+    changeTheme: (state, action) => {
+      const {background} = action.payload;
+      state.background = background;
+      saveThemeToStorage({background});
     },
-    reducers: {
-        changeTheme: (state, actions)=>{
-            state.background = actions.payload.background,
-            state.text = actions.payload.text
-        }
-    }
-})
-
-
+  },
+  extraReducers: builder => {
+    builder.addCase(loadTheme.fulfilled, (state, action) => {
+      return action.payload;
+    });
+  },
+});
 
 export const {changeTheme} = themeSlice.actions;
+
 export default themeSlice.reducer;
