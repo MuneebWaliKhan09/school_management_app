@@ -5,6 +5,7 @@ import {GHOST_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomHeaderLeft from '../../components/CustomHeaderLeft';
 import TeacherMain from '../Teacher/TeacherMain';
 import TeacherDrawer from '../../components/TeacherDrawer/TeacherDrawer';
+import { useSelector } from 'react-redux';
 
 const Drawer = createDrawerNavigator();
 
@@ -22,7 +23,7 @@ const options = {
 };
 
 const TeacherHome = () => {
-
+  const theme = useSelector(state => state.themeTeacher);
   return (
     <Drawer.Navigator drawerContent={props => <TeacherDrawer {...props} />}>
       <Drawer.Screen
@@ -35,6 +36,9 @@ const TeacherHome = () => {
         component={Profile}
         options={({navigation}) => ({
           ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
           headerLeft: () => <CustomHeaderLeft navigation={navigation} />, // Custom header left component
         })}
       />

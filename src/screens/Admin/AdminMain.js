@@ -36,6 +36,7 @@ import { useSelector } from 'react-redux';
 
 const AdminMain = () => {
   const theme = useSelector((state)=> state.themeAdmin)
+  
   const nav = useNavigation();
   const isFocused = useIsFocused();
   const animations = {

@@ -2,15 +2,13 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import UpdatePassword from './UpdatePassword';
 import EditProfile from './EditProfile';
-import { GHOST_WHITE, THEME_COLOR } from '../../../strings/Colors';
+import {GHOST_WHITE} from '../../../strings/Colors';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 
 const options = {
   headerShown: true,
-  headerStyle: {
-    backgroundColor: THEME_COLOR,
-  },
   headerTintColor: GHOST_WHITE,
   headerTitleStyle: {
     fontWeight: 'semibold',
@@ -19,16 +17,30 @@ const options = {
 };
 
 const Actions = () => {
+  const theme = useSelector(state => state.themeAdmin);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="EditPasswordAdmin"
-        options={{headerTitle: 'Update Password', ...options}}
+        options={{
+          headerTitle: 'Update Password',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
         component={UpdatePassword}
       />
       <Stack.Screen
         name="EditProfileAdmin"
-        options={{headerTitle: 'Update Profile', ...options}}
+        options={{
+          headerTitle: 'Update Profile',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
         component={EditProfile}
       />
     </Stack.Navigator>

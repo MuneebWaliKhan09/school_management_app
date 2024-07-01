@@ -5,14 +5,12 @@ import AdminDrawer from '../../components/AdminDrawer/AdminDrawer';
 import Profile from '../Admin/Porfile/Profile';
 import {GHOST_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomHeaderLeft from '../../components/CustomHeaderLeft';
+import { useSelector } from 'react-redux';
 
 const Drawer = createDrawerNavigator();
 
 const options = {
   headerShown: true,
-  headerStyle: {
-    backgroundColor: THEME_COLOR,
-  },
   headerTintColor: GHOST_WHITE,
   headerTitleStyle: {
     fontWeight: 'semibold',
@@ -21,7 +19,7 @@ const options = {
 };
 
 const AdminHome = () => {
-
+  const theme = useSelector((state)=> state.themeAdmin)
 
   return (
     <Drawer.Navigator drawerContent={props => <AdminDrawer {...props} />}>
@@ -35,6 +33,9 @@ const AdminHome = () => {
         component={Profile}
         options={({navigation}) => ({
           ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
           headerTitle: 'My Profile',
           headerLeft: () => <CustomHeaderLeft navigation={navigation}/>, // Custom header left component
         })}

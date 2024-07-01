@@ -1,14 +1,16 @@
 import React from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {Card, List, Divider, Text} from 'react-native-paper';
-import {GHOST_WHITE, Half_gray, THEME_COLOR, THEME_COLOR2, WHITE_BG} from '../../../strings/Colors';
+import {THEME_COLOR, THEME_COLOR2, WHITE_BG} from '../../../strings/Colors';
 import {
   responsiveWidth,
   responsiveHeight,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
+import { useSelector } from 'react-redux';
 
 const TeacherProfile = ({teacherData, loadingTeacherData}) => {
+  const theme = useSelector((state)=> state.themeTeacher)
   const teacher = teacherData?.[0];
   const teacherOfClass = teacherData?.[1];
 
@@ -18,13 +20,13 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
         <Card.Title
           style={styles.cardTitle}
           title={
-            <Text style={styles.title}>
+            <Text style={[styles.title,{color:theme.background}]}>
               {teacher?.fullName[0].toUpperCase() +
                 teacher?.fullName.substr(1, teacher?.fullName.length)}
             </Text>
           }
           subtitle={
-            <Text style={styles.subtitle}>
+            <Text style={[styles.subtitle,{color:theme.background}]}>
               {teacher?.designation + ' , ' + teacherOfClass?.toLowerCase()}
             </Text>
           }
@@ -41,76 +43,76 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
         />
         <Card.Content style={styles.cardContent}>
           <List.Section>
-            <List.Subheader style={{color:THEME_COLOR}}>Personal Information</List.Subheader>
+            <List.Subheader style={[{color:THEME_COLOR},{color:theme.background}]}>Personal Information</List.Subheader>
             <Divider />
             <List.Item
               title="Email"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={teacher?.email}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/email.png')}
                 />
               )}
             />
             <List.Item
               title="Phone"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={teacher?.phone}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/smartphone.png')}
                 />
               )}
             />
             <List.Item
               title="Address"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={teacher?.address}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/placeholder.png')}
                 />
               )}
             />
             <List.Item
               title="DOB"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={new Date(teacher?.DOB).toDateString()}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/birthday.png')}
                 />
               )}
             />
             <List.Item
               title="Gender"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={teacher?.gender}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/gender-equality.png')}
                 />
               )}
             />
             <List.Item
               title="Blood Group"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={teacher?.bloodGroup}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/blood-group.png')}
                 />
               )}
@@ -118,78 +120,78 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
           </List.Section>
 
           <List.Section>
-            <List.Subheader style={{color:THEME_COLOR}}>Professional Information</List.Subheader>
+            <List.Subheader style={[{color:THEME_COLOR}, {color:theme.background}]}>Professional Information</List.Subheader>
             <Divider />
             <List.Item
               title="Joining Date"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={new Date(teacher?.joiningDate).toDateString()}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/add-event.png')}
                 />
               )}
             />
             <List.Item
               title="Leaving Date"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={new Date(teacher?.leavingDate).toDateString()}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/leave.png')}
                 />
               )}
             />
             <List.Item
               title="Status"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={teacher?.status}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/check-list.png')}
                 />
               )}
             />
             <List.Item
               title="Subject"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={teacher?.subject}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/books.png')}
                 />
               )}
             />
             <List.Item
               title="Classes Taught"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={teacher?.classesTaught
                 ?.map(cls => cls?.className)
                 .join(', ')}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/teachings.png')}
                 />
               )}
             />
             <List.Item
               title="Salary"
-              titleStyle={styles.titleStyle}
-              descriptionStyle={styles.descriptionStyle}
+              titleStyle={[styles.titleStyle,{color:theme.background}]}
+              descriptionStyle={[styles.descriptionStyle,{color:theme.background}]}
               description={`$${teacher?.sallary}`}
               left={() => (
                 <Image
-                  style={styles.icon}
+                  style={[styles.icon,{tintColor:theme.background}]}
                   source={require('../../../images/icons/usericons/payroll.png')}
                 />
               )}

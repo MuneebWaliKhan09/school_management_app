@@ -4,7 +4,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialStateTheme = {
-  background: '#0000',
+  background: '#063970',
 };
 
 const saveThemeToStorage = async theme => {
