@@ -1,20 +1,19 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeTheme } from '../../../store/Theme/ThemeSlice';
+import { changeTheme } from '../../../store/Theme/ThemeStudent';
 
 const colors = [
-  { label: 'Default', value: { background: '#ffffff', text: '#000000' } },
-  { label: 'Theme 1', value: { background: 'rgba(144, 12, 63, 0.9)', text: '#ffffff' } },
-  { label: 'Theme 2', value: { background: 'rgba(88, 24, 69, 0.9)', text: '#ffffff' } },
-  { label: 'Theme 3', value: { background: 'rgba(32, 9, 6, 0.9)', text: '#ffffff' } },
-  { label: 'Theme 4', value: { background: 'rgba(6, 57, 112, 0.9)', text: '#ffffff' } },
-  { label: 'Theme 5', value: { background: 'rgba(71, 116, 255, 0.9)', text: '#ffffff' } },
+  {label: 'Theme 1', value: {background: '#4774FF'}},
+  {label: 'Theme 2', value: {background: '#900C3F'}},
+  {label: 'Theme 3', value: {background: '#581845'}},
+  {label: 'Theme 4', value: {background: '#200906'}},
+  {label: 'Theme 5', value: {background: '#063970'}},
 ];
 
 const ThemeChangerStudent = () => {
   const dispatch = useDispatch();
-  const theme = useSelector((state) => state.theme);
+  const theme = useSelector((state) => state.themeStudent);
 
   const handleColorChange = (value) => {
     dispatch(changeTheme(value));

@@ -14,9 +14,11 @@ import {
   responsiveHeight,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
+import { useSelector } from 'react-redux';
 
 const UserProfile = ({ dataUser, onEditProfile, onUpdatePassword }) => {
   const userData = dataUser ? dataUser : null;
+  const theme = useSelector((state)=> state.themeAdmin)
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -36,39 +38,39 @@ const UserProfile = ({ dataUser, onEditProfile, onUpdatePassword }) => {
               />
             )}
             <View style={styles.headerText}>
-              <Text style={styles.title}>
+              <Text style={[styles.title,{color: theme.background}]}>
                 {userData?.fullName[0].toUpperCase() +
                   userData?.fullName.substr(1)}
               </Text>
-              <Text style={styles.subtitle}>@{userData?.username}</Text>
+              <Text style={[styles.subtitle,{color:theme.background}]}>@{userData?.username}</Text>
             </View>
           </View>
           <View style={styles.content}>
-            <Text style={styles.sectionTitle}>Personal Information</Text>
+            <Text style={[styles.sectionTitle,{color:theme.background}]}>Personal Information</Text>
             <CustomDivider bgColor={'gray'} marginTopBtm={5} />
             <View style={styles.infoItem}>
               <Image
-                style={styles.icon}
+                style={[styles.icon,{tintColor:theme.background}]}
                 source={require('../../../images/icons/usericons/email.png')}
               />
-              <Text style={styles.label}>Email: </Text>
-              <Text style={styles.value}>{userData?.email}</Text>
+              <Text style={[styles.label,{color:theme.background}]}>Email: </Text>
+              <Text style={[styles.value,{color:theme.background}]}>{userData?.email}</Text>
             </View>
             <View style={styles.infoItem}>
               <Image
-                style={styles.icon}
+                style={[styles.icon,{tintColor:theme.background}]}
                 source={require('../../../images/icons/usericons/teachings.png')}
               />
-              <Text style={styles.label}>Role: </Text>
-              <Text style={styles.value}>{userData?.role}</Text>
+              <Text style={[styles.label,{color:theme.background}]}>Role: </Text>
+              <Text style={[styles.value,{color:theme.background}]}>{userData?.role}</Text>
             </View>
             <View style={styles.infoItem}>
               <Image
-                style={styles.icon}
+                style={[styles.icon,{tintColor:theme.background}]}
                 source={require('../../../images/icons/usericons/check-list.png')}
               />
-              <Text style={styles.label}>Account Status: </Text>
-              <Text style={styles.value}>
+              <Text style={[styles.label,{color:theme.background}]}>Account Status: </Text>
+              <Text style={[styles.value,{color:theme.background}]}>
                 {userData?.isActive ? 'Active' : 'Inactive'}
               </Text>
             </View>
@@ -76,14 +78,14 @@ const UserProfile = ({ dataUser, onEditProfile, onUpdatePassword }) => {
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={onEditProfile}>
+        <TouchableOpacity style={[styles.button,{backgroundColor:theme.background}]} onPress={onEditProfile}>
           <Image
             style={styles.buttonIcon}
             source={require('../../../images/icons/edit.png')}
           />
           <Text style={styles.buttonText}>Edit Profile</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={onUpdatePassword}>
+        <TouchableOpacity style={[styles.button,{backgroundColor:theme.background}]} onPress={onUpdatePassword}>
           <Image
             style={styles.buttonIcon}
             source={require('../../../images/icons/password.png')}

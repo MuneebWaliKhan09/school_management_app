@@ -18,8 +18,10 @@ import {useLogoutUserMutation, useUserDetailsQuery} from '../../store/features/u
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomDivider from '../CustomDivider';
 import {ResetNavigations} from '../../utils/ResetNavigations';
+import { useSelector } from 'react-redux';
 
 const StudentDrawer = props => {
+  const theme = useSelector((state)=> state.themeStudent)
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const isFocused = useIsFocused();
@@ -64,7 +66,7 @@ const StudentDrawer = props => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor:theme.background}]}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>

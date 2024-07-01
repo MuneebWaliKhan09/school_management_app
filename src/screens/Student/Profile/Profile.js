@@ -18,8 +18,10 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 import {useNavigation} from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
+  const theme = useSelector(state => state.themeStudent);
   const nav = useNavigation();
   const [selectedTab, setSelectedTab] = useState('user');
   const {data: userData, isLoading, isError} = useUserDetailsQuery();
@@ -51,7 +53,7 @@ const Profile = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Divider />
-      <View style={styles.topNav}>
+      <View style={[styles.topNav,{backgroundColor:theme.background}]}>
         <TouchableOpacity
           style={[
             styles.navButton,

@@ -32,9 +32,10 @@ import studentsIcon from '../../images/icons/students.png';
 import teacherIcon from '../../images/icons/teacher.png';
 import usersIcon from '../../images/icons/users.png';
 import subjectsIcon from '../../images/icons/subjects.png';
+import { useSelector } from 'react-redux';
 
 const TeacherMain = () => {
-  const theme = useSelector((state)=> state.theme)
+  const theme = useSelector((state)=> state.themeTeacher)
   const nav = useNavigation();
   const isFocused = useIsFocused();
   const animations = {
@@ -78,7 +79,7 @@ const TeacherMain = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <StatusBar barStyle={'light-content'} backgroundColor={theme.background} />
+      <StatusBar barStyle={'light-content'} backgroundColor={theme?.background} />
       <SafeAreaView>
         {/* Top Section */}
         <View style={[styles.topSection, {backgroundColor:theme.background}]}>

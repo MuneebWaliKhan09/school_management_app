@@ -1,15 +1,13 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import ThemeChangerTeacher from './Theme/ThemeChangeTeacher';
-import { GHOST_WHITE, THEME_COLOR } from '../../strings/Colors';
+import {GHOST_WHITE} from '../../strings/Colors';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 
 const options = {
   headerShown: true,
-  headerStyle: {
-    backgroundColor: THEME_COLOR,
-  },
   headerTintColor: GHOST_WHITE,
   headerTitleStyle: {
     fontWeight: 'semibold',
@@ -18,10 +16,17 @@ const options = {
 };
 
 const TeacherStack = () => {
+  const theme = useSelector(state => state.themeTeacher);
   return (
     <Stack.Navigator>
       <Stack.Screen
-        options={{headerTitle: 'Theme Changer', ...options}}
+        options={{
+          headerTitle: 'Theme Changer',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
         name="ThemeChangerTeacher"
         component={ThemeChangerTeacher}
       />

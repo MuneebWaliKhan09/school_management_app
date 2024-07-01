@@ -35,7 +35,7 @@ import subjectsIcon from '../../images/icons/subjects.png';
 import { useSelector } from 'react-redux';
 
 const StudentMain = () => {
-  const theme = useSelector((state)=> state.theme)
+  const theme = useSelector((state)=> state.themeStudent)
   const nav = useNavigation();
   const isFocused = useIsFocused();
   const animations = {

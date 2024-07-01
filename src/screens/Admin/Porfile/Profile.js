@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-} from 'react-native';
+import {View, StyleSheet, SafeAreaView} from 'react-native';
 import UserProfile from './UserProfile';
 import {THEME_COLOR} from '../../../strings/Colors';
 import {Divider} from 'react-native-paper';
@@ -16,8 +10,10 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const Profile = () => {
+  const theme = useSelector(state => state.themeAdmin);
   const nav = useNavigation();
   const {data: userData, isLoading, isError} = useUserDetailsQuery();
   const [dataUser, setDataUser] = useState(null);
@@ -42,7 +38,7 @@ const Profile = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Divider />
-      <View style={styles.topNav}></View>
+      <View style={[styles.topNav, {backgroundColor: theme?.background}]}></View>
       <View style={{flex: 1}}>
         <UserProfile
           dataUser={dataUser}

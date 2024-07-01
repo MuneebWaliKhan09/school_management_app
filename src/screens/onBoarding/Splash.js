@@ -5,19 +5,22 @@ import {SPLASH_COLOR, THEME_COLOR} from '../../strings/Colors';
 import {responsiveScreenWidth} from 'react-native-responsive-dimensions';
 import LottieView from 'lottie-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from 'react-redux';
-import { loadTheme } from '../../store/Theme/ThemeSlice';
+import {useDispatch} from 'react-redux';
+import {loadTheme as adminLoadTheme} from '../../store/Theme/ThemeAdmin';
+import {loadTheme as studentLoadTheme} from '../../store/Theme/ThemeStudent';
+import {loadTheme as teacherLoadTheme} from '../../store/Theme/ThemeTeacher';
 
 const Splash = () => {
   const screenFocused = useIsFocused();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const nav = useNavigation();
 
   useEffect(() => {
     verifyUserLogedIn();
-    dispatch(loadTheme());
+    dispatch(adminLoadTheme());
+    dispatch(studentLoadTheme());
+    dispatch(teacherLoadTheme());
   }, [screenFocused]);
-
 
   const verifyUserLogedIn = async () => {
     const accessToken = await AsyncStorage.getItem('accessToken');

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {changeTheme} from '../../../store/Theme/ThemeSlice';
+import {changeTheme} from '../../../store/Theme/ThemeAdmin';
 
 const colors = [
   {label: 'Theme 1', value: {background: '#4774FF'}},
@@ -13,7 +13,7 @@ const colors = [
 
 const ThemeChangerAdmin = () => {
   const dispatch = useDispatch();
-  const theme = useSelector(state => state.theme);
+  const theme = useSelector(state => state.themeAdmin);
 
   const handleColorChange = value => {
     dispatch(changeTheme(value));
@@ -29,7 +29,7 @@ const ThemeChangerAdmin = () => {
 
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
-      <Text style={[styles.title, {color: theme.text}]}>
+      <Text style={styles.title}>
         Select Theme Color:
       </Text>
       <View style={styles.palette}>

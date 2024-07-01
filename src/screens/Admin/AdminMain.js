@@ -35,7 +35,7 @@ import subjectsIcon from '../../images/icons/subjects.png';
 import { useSelector } from 'react-redux';
 
 const AdminMain = () => {
-  const theme = useSelector((state)=> state.theme)
+  const theme = useSelector((state)=> state.themeAdmin)
   const nav = useNavigation();
   const isFocused = useIsFocused();
   const animations = {
@@ -79,7 +79,7 @@ const AdminMain = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <StatusBar barStyle={'light-content'} backgroundColor={theme?.background} />
+      <StatusBar barStyle={'light-content'} backgroundColor={theme.background} />
       <SafeAreaView>
         {/* Top Section */}
         <View style={[styles.topSection, { backgroundColor: theme.background }]}>
