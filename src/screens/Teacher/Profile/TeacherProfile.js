@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {Card, List, Divider, Text} from 'react-native-paper';
-import {GHOST_WHITE, Half_gray, WHITE_BG} from '../../../strings/Colors';
+import {GHOST_WHITE, Half_gray, THEME_COLOR, THEME_COLOR2, WHITE_BG} from '../../../strings/Colors';
 import {
   responsiveWidth,
   responsiveHeight,
@@ -41,10 +41,12 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
         />
         <Card.Content style={styles.cardContent}>
           <List.Section>
-            <List.Subheader>Personal Information</List.Subheader>
+            <List.Subheader style={{color:THEME_COLOR}}>Personal Information</List.Subheader>
             <Divider />
             <List.Item
               title="Email"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={teacher?.email}
               left={() => (
                 <Image
@@ -55,6 +57,8 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
             />
             <List.Item
               title="Phone"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={teacher?.phone}
               left={() => (
                 <Image
@@ -65,6 +69,8 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
             />
             <List.Item
               title="Address"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={teacher?.address}
               left={() => (
                 <Image
@@ -75,6 +81,8 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
             />
             <List.Item
               title="DOB"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={new Date(teacher?.DOB).toDateString()}
               left={() => (
                 <Image
@@ -85,6 +93,8 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
             />
             <List.Item
               title="Gender"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={teacher?.gender}
               left={() => (
                 <Image
@@ -95,6 +105,8 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
             />
             <List.Item
               title="Blood Group"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={teacher?.bloodGroup}
               left={() => (
                 <Image
@@ -106,10 +118,12 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
           </List.Section>
 
           <List.Section>
-            <List.Subheader>Professional Information</List.Subheader>
+            <List.Subheader style={{color:THEME_COLOR}}>Professional Information</List.Subheader>
             <Divider />
             <List.Item
               title="Joining Date"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={new Date(teacher?.joiningDate).toDateString()}
               left={() => (
                 <Image
@@ -120,6 +134,8 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
             />
             <List.Item
               title="Leaving Date"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={new Date(teacher?.leavingDate).toDateString()}
               left={() => (
                 <Image
@@ -130,6 +146,8 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
             />
             <List.Item
               title="Status"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={teacher?.status}
               left={() => (
                 <Image
@@ -140,6 +158,8 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
             />
             <List.Item
               title="Subject"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={teacher?.subject}
               left={() => (
                 <Image
@@ -150,6 +170,8 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
             />
             <List.Item
               title="Classes Taught"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={teacher?.classesTaught
                 ?.map(cls => cls?.className)
                 .join(', ')}
@@ -162,6 +184,8 @@ const TeacherProfile = ({teacherData, loadingTeacherData}) => {
             />
             <List.Item
               title="Salary"
+              titleStyle={styles.titleStyle}
+              descriptionStyle={styles.descriptionStyle}
               description={`$${teacher?.sallary}`}
               left={() => (
                 <Image
@@ -205,14 +229,22 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(1.5),
     fontSize: responsiveFontSize(2.2),
     fontWeight: '700',
-    color: Half_gray,
+    color: THEME_COLOR,
+  },
+  titleStyle:{
+    color:THEME_COLOR,
+    fontWeight:"700",
+    opacity:.9
+  },
+  descriptionStyle:{
+    color:THEME_COLOR2
   },
   subtitle: {
     marginLeft: responsiveWidth(10),
     lineHeight: responsiveHeight(1.8),
     fontSize: responsiveFontSize(1.6),
     fontWeight: '600',
-    color: Half_gray,
+    color: THEME_COLOR2,
   },
   cardContent: {
     backgroundColor: WHITE_BG,
@@ -220,7 +252,7 @@ const styles = StyleSheet.create({
   icon: {
     width: responsiveWidth(7),
     height: responsiveHeight(3.5),
-    backgroundColor: GHOST_WHITE,
+    tintColor: THEME_COLOR,
     resizeMode: 'cover',
   },
 });

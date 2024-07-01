@@ -4,6 +4,7 @@ import {TextInput as PaperTextInput, Text} from 'react-native-paper';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import { useChangePasswordUserMutation } from '../../../store/features/userFeatures';
+import Loader from '../../../Loaders/Loader';
 
 const UpdatePassword = () => {
   const [changePasswordUser, {isLoading}] = useChangePasswordUserMutation();

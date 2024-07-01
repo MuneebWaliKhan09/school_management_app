@@ -7,7 +7,7 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -16,10 +16,10 @@ import {
 } from 'react-native-responsive-dimensions';
 import {THEME_COLOR} from '../../strings/Colors';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Welcome = () => {
   const nav = useNavigation();
-
 
 
   return (

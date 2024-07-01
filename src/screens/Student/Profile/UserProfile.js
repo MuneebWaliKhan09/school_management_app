@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { Half_gray, WHITE_BG, THEME_COLOR } from '../../../strings/Colors';
+import { Half_gray, WHITE_BG, THEME_COLOR, THEME_COLOR2 } from '../../../strings/Colors';
 import CustomDivider from '../../../components/CustomDivider';
 import {
   responsiveWidth,
@@ -129,12 +129,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: responsiveFontSize(2.2),
     fontWeight: '700',
-    color: Half_gray,
+    color: THEME_COLOR,
   },
   subtitle: {
     fontSize: responsiveFontSize(1.6),
     fontWeight: '600',
-    color: Half_gray,
+    color: THEME_COLOR2,
   },
   content: {
     paddingTop: responsiveHeight(1.5),
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(1.8),
     fontWeight: '400',
     marginBottom: responsiveHeight(1),
-    color: Half_gray,
+    color: THEME_COLOR,
     marginTop: responsiveHeight(1.5),
   },
   infoItem: {
@@ -156,14 +156,15 @@ const styles = StyleSheet.create({
     height: responsiveHeight(3.5),
     marginRight: responsiveWidth(2.5),
     resizeMode: 'cover',
+    tintColor:THEME_COLOR2
   },
   label: {
-    fontWeight: '500',
+    fontWeight: '600',
     fontSize: responsiveFontSize(2),
-    color: Half_gray,
+    color: THEME_COLOR2,
   },
   value: {
-    color: Half_gray,
+    color: THEME_COLOR2,
   },
   buttonContainer: {
     flex:1/9,

@@ -23,6 +23,7 @@ import {useLoginUserMutation} from '../../store/features/userFeatures';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '../../Loaders/Loader';
 import {ResetNavigations} from '../../utils/ResetNavigations';
+import {useToast} from '../../context/ToastContext';
 
 let userSchema = object({
   username: string().required('Username is required !'),
@@ -31,6 +32,7 @@ let userSchema = object({
 });
 
 const Login = () => {
+  const {showToast} = useToast();
   const nav = useNavigation();
   const [loginUser, {isLoading}] = useLoginUserMutation();
 
@@ -42,7 +44,8 @@ const Login = () => {
       // Store access token in AsyncStorage
       await AsyncStorage.setItem('accessToken', accessToken);
       await AsyncStorage.setItem('userData', JSON.stringify(user));
-
+      showToast(response?.message, 'success');
+      
       // Navigate based on user role
       switch (user.role) {
         case 'admin':
@@ -61,11 +64,11 @@ const Login = () => {
           console.error('Unknown role:', user.role);
       }
     } catch (error) {
-      console.error('Login failed:', error);
+      showToast(error?.data?.message, 'error');
     }
   };
 
-  if(isLoading) return <Loader />;
+  if (isLoading) return <Loader />;
 
   return (
     <SafeAreaView style={styles.container}>

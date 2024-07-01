@@ -21,7 +21,7 @@ const Splash = () => {
     const userData = await AsyncStorage.getItem('userData');
 
     if (accessToken) {
-      switch (JSON.parse(userData).role) {
+      switch (JSON.parse(userData)?.role) {
         case 'admin':
           nav.navigate('AdminHome');
           break;
@@ -32,7 +32,7 @@ const Splash = () => {
           nav.navigate('StudentHome');
           break;
         default:
-          console.error('Unknown role:', JSON.parse(userData).role);
+          console.error('Unknown role:', JSON.parse(userData)?.role);
       }
     } else {
       nav.navigate('Welcome');

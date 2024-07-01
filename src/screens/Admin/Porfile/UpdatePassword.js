@@ -5,6 +5,7 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {useChangePasswordUserMutation} from '../../../store/features/userFeatures';
 import Loader from '../../../Loaders/Loader';
+import { Half_WHITE, Half_gray, WHITE_BG } from '../../../strings/Colors';
 
 const UpdatePassword = () => {
   const [changePasswordUser,{isLoading}] = useChangePasswordUserMutation();
@@ -96,6 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor:WHITE_BG
   },
   formContainer: {
     width: '100%',
@@ -103,15 +105,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 40,
     textAlign: 'center',
+    color:Half_gray
   },
   inputContainer: {
-    marginBottom: 15,
+    marginBottom: 30,
   },
   label: {
     marginBottom: 5,
     fontWeight: 'bold',
+    marginLeft:10
   },
   input: {
     height: 40,
@@ -122,6 +126,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginTop: 5,
+    marginLeft:10
   },
   button: {
     marginTop: 20,
