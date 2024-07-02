@@ -67,7 +67,7 @@ const class_End_Points= {
 }
 
 
-const admin_End_Points = {
+export const admin_End_Points = {
     // User Routes
     user_routes:{
         allUsers: '/all-users',

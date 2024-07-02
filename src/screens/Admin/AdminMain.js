@@ -32,11 +32,11 @@ import studentsIcon from '../../images/icons/students.png';
 import teacherIcon from '../../images/icons/teacher.png';
 import usersIcon from '../../images/icons/users.png';
 import subjectsIcon from '../../images/icons/subjects.png';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const AdminMain = () => {
-  const theme = useSelector((state)=> state.themeAdmin)
-  
+  const theme = useSelector(state => state.themeAdmin);
+
   const nav = useNavigation();
   const isFocused = useIsFocused();
   const animations = {
@@ -78,12 +78,43 @@ const AdminMain = () => {
     }
   }, [isFocused]);
 
+  const handlePress = item => {
+    switch (item) {
+      case 'Attendances':
+        nav.navigate('AdminAttendance');
+        break;
+      case 'All Classes':
+        nav.navigate('AdminClasses');
+        break;
+      case 'Results':
+        nav.navigate('AdminResults');
+        break;
+      case 'All Students':
+        nav.navigate('AdminStack', {screen: 'AdminStudents'});
+        break;
+      case 'All Teachers':
+        nav.navigate('AdminTeachers');
+        break;
+      case 'All Users':
+        nav.navigate('AdminUsers');
+        break;
+      case 'All Subjects':
+        nav.navigate('AdminSubjects');
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
-      <StatusBar barStyle={'light-content'} backgroundColor={theme.background} />
+      <StatusBar
+        barStyle={'light-content'}
+        backgroundColor={theme.background}
+      />
       <SafeAreaView>
         {/* Top Section */}
-        <View style={[styles.topSection, { backgroundColor: theme.background }]}>
+        <View style={[styles.topSection, {backgroundColor: theme.background}]}>
           <TouchableOpacity onPress={() => nav.openDrawer()}>
             <Image
               style={styles.headerIcons}
@@ -151,9 +182,13 @@ const AdminMain = () => {
             <Animated.View
               key={index}
               style={{opacity: animations.cards[index]}}>
-              <Card key={index} style={[styles.card, {backgroundColor: theme.background}]}>
+              <Card
+                key={index}
+                style={[styles.card, {backgroundColor: theme.background}]}>
                 <Card.Content>
-                  <TouchableOpacity style={styles.cardContent}>
+                  <TouchableOpacity
+                    style={styles.cardContent}
+                    onPress={() => handlePress(item?.name)}>
                     <Image source={item.source} style={styles.cardIcons} />
                     <Text style={styles.cardText}>{item.name}</Text>
                   </TouchableOpacity>
@@ -201,7 +236,7 @@ const styles = StyleSheet.create({
     marginBottom: responsiveHeight(1.25),
     width: responsiveWidth(20),
     height: responsiveWidth(20),
-    resizeMode: "cover",
+    resizeMode: 'cover',
     marginTop: 20,
   },
   welcomeText: {
@@ -242,6 +277,5 @@ const styles = StyleSheet.create({
     tintColor: Half_WHITE,
   },
 });
-
 
 export default AdminMain;
