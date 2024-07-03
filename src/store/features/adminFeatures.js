@@ -9,9 +9,7 @@ export const adminApi = createApi({
     baseQuery: fetchBaseQuery({baseUrl: API_ADMIN_URL}),
     endpoints: (builder) => ({
         allStudentsAdmin: builder.query({
-            // query: () => admin_End_Points.student_routes.allStudents,
-            query: (page = 1) => `${admin_End_Points.student_routes.allStudents}?page=${page}&limit=4`, 
-
+            query: () => admin_End_Points.student_routes.allStudents,
         }),
     }),
 });

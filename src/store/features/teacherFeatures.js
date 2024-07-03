@@ -6,12 +6,15 @@ export const teacherApi = createApi({
   baseQuery: fetchBaseQuery({baseUrl: API_TEACHER_URL}),
   tagTypes: ['Teacher'],
   endpoints: builder => ({
-    teacherDetails:builder.query({
-        query:()=> teacher_End_Points.teacherProfile,
-        providesTags:["Teacher"],
-        keepUnusedDataFor: 0
+    teacherDetails: builder.query({
+      query: () => teacher_End_Points.teacherProfile,
+      providesTags: ['Teacher'],
+      keepUnusedDataFor: 0,
+    }),
+    allStudentsClassTeacher: builder.query({
+      query: () => teacher_End_Points.allStudentsOfClass,
     }),
   }),
 });
 
-export const {useTeacherDetailsQuery} = teacherApi;
+export const {useTeacherDetailsQuery,useAllStudentsClassTeacherQuery} = teacherApi;

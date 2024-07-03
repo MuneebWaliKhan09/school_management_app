@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ThemeChangerTeacher from './Theme/ThemeChangeTeacher';
 import {GHOST_WHITE} from '../../strings/Colors';
 import { useSelector } from 'react-redux';
+import StudentsTeacher from './StudentsTeacher/StudentsTeacher';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,17 @@ const TeacherStack = () => {
         }}
         name="ThemeChangerTeacher"
         component={ThemeChangerTeacher}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'All Students',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
+        name="AllStudentsTeacher"
+        component={StudentsTeacher}
       />
     </Stack.Navigator>
   );

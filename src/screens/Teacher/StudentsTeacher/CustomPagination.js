@@ -25,7 +25,7 @@ const CustomPagination = ({
   numberOfItemsPerPage,
   onItemsPerPageChange,
 }) => {
-  const theme = useSelector(state => state?.themeAdmin);
+  const theme = useSelector(state => state.themeTeacher);
 
   const isFirstPage = page === 0;
   const isLastPage = page === numberOfPages - 1;
@@ -67,7 +67,7 @@ const CustomPagination = ({
   }));
 
   return (
-    <View style={[styles.container, {backgroundColor: theme?.background}]}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
       <View style={styles.firstRow}>
         <Text style={[styles.pageNumbers, {color: 'rgba(250,250,250,.7)'}]}>
           Page: {page + 1} of {numberOfPages}
