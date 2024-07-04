@@ -2,8 +2,10 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import ThemeChangerTeacher from './Theme/ThemeChangeTeacher';
 import {GHOST_WHITE} from '../../strings/Colors';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import StudentsTeacher from './StudentsTeacher/StudentsTeacher';
+import StudentDetails from './StudentsTeacher/StudentDetails';
+import AcademicHistory from './StudentsTeacher/AcademicHistory';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +43,28 @@ const TeacherStack = () => {
         }}
         name="AllStudentsTeacher"
         component={StudentsTeacher}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Student Details',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
+        name="StudentDetails"
+        component={StudentDetails}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Academic History',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
+        name="AcademicHistory"
+        component={AcademicHistory}
       />
     </Stack.Navigator>
   );

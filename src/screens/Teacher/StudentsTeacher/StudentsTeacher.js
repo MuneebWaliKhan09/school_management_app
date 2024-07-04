@@ -80,6 +80,14 @@ const StudentsTeacher = () => {
     return <Text>{isError}</Text>;
   }
 
+  
+  const handleVeiw = (id) => {
+    navigation.navigate('TeacherStack', {
+      screen: 'StudentDetails',
+      params: {id: id},
+    });
+  };
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -149,6 +157,16 @@ const StudentsTeacher = () => {
                         fontSize: responsiveFontSize(2),
                       },
                     ]}>
+                    Class: {item.className?.className?.toLowerCase()}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.cardText,
+                      {
+                        color: 'rgba(250,250,250,.7)',
+                        fontSize: responsiveFontSize(2),
+                      },
+                    ]}>
                     Email: {item.email}
                   </Text>
                   <Text
@@ -182,7 +200,7 @@ const StudentsTeacher = () => {
                     Date Added: {moment(item.createdAt).format(DATE_FORMAT)}
                   </Text>
                   <View style={styles.actionsContainer}>
-                    <TouchableOpacity style={styles.actionButton}>
+                    <TouchableOpacity style={styles.actionButton} onPress={()=> handleVeiw(item?._id)}>
                       <Text
                         style={[
                           styles.viewButton,

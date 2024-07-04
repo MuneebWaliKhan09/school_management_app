@@ -4,6 +4,8 @@ import ThemeChangerAdmin from './Theme/ThemeChangerAdmin';
 import {GHOST_WHITE} from '../../strings/Colors';
 import { useSelector } from 'react-redux';
 import StudentsAdmin from './StudentsAdmin/StudentsAdmin';
+import StudentDetails from './StudentsAdmin/StudentDetails';
+import AcademicHistory from './StudentsAdmin/AcademicHistory';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +43,28 @@ const AdminStack = () => {
         }}
         name="AdminStudents"
         component={StudentsAdmin}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Student Details',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
+        name="StudentDetails"
+        component={StudentDetails}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Academic History',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
+        name="AcademicHistory"
+        component={AcademicHistory}
       />
     </Stack.Navigator>
   );

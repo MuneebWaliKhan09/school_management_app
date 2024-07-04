@@ -14,7 +14,10 @@ export const teacherApi = createApi({
     allStudentsClassTeacher: builder.query({
       query: () => teacher_End_Points.allStudentsOfClass,
     }),
+    studentDetailsClass: builder.query({
+      query: (id) => `${teacher_End_Points.singleStudentDetail}${id}`,
+  }),
   }),
 });
 
-export const {useTeacherDetailsQuery,useAllStudentsClassTeacherQuery} = teacherApi;
+export const {useTeacherDetailsQuery,useAllStudentsClassTeacherQuery,useStudentDetailsClassQuery} = teacherApi;

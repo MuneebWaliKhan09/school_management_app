@@ -19,6 +19,7 @@ const colors = [
   { label: 'Theme 13', value: { background: '#FFB703' } }, // Vibrant Orange
   { label: 'Theme 14', value: { background: '#8D99AE' } }, // Cool Gray
   { label: 'Theme 15', value: { background: '#1B263B' } }, // Space Cadet
+  { label: 'Theme 16', value: { background: '#6200ee' } }, // Space Cadet
 ];
 
 

@@ -11,8 +11,11 @@ export const adminApi = createApi({
         allStudentsAdmin: builder.query({
             query: () => admin_End_Points.student_routes.allStudents,
         }),
+        singleStudentDetails: builder.query({
+            query: (id) => `${admin_End_Points.student_routes.getStudentById}${id}`,
+        }),
     }),
 });
 
 
-export const {useAllStudentsAdminQuery} = adminApi
+export const {useAllStudentsAdminQuery,useSingleStudentDetailsQuery} = adminApi
