@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import StudentsAdmin from './StudentsAdmin/StudentsAdmin';
 import StudentDetails from './StudentsAdmin/StudentDetails';
 import AcademicHistory from './StudentsAdmin/AcademicHistory';
+import EditStudent from './StudentsAdmin/EditStudent';
 
 const Stack = createStackNavigator();
 
@@ -65,6 +66,17 @@ const AdminStack = () => {
         }}
         name="AcademicHistory"
         component={AcademicHistory}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Edit Student',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
+        name="EditStudent"
+        component={EditStudent}
       />
     </Stack.Navigator>
   );

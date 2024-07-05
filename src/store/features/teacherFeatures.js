@@ -4,7 +4,7 @@ import {teacher_End_Points, API_TEACHER_URL} from '../../strings/Strings';
 export const teacherApi = createApi({
   reducerPath: 'teacherApi',
   baseQuery: fetchBaseQuery({baseUrl: API_TEACHER_URL}),
-  tagTypes: ['Teacher'],
+  tagTypes: ['Teacher', 'Student'],
   endpoints: builder => ({
     teacherDetails: builder.query({
       query: () => teacher_End_Points.teacherProfile,
@@ -13,11 +13,34 @@ export const teacherApi = createApi({
     }),
     allStudentsClassTeacher: builder.query({
       query: () => teacher_End_Points.allStudentsOfClass,
+      providesTags: ['Student'],
     }),
     studentDetailsClass: builder.query({
-      query: (id) => `${teacher_End_Points.singleStudentDetail}${id}`,
-  }),
+      query: id => `${teacher_End_Points.singleStudentDetail}${id}`,
+      providesTags: ['Student'],
+    }),
+    UpdateStudentDetails: builder.mutation({
+      query: ({id, data}) => ({
+        url: `${teacher_End_Points.updateStudentClass}${id}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Student'],
+    }),
+    RemoveStudent: builder.mutation({
+      query: id => ({
+        url: `${teacher_End_Points.removeStudentClass}${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Student'],
+    }),
   }),
 });
 
-export const {useTeacherDetailsQuery,useAllStudentsClassTeacherQuery,useStudentDetailsClassQuery} = teacherApi;
+export const {
+  useTeacherDetailsQuery,
+  useAllStudentsClassTeacherQuery,
+  useStudentDetailsClassQuery,
+  useUpdateStudentDetailsMutation,
+  useRemoveStudentMutation
+} = teacherApi;

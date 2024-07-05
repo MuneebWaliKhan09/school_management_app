@@ -16,7 +16,7 @@ const options = {
 };
 
 const StudentStack = () => {
-  const theme = useSelector(state => state.themeStudent);
+  const theme = useSelector(state => state.themeAdmin);
   return (
     <Stack.Navigator>
       <Stack.Screen

@@ -35,7 +35,6 @@ const EditProfile = () => {
       .then(async res => {
           showToast(res?.data?.message, 'success');
           navigation.goBack();
-          
       })
       .catch(error => {
         console.log(error);

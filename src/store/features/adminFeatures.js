@@ -7,15 +7,33 @@ import { API_ADMIN_URL, admin_End_Points } from "../../strings/Strings";
 export const adminApi = createApi({
     reducerPath: "adminApi",
     baseQuery: fetchBaseQuery({baseUrl: API_ADMIN_URL}),
+    tagTypes: ["Students"],
     endpoints: (builder) => ({
         allStudentsAdmin: builder.query({
             query: () => admin_End_Points.student_routes.allStudents,
+            providesTags: ["Students"]
         }),
         singleStudentDetails: builder.query({
             query: (id) => `${admin_End_Points.student_routes.getStudentById}${id}`,
+            providesTags: ["Students"]
+        }),
+        EditStudentDetails: builder.mutation({
+            query: ({id,data}) => ({
+                url: `${admin_End_Points.student_routes.updateStudent}${id}`,
+                method: "PUT",
+                body: data
+            }),
+            invalidatesTags: ["Students"]
+        }),
+        DeleteStudent: builder.mutation({
+            query: (id) => ({
+                url: `${admin_End_Points.student_routes.deleteStudent}${id}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["Students"]
         }),
     }),
 });
 
 
-export const {useAllStudentsAdminQuery,useSingleStudentDetailsQuery} = adminApi
+export const {useAllStudentsAdminQuery,useSingleStudentDetailsQuery,useEditStudentDetailsMutation,useDeleteStudentMutation} = adminApi

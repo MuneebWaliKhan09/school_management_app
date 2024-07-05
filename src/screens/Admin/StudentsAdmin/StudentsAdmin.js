@@ -7,12 +7,17 @@ import {
   TextInput,
   RefreshControl,
   StyleSheet,
+  Image,
+  Alert,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {DataTable} from 'react-native-paper';
 import moment from 'moment';
-import {useAllStudentsAdminQuery} from '../../../store/features/adminFeatures';
-import {THEME_COLOR, WHITE_BG} from '../../../strings/Colors';
+import {
+  useAllStudentsAdminQuery,
+  useDeleteStudentMutation,
+} from '../../../store/features/adminFeatures';
+import {Half_WHITE, THEME_COLOR, WHITE_BG} from '../../../strings/Colors';
 import {useSelector} from 'react-redux';
 import Loader from '../../../Loaders/Loader';
 import {
@@ -21,15 +26,18 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 import CustomPagination from './CustomPagination'; // Adjust path as needed
+import {useToast} from '../../../context/ToastContext';
 
 const DATE_FORMAT = 'DD/MM/YYYY';
 const INITIAL_LOAD_COUNT = 3; // Number of students to load initially
 const LOAD_MORE_COUNT = 3; // Number of students to load on refresh
 
 const StudentsAdmin = () => {
+  const {showToast} = useToast();
   const theme = useSelector(state => state.themeAdmin);
   const navigation = useNavigation();
   const {data: allStudents, isError, isLoading} = useAllStudentsAdminQuery();
+  const [DeleteStudent] = useDeleteStudentMutation();
   const [refreshing, setRefreshing] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [studentsData, setStudentsData] = useState([]);
@@ -76,11 +84,49 @@ const StudentsAdmin = () => {
     return <Text>{isError}</Text>;
   }
 
-  const handleVeiw = (id) => {
+  const handleVeiw = id => {
     navigation.navigate('AdminStack', {
       screen: 'StudentDetails',
       params: {id: id},
     });
+  };
+
+  const handleEdit = id => {
+    navigation.navigate('AdminStack', {
+      screen: 'EditStudent',
+      params: {id: id},
+    });
+  };
+
+  const handleDelete = async id => {
+    const confirm = Alert.alert(
+      'Confirm Deletion',
+      'Are you sure you want to delete this item?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: async () => {
+            try {
+              const response = await DeleteStudent(id);
+              if (response?.error) {
+                showToast(response?.error?.data?.message, 'error');
+              } else {
+                showToast(response?.data?.message, 'success');
+                navigation.goBack();
+              }
+            } catch (error) {
+              showToast('An error occurred while saving changes', 'error');
+            }
+          },
+        },
+      ],
+      {cancelable: false},
+    );
   };
 
   return (
@@ -195,35 +241,30 @@ const StudentsAdmin = () => {
                     ]}>
                     Date Added: {moment(item.createdAt).format(DATE_FORMAT)}
                   </Text>
-                  <View style={styles.actionsContainer}>
+                  <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                      style={styles.actionButton}
-                      onPress={()=> handleVeiw(item?._id)}>
-                      <Text
-                        style={[
-                          styles.viewButton,
-                          {fontSize: responsiveFontSize(1.8)},
-                        ]}>
-                        View
-                      </Text>
+                      style={[styles.button, styles.actionBTNStyle]}
+                      onPress={() => handleVeiw(item?._id)}>
+                      <Image
+                        style={styles.icon}
+                        source={require('../../../images/icons/view.png')}
+                      />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.actionButton}>
-                      <Text
-                        style={[
-                          styles.editButton,
-                          {fontSize: responsiveFontSize(1.8)},
-                        ]}>
-                        Edit
-                      </Text>
+                    <TouchableOpacity
+                      style={[styles.button, styles.actionBTNStyle]}
+                      onPress={() => handleEdit(item?._id)}>
+                      <Image
+                        style={styles.icon}
+                        source={require('../../../images/icons/pen.png')}
+                      />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.actionButton}>
-                      <Text
-                        style={[
-                          styles.deleteButton,
-                          {fontSize: responsiveFontSize(1.8)},
-                        ]}>
-                        Delete
-                      </Text>
+                    <TouchableOpacity
+                      style={[styles.button, styles.actionBTNStyle]}
+                      onPress={() => handleDelete(item?._id)}>
+                      <Image
+                        style={styles.icon}
+                        source={require('../../../images/icons/delete.png')}
+                      />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -311,24 +352,26 @@ const styles = StyleSheet.create({
     color: '#7f8c8d',
     marginBottom: 5,
   },
-  actionsContainer: {
+  buttonContainer: {
     flexDirection: 'row',
+    justifyContent: 'flex-start',
     marginTop: responsiveHeight(2),
+    gap: responsiveWidth(4.5),
   },
-  actionButton: {
-    marginRight: 15,
+  button: {
+    paddingVertical: responsiveHeight(0.8),
+    paddingHorizontal: responsiveWidth(2),
+    borderRadius: responsiveWidth(1.25),
+    alignItems: 'center',
   },
-  viewButton: {
-    color: '#3498db',
-    fontWeight: 'bold',
+  actionBTNStyle: {
+    borderColor: Half_WHITE,
+    borderWidth: 0.7,
   },
-  editButton: {
-    color: '#27ae60',
-    fontWeight: 'bold',
-  },
-  deleteButton: {
-    color: '#e74c3c',
-    fontWeight: 'bold',
+  icon: {
+    width: responsiveWidth(5),
+    height: responsiveHeight(2.5),
+    tintColor: Half_WHITE,
   },
   noDataContainer: {
     marginTop: responsiveHeight(10),

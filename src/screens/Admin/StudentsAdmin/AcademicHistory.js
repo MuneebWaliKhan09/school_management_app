@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   View,
   Text,
@@ -6,13 +7,13 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React from 'react';
 import {useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {Half_WHITE, WHITE_BG} from '../../../strings/Colors';
 import {
   responsiveFontSize,
   responsiveHeight,
+  responsiveWidth,
 } from 'react-native-responsive-dimensions';
 
 const AcademicHistory = ({navigation}) => {
@@ -163,7 +164,7 @@ const AcademicHistory = ({navigation}) => {
                     navigation.navigate('EditAcademicRecord', {record})
                   }>
                   <Image
-                    style={{width: 20, height: 20, tintColor: Half_WHITE}}
+                    style={styles.icon}
                     source={require('../../../images/icons/pen.png')}
                   />
                 </TouchableOpacity>
@@ -173,7 +174,7 @@ const AcademicHistory = ({navigation}) => {
                     /* Handle delete action */
                   }}>
                   <Image
-                    style={{width: 20, height: 20, tintColor: Half_WHITE}}
+                    style={styles.icon}
                     source={require('../../../images/icons/delete.png')}
                   />
                 </TouchableOpacity>
@@ -200,14 +201,14 @@ const AcademicHistory = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: responsiveWidth(5),
     backgroundColor: '#f0f4f7',
   },
   card: {
     backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-    marginBottom: 20,
+    borderRadius: responsiveWidth(2.5),
+    padding: responsiveWidth(5),
+    marginBottom: responsiveHeight(2.5),
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
@@ -217,30 +218,30 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: responsiveHeight(1.5),
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
-    paddingBottom: 5,
+    paddingBottom: responsiveHeight(0.5),
   },
   label: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: responsiveFontSize(2),
     color: '#333',
   },
   value: {
-    fontSize: 16,
+    fontSize: responsiveFontSize(2),
     color: '#555',
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginTop: 10,
-    gap: 18,
+    marginTop: responsiveHeight(1),
+    gap: responsiveWidth(4.5),
   },
   button: {
-    paddingVertical: 5,
-    paddingHorizontal: 8,
-    borderRadius: 5,
+    paddingVertical: responsiveHeight(0.8),
+    paddingHorizontal: responsiveWidth(2),
+    borderRadius: responsiveWidth(1.25),
     alignItems: 'center',
   },
   editButton: {
@@ -251,20 +252,21 @@ const styles = StyleSheet.create({
     borderColor: Half_WHITE,
     borderWidth: 0.7,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 12,
+  icon: {
+    width: responsiveWidth(5),
+    height: responsiveHeight(2.5),
+    tintColor: Half_WHITE,
   },
   addButton: {
     position: 'absolute',
-    bottom: 20,
-    right: 25,
+    bottom: responsiveHeight(2.5),
+    right: responsiveWidth(6),
     backgroundColor: '#6200ee',
-    width: 60,
-    height: 60,
+    width: responsiveWidth(15),
+    height: responsiveWidth(15),
     borderColor: 'white',
     borderWidth: 0.7,
-    borderRadius: 30,
+    borderRadius: responsiveWidth(7.5),
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
@@ -275,8 +277,8 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     color: '#fff',
-    fontSize: 25,
-    lineHeight: 30,
+    fontSize: responsiveFontSize(3.2),
+    lineHeight: responsiveFontSize(3.5),
   },
   noDataContainer: {
     marginTop: responsiveHeight(10),
@@ -284,7 +286,7 @@ const styles = StyleSheet.create({
   noDataText: {
     textAlign: 'center',
     color: '#7f8c8d',
-    fontSize: 16,
+    fontSize: responsiveFontSize(2),
   },
 });
 

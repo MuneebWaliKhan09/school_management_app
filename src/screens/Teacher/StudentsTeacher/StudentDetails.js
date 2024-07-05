@@ -12,6 +12,11 @@ import {useRoute} from '@react-navigation/native';
 import Loader from '../../../Loaders/Loader';
 import {useSelector} from 'react-redux';
 import {Half_WHITE, WHITE_BG} from '../../../strings/Colors';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
 import { useStudentDetailsClassQuery } from '../../../store/features/teacherFeatures';
 
 const StudentDetails = ({navigation}) => {
@@ -40,7 +45,8 @@ const StudentDetails = ({navigation}) => {
   };
 
   const data = singleStudentData?.data || '';
-  
+  const addressD = 'sadda lower kurram sadda bazar molayano kalay hor';
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={[styles.card, {backgroundColor: theme.background}]}>
@@ -94,15 +100,6 @@ const StudentDetails = ({navigation}) => {
                 {color: theme.background ? Half_WHITE : '#555'},
               ]}>
               {data.gender}
-            </Text>
-          </View>
-          <View style={styles.row}>
-            <Text
-              style={[
-                styles.label,
-                {color: theme.background ? WHITE_BG : '#333'},
-              ]}>
-              Class Name:
             </Text>
           </View>
           <View style={styles.row}>
@@ -360,63 +357,63 @@ const StudentDetails = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 14,
+    padding: responsiveWidth(4),
     backgroundColor: '#f0f4f7',
   },
   card: {
     backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-    marginBottom: 20,
+    borderRadius: responsiveWidth(2),
+    padding: responsiveWidth(5),
+    marginBottom: responsiveHeight(2),
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: {width: 0, height: responsiveHeight(0.2)},
     shadowOpacity: 0.1,
-    shadowRadius: 5,
+    shadowRadius: responsiveWidth(2),
     elevation: 5,
   },
   imageContainer: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: responsiveHeight(2),
   },
   avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    borderWidth: 2,
+    width: responsiveWidth(30),
+    height: responsiveWidth(30),
+    borderRadius: responsiveWidth(15),
+    borderWidth: responsiveWidth(0.5),
     borderColor: '#dcdcdc',
   },
   detailsContainer: {
-    marginBottom: 20,
+    marginBottom: responsiveHeight(2),
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 15,
-    borderBottomWidth: 1,
+    marginBottom: responsiveHeight(1.7),
+    borderBottomWidth: responsiveWidth(0.2),
     borderBottomColor: '#f0f0f0',
-    paddingBottom: 5,
+    paddingBottom: responsiveHeight(0.5),
   },
   label: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: responsiveFontSize(2),
     color: '#333',
   },
   value: {
-    fontSize: 15,
+    fontSize: responsiveFontSize(1.8),
     color: '#555',
   },
   button: {
     backgroundColor: '#6200ee',
-    paddingVertical: 10,
-    borderRadius: 5,
+    paddingVertical: responsiveHeight(1.2),
+    borderRadius: responsiveWidth(1.2),
     alignItems: 'center',
-    marginTop: 20,
-    borderWidth: 0.7,
+    marginTop: responsiveHeight(2),
+    borderWidth: responsiveWidth(0.2),
     borderColor: Half_WHITE,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: responsiveFontSize(2),
   },
   modalBackground: {
     flex: 1,
@@ -425,30 +422,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    borderRadius: 10,
-    padding: 20,
+    borderRadius: responsiveWidth(2),
+    padding: responsiveWidth(5),
     width: '80%',
     maxHeight: '80%',
   },
   modalText: {
-    fontSize: 16,
+    fontSize: responsiveFontSize(2),
     color: '#ffff',
-    marginBottom: 10,
+    marginBottom: responsiveHeight(1),
   },
   closeButton: {
-    borderWidth: 1,
+    borderWidth: responsiveWidth(0.2),
     borderColor: '#6200ee',
-    padding: 10,
-    borderRadius: 5,
+    padding: responsiveWidth(2),
+    borderRadius: responsiveWidth(1.2),
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: responsiveHeight(2),
   },
   closeButtonText: {
-    fontSize: 16,
+    fontSize: responsiveFontSize(2),
     color: '#6200ee',
   },
   addressContainer: {
-    flexDirection: 'row', // Ensures the text inside TouchableOpacity is properly rendered
+    flexDirection: 'row',
   },
 });
 
