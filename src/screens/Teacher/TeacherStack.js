@@ -7,6 +7,7 @@ import StudentsTeacher from './StudentsTeacher/StudentsTeacher';
 import StudentDetails from './StudentsTeacher/StudentDetails';
 import AcademicHistory from './StudentsTeacher/AcademicHistory';
 import EditStudent from './StudentsTeacher/EditStudent';
+import AddStudent from './StudentsTeacher/AddStudent';
 
 const Stack = createStackNavigator();
 
@@ -77,6 +78,17 @@ const TeacherStack = () => {
         }}
         name="EditStudent"
         component={EditStudent}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Add Student',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
+        name="AddStudent"
+        component={AddStudent}
       />
     </Stack.Navigator>
   );

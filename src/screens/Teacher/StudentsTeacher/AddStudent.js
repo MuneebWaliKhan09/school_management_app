@@ -12,9 +12,7 @@ import {
 import {TextInput} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
-import {useAddStudentMutation} from '../../../store/features/adminFeatures';
 import {useToast} from '../../../context/ToastContext';
-import Loader from '../../../Loaders/Loader';
 import DatePicker from 'react-native-date-picker';
 import {
   responsiveFontSize,
@@ -26,6 +24,7 @@ import {Half_WHITE, WHITE_BG} from '../../../strings/Colors';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { useRegisterStudentToClassMutation } from '../../../store/features/teacherFeatures';
 
 const genderOptions = [
   {label: 'Male', value: 'Male'},
@@ -50,7 +49,6 @@ const validationSchema = Yup.object().shape({
   admissionClass: Yup.string().required('Admission class is required'),
   rollNo: Yup.string().required('Roll number is required'),
   age: Yup.string().required('Age is required'),
-  className: Yup.string().required('Class name is required'),
   fatherName: Yup.string().required('Father name is required'),
   gender: Yup.string().required('Gender is required'),
   DOB: Yup.string().required('Date of birth is required'),
@@ -66,10 +64,10 @@ const validationSchema = Yup.object().shape({
 });
 
 const AddStudent = () => {
-  const theme = useSelector(state => state.themeAdmin);
+  const theme = useSelector(state => state.themeTeacher);
   const {showToast} = useToast();
   const navigation = useNavigation();
-  const [AddStudent, {isLoading, isError}] = useAddStudentMutation();
+  const [RegisterStudentToClass, {isLoading, isError}] = useRegisterStudentToClassMutation();
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateField, setDateField] = useState('');
@@ -118,7 +116,6 @@ const AddStudent = () => {
     formData.append('admissionClass', values.admissionClass);
     formData.append('rollNo', values.rollNo);
     formData.append('age', values.age);
-    formData.append('className', values.className);
     formData.append('fatherName', values.fatherName);
     formData.append('gender', values.gender);
     formData.append('DOB', values.DOB);
@@ -132,7 +129,7 @@ const AddStudent = () => {
     formData.append('labFee', values.labFee);
 
     try {
-      const response = await AddStudent(formData);
+      const response = await RegisterStudentToClass(formData);
       console.log(response);
       if (response.error) {
         showToast(response.error.data.message, 'error');
@@ -155,7 +152,6 @@ const AddStudent = () => {
           admissionClass: '',
           rollNo: '',
           age: '',
-          className: '',
           fatherName: '',
           gender: '',
           DOB: '',

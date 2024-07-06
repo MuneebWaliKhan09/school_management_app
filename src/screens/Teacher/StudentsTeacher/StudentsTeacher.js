@@ -81,6 +81,10 @@ const StudentsTeacher = () => {
     return <Text>{isError}</Text>;
   }
 
+  const handleAddStudent = ()=>{
+    navigation.navigate("TeacherStack", {screen: 'AddStudent'})
+  }
+
   const handleVeiw = id => {
     navigation.navigate('TeacherStack', {
       screen: 'StudentDetails',
@@ -159,7 +163,7 @@ const StudentsTeacher = () => {
                 borderWidth: theme.background ? 1 : 0,
               },
             ]}
-            onPress={() => {}}>
+            onPress={handleAddStudent}>
             <Text style={styles.addButtonText}>Add</Text>
           </TouchableOpacity>
         </View>

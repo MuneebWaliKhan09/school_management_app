@@ -11,7 +11,7 @@ import React, {useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import Loader from '../../../Loaders/Loader';
 import {useSelector} from 'react-redux';
-import {Half_WHITE, WHITE_BG} from '../../../strings/Colors';
+import {Half_gray, Half_WHITE, WHITE_BG} from '../../../strings/Colors';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -44,14 +44,30 @@ const StudentDetails = ({navigation}) => {
     setmore(address);
   };
 
+  const handleEditAvatar = ()=>{
+    
+  }
+
   const data = singleStudentData?.data || '';
   const addressD = 'sadda lower kurram sadda bazar molayano kalay hor';
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={[styles.card, {backgroundColor: theme.background}]}>
-        <View style={styles.imageContainer}>
-          <Image source={{uri: data.avatar}} style={styles.avatar} />
+      <View style={styles.imageContainer}>
+          <View style={{position: 'relative'}}>
+            <TouchableOpacity>
+              <Image source={{uri: data.avatar}} style={styles.avatar} />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={handleEditAvatar}
+              style={styles.editAvatarContainer}>
+              <Image
+                style={styles.editAvatarImage}
+                source={require('../../../images/icons/pen.png')}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.detailsContainer}>
           <View style={styles.row}>
@@ -381,6 +397,21 @@ const styles = StyleSheet.create({
     borderRadius: responsiveWidth(15),
     borderWidth: responsiveWidth(0.5),
     borderColor: '#dcdcdc',
+  },
+  editAvatarContainer:{
+    height: responsiveHeight(4.5),
+    width: responsiveWidth(9),
+    backgroundColor: Half_gray,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: -9,
+    top: 13,
+  },
+  editAvatarImage:{
+    height: responsiveHeight(2.3),
+    width: responsiveWidth(4.5),
+    tintColor: 'white',
   },
   detailsContainer: {
     marginBottom: responsiveHeight(2),

@@ -31,12 +31,20 @@ export const adminApi = createApi({
     }),
     AddStudent: builder.mutation({
       query: data => ({
-          url: `${admin_End_Points.student_routes.addStudent}`,
-          method: 'POST',
-          body: data,
+        url: `${admin_End_Points.student_routes.addStudent}`,
+        method: 'POST',
+        body: data,
       }),
       invalidatesTags: ['Students'],
-    }),    
+    }),
+    EditStudentAvatar: builder.mutation({
+      query: ({id, formData}) => ({
+        url: `${admin_End_Points.student_routes.updateAvatarStudent}${id}`,
+        method: 'PUT',
+        body: formData,
+      }),
+      invalidatesTags: ['Students'],
+    }),
   }),
 });
 
@@ -45,5 +53,6 @@ export const {
   useSingleStudentDetailsQuery,
   useEditStudentDetailsMutation,
   useDeleteStudentMutation,
-  useAddStudentMutation
+  useAddStudentMutation,
+  useEditStudentAvatarMutation,
 } = adminApi;

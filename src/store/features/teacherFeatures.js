@@ -34,6 +34,14 @@ export const teacherApi = createApi({
       }),
       invalidatesTags: ['Student'],
     }),
+    RegisterStudentToClass: builder.mutation({
+      query: data => ({
+        url: `${teacher_End_Points.classTeacherAddStudent}`,
+        method: 'POST',
+        body:data
+      }),
+      invalidatesTags: ['Student'],
+    }),
   }),
 });
 
@@ -42,5 +50,6 @@ export const {
   useAllStudentsClassTeacherQuery,
   useStudentDetailsClassQuery,
   useUpdateStudentDetailsMutation,
-  useRemoveStudentMutation
+  useRemoveStudentMutation,
+  useRegisterStudentToClassMutation
 } = teacherApi;
