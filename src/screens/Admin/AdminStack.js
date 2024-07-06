@@ -7,6 +7,7 @@ import StudentsAdmin from './StudentsAdmin/StudentsAdmin';
 import StudentDetails from './StudentsAdmin/StudentDetails';
 import AcademicHistory from './StudentsAdmin/AcademicHistory';
 import EditStudent from './StudentsAdmin/EditStudent';
+import AddStudent from './StudentsAdmin/AddStudent';
 
 const Stack = createStackNavigator();
 
@@ -77,6 +78,17 @@ const AdminStack = () => {
         }}
         name="EditStudent"
         component={EditStudent}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Add Student',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
+        name="AddStudent"
+        component={AddStudent}
       />
     </Stack.Navigator>
   );

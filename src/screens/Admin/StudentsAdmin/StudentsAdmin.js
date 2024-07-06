@@ -44,7 +44,7 @@ const StudentsAdmin = () => {
   const [page, setPage] = useState(0); // Current page
   const [numberOfItemsPerPage, setNumberOfItemsPerPage] =
     useState(INITIAL_LOAD_COUNT); // Items per page
-
+    
   useEffect(() => {
     if (allStudents?.data) {
       const startIndex = page * numberOfItemsPerPage;
@@ -83,6 +83,14 @@ const StudentsAdmin = () => {
   if (isError) {
     return <Text>{isError}</Text>;
   }
+
+  const
+
+   handleAddStudent = ()=>{
+    navigation.navigate('AdminStack',{
+      screen: 'AddStudent'
+    })
+   }
 
   const handleVeiw = id => {
     navigation.navigate('AdminStack', {
@@ -162,7 +170,7 @@ const StudentsAdmin = () => {
                 borderWidth: theme.background ? 1 : 0,
               },
             ]}
-            onPress={() => {}}>
+            onPress={handleAddStudent}>
             <Text style={styles.addButtonText}>Add</Text>
           </TouchableOpacity>
         </View>
