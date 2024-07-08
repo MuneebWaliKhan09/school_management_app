@@ -42,6 +42,14 @@ export const teacherApi = createApi({
       }),
       invalidatesTags: ['Student'],
     }),
+    UpdateStudentAvatar: builder.mutation({
+      query: ({id, formData}) => ({
+        url: `${teacher_End_Points.updateStudentAvatar}${id}`,
+        method: 'PUT',
+        body: formData,
+      }),
+      invalidatesTags: ['Student'],
+    }),
   }),
 });
 
@@ -51,5 +59,6 @@ export const {
   useStudentDetailsClassQuery,
   useUpdateStudentDetailsMutation,
   useRemoveStudentMutation,
-  useRegisterStudentToClassMutation
+  useRegisterStudentToClassMutation,
+  useUpdateStudentAvatarMutation
 } = teacherApi;

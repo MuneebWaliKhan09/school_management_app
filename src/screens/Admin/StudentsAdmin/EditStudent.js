@@ -1,42 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Modal, TouchableOpacity, Button, Text, Image } from 'react-native';
-import {TextInput , PaperTextInput} from 'react-native-paper';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import { Dropdown } from 'react-native-element-dropdown';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Modal,
+  TouchableOpacity,
+  Button,
+  Text,
+  Image,
+} from 'react-native';
+import {TextInput, PaperTextInput} from 'react-native-paper';
+import {useRoute, useNavigation} from '@react-navigation/native';
+import {Dropdown} from 'react-native-element-dropdown';
 import {
   useEditStudentDetailsMutation,
   useSingleStudentDetailsQuery,
 } from '../../../store/features/adminFeatures';
-import { useToast } from '../../../context/ToastContext';
+import {useToast} from '../../../context/ToastContext';
 import Loader from '../../../Loaders/Loader';
 import DatePicker from 'react-native-date-picker';
-import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-import { useSelector } from 'react-redux';
-import { Half_WHITE, WHITE_BG } from '../../../strings/Colors';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+import {useSelector} from 'react-redux';
+import {Half_WHITE, WHITE_BG} from '../../../strings/Colors';
 
 const genderOptions = [
-  { label: 'Male', value: 'Male' },
-  { label: 'Female', value: 'Female' },
-  { label: 'Other', value: 'Other' },
+  {label: 'Male', value: 'Male'},
+  {label: 'Female', value: 'Female'},
+  {label: 'Other', value: 'Other'},
 ];
 
 const bloodGroupOptions = [
-  { label: 'A+', value: 'A+' },
-  { label: 'A-', value: 'A-' },
-  { label: 'B+', value: 'B+' },
-  { label: 'B-', value: 'B-' },
-  { label: 'AB+', value: 'AB+' },
-  { label: 'AB-', value: 'AB-' },
-  { label: 'O+', value: 'O+' },
-  { label: 'O-', value: 'O-' },
+  {label: 'A+', value: 'A+'},
+  {label: 'A-', value: 'A-'},
+  {label: 'B+', value: 'B+'},
+  {label: 'B-', value: 'B-'},
+  {label: 'AB+', value: 'AB+'},
+  {label: 'AB-', value: 'AB-'},
+  {label: 'O+', value: 'O+'},
+  {label: 'O-', value: 'O-'},
 ];
 
 const EditStudent = () => {
-  const theme = useSelector((state)=> state.themeAdmin)
-  const { showToast } = useToast();
+  const theme = useSelector(state => state.themeAdmin);
+  const {showToast} = useToast();
   const route = useRoute();
   const navigation = useNavigation();
-  const { id } = route?.params;
+  const {id} = route?.params;
   const {
     data: singleStudentData,
     isLoading,
@@ -95,13 +108,17 @@ const EditStudent = () => {
   const handleChange = (key, value) => {
     setFormData({
       ...formData,
-      [key]: ['rollNo', 'age', 'monthlyFee', 'securityFee', 'labFee'].includes(key) ? parseInt(value, 10) || '' : value,
+      [key]: ['rollNo', 'age', 'monthlyFee', 'securityFee', 'labFee'].includes(
+        key,
+      )
+        ? parseInt(value, 10) || ''
+        : value,
     });
   };
 
   const handleSubmit = async () => {
     try {
-      const response = await EditStudentDetails({ id, data: formData });
+      const response = await EditStudentDetails({id, data: formData});
       if (response.error) {
         showToast(response.error.data.message, 'error');
       } else {
@@ -113,7 +130,7 @@ const EditStudent = () => {
     }
   };
 
-  const openDatePicker = (field) => {
+  const openDatePicker = field => {
     setDateField(field);
     setShowDatePicker(true);
   };
@@ -131,65 +148,108 @@ const EditStudent = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={[styles.container, {backgroundColor:WHITE_BG}]}>
-      {Object.keys(formData).map((key) => (
-        <View key={key} style={[styles.inputContainer,{backgroundColor:WHITE_BG}]}>
+    <ScrollView
+      contentContainerStyle={[styles.container, {backgroundColor: WHITE_BG}]}>
+      {Object.keys(formData).map(key => (
+        <View
+          key={key}
+          style={[styles.inputContainer, {backgroundColor: WHITE_BG}]}>
           {key === 'gender' ? (
             <Dropdown
-            style={[styles.dropdown,{borderColor:theme.background,backgroundColor:WHITE_BG}]}
+              style={[
+                styles.dropdown,
+                {borderColor: theme.background, backgroundColor: WHITE_BG},
+              ]}
               data={genderOptions}
-              itemTextStyle={{color:theme.background}}
-              containerStyle={{borderWidth:0.7, borderColor:theme.background,borderTopWidth:0,elevation:5}}
+              itemTextStyle={{color: theme.background}}
+              containerStyle={{
+                borderWidth: 0.7,
+                borderColor: theme.background,
+                borderTopWidth: 0,
+                elevation: 5,
+              }}
               labelField="label"
-              selectedTextStyle={{color:theme.background}}
-              iconStyle={{marginRight:responsiveWidth(2),tintColor: theme.background}}
+              selectedTextStyle={{color: theme.background}}
+              iconStyle={{
+                marginRight: responsiveWidth(2),
+                tintColor: theme.background,
+              }}
               valueField="value"
               placeholder="Select Gender"
               value={formData.gender}
-              onChange={(item) => handleChange('gender', item.value)}
+              onChange={item => handleChange('gender', item.value)}
             />
           ) : key === 'bloodGroup' ? (
             <Dropdown
-              style={[styles.dropdown,{borderColor:theme.background,backgroundColor:WHITE_BG}]}
+              style={[
+                styles.dropdown,
+                {borderColor: theme.background, backgroundColor: WHITE_BG},
+              ]}
               data={bloodGroupOptions}
-              itemTextStyle={{color:theme.background}}
-              containerStyle={{borderWidth:0.7, borderColor:theme.background,borderTopWidth:0,elevation:5}}
+              itemTextStyle={{color: theme.background}}
+              containerStyle={{
+                borderWidth: 0.7,
+                borderColor: theme.background,
+                borderTopWidth: 0,
+                elevation: 5,
+              }}
               labelField="label"
               valueField="value"
-              selectedTextStyle={{color:theme.background}}
-              iconStyle={{marginRight:responsiveWidth(2),tintColor: theme.background}}
+              selectedTextStyle={{color: theme.background}}
+              iconStyle={{
+                marginRight: responsiveWidth(2),
+                tintColor: theme.background,
+              }}
               placeholder="Select Blood Group"
               value={formData.bloodGroup}
-              onChange={(item) => handleChange('bloodGroup', item.value)}
+              onChange={item => handleChange('bloodGroup', item.value)}
             />
           ) : key === 'DOB' || key === 'joiningDate' ? (
             <TouchableOpacity onPress={() => openDatePicker(key)}>
               <TextInput
                 label={key.replace(/([A-Z])/g, ' $1').trim()}
-                 mode='outlined'
-              contentStyle={{color:theme.background}}
-                 style={{backgroundColor:WHITE_BG}}
-                value={formData[key]}
+                mode="outlined"
+                contentStyle={{color: theme.background}}
+                style={{backgroundColor: WHITE_BG}}
+                value={new Date(formData[key]).toLocaleString('en-US', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                })}
                 editable={false}
               />
             </TouchableOpacity>
           ) : (
             <TextInput
               label={key.replace(/([A-Z])/g, ' $1').trim()}
-              mode='outlined'
+              mode="outlined"
               outlineColor={theme.background}
               activeOutlineColor={theme.background}
-              contentStyle={{color:theme.background}}
+              contentStyle={{color: theme.background}}
               value={formData[key]?.toString()}
-              style={{backgroundColor:WHITE_BG}}
-              onChangeText={(value) => handleChange(key, value)}
-              keyboardType={['rollNo', 'age', 'monthlyFee', 'securityFee', 'labFee'].includes(key) ? 'numeric' : 'default'}
+              style={{backgroundColor: WHITE_BG}}
+              onChangeText={value => handleChange(key, value)}
+              keyboardType={
+                [
+                  'rollNo',
+                  'age',
+                  'monthlyFee',
+                  'securityFee',
+                  'labFee',
+                ].includes(key)
+                  ? 'numeric'
+                  : 'default'
+              }
             />
           )}
         </View>
       ))}
-      <TouchableOpacity style={[styles.btn,{backgroundColor:theme.background}]} onPress={handleSubmit} >
-        <Text style={{color:Half_WHITE,fontWeight:"bold"}}>Save Changes</Text>
+      <TouchableOpacity
+        style={[styles.btn, {backgroundColor: theme.background}]}
+        onPress={handleSubmit}>
+        <Text style={{color: Half_WHITE, fontWeight: 'bold'}}>
+          {updatingLoad ? 'Updating...' : 'Save Changes'}
+        </Text>
       </TouchableOpacity>
       <Modal
         visible={showDatePicker}
@@ -199,14 +259,16 @@ const EditStudent = () => {
         <View style={styles.modalContainer}>
           <View style={styles.modal}>
             <DatePicker
-              date={formData[dateField] ? new Date(formData[dateField]) : new Date()}
+              date={
+                formData[dateField] ? new Date(formData[dateField]) : new Date()
+              }
               mode="date"
-              onDateChange={(date) => {
+              onDateChange={date => {
                 handleChange(dateField, date.toISOString().split('T')[0]);
               }}
               maximumDate={new Date()}
             />
-            <Button  title="Close" onPress={closeDatePicker} />
+            <Button title="Close" onPress={closeDatePicker} />
           </View>
         </View>
       </Modal>
@@ -235,7 +297,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     height: responsiveHeight(7),
-    borderRadius:5,
+    borderRadius: 5,
     borderColor: 'gray',
     borderWidth: 1,
     paddingLeft: responsiveWidth(4),
@@ -252,13 +314,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 5,
   },
-  btn:{
-    padding:responsiveWidth(4),
-    borderRadius:50,
-    marginTop:responsiveHeight(1),
-    alignItems:'center'
-  }
-
+  btn: {
+    padding: responsiveWidth(4),
+    borderRadius: 50,
+    marginTop: responsiveHeight(1),
+    alignItems: 'center',
+  },
 });
 
 export default EditStudent;

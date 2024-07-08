@@ -8,6 +8,7 @@ import StudentDetails from './StudentsTeacher/StudentDetails';
 import AcademicHistory from './StudentsTeacher/AcademicHistory';
 import EditStudent from './StudentsTeacher/EditStudent';
 import AddStudent from './StudentsTeacher/AddStudent';
+import EditAvatarStudent from './StudentsTeacher/EditAvatarStudent';
 
 const Stack = createStackNavigator();
 
@@ -89,6 +90,17 @@ const TeacherStack = () => {
         }}
         name="AddStudent"
         component={AddStudent}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Update Avatar',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
+        name="UpdateAvatarStudent"
+        component={EditAvatarStudent}
       />
     </Stack.Navigator>
   );

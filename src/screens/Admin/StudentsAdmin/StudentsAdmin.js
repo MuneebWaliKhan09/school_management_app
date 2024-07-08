@@ -287,7 +287,7 @@ const StudentsAdmin = () => {
             </Text>
           </View>
         )}
-        {filteredStudents?.length > 0 && (
+        {allStudents?.data?.length > 3 && (
           <CustomPagination
             page={page}
             numberOfPages={totalPages}

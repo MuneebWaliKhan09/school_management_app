@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useEditStudentAvatarMutation } from '../../../store/features/adminFeatures';
 import { Button, Avatar } from 'react-native-paper';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { useToast } from '../../../context/ToastContext';
@@ -12,14 +11,15 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import { useUpdateStudentAvatarMutation } from '../../../store/features/teacherFeatures';
 
 const EditAvatarStudent = () => {
-  const theme = useSelector(state => state.themeAdmin);
+  const theme = useSelector(state => state.themeTeacher);
   const navigation = useNavigation();
   const { showToast } = useToast();
   const route = useRoute();
   const { id, avatar } = route?.params;
-  const [editAvatarStudent, { isLoading }] = useEditStudentAvatarMutation();
+  const [editAvatarStudent, { isLoading }] = useUpdateStudentAvatarMutation();
   const [selectedImage, setSelectedImage] = useState(avatar);
   const [showSelectBtn, setShowSelectBtn] = useState(true);
   const [imageFileName, setImageFileName] = useState(null);

@@ -8,7 +8,7 @@ import {
   Modal,
 } from 'react-native';
 import React, {useState} from 'react';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import Loader from '../../../Loaders/Loader';
 import {useSelector} from 'react-redux';
 import {Half_gray, Half_WHITE, WHITE_BG} from '../../../strings/Colors';
@@ -19,7 +19,8 @@ import {
 } from 'react-native-responsive-dimensions';
 import { useStudentDetailsClassQuery } from '../../../store/features/teacherFeatures';
 
-const StudentDetails = ({navigation}) => {
+const StudentDetails = () => {
+  const navigation = useNavigation()
   const theme = useSelector(state => state.themeTeacher);
   const [modalOpen, setmodalOpen] = useState(false);
   const [more, setmore] = useState('');
@@ -44,12 +45,16 @@ const StudentDetails = ({navigation}) => {
     setmore(address);
   };
 
-  const handleEditAvatar = ()=>{
-    
-  }
+  const handleEditAvatar = () => {
+    const {avatar, _id} = data;
+    navigation.navigate('TeacherStack', {
+      screen: 'UpdateAvatarStudent',
+      params: {avatar: avatar, id: _id},
+    });
+  };
+
 
   const data = singleStudentData?.data || '';
-  const addressD = 'sadda lower kurram sadda bazar molayano kalay hor';
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

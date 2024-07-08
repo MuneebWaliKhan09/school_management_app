@@ -23,7 +23,11 @@ import {
 } from 'react-native-responsive-dimensions';
 import CustomPagination from './CustomPagination'; // Adjust path as needed
 import {useToast} from '../../../context/ToastContext';
-import { useAllStudentsClassTeacherQuery, useRemoveStudentMutation } from '../../../store/features/teacherFeatures';
+import {
+  useAllStudentsClassTeacherQuery,
+  useRemoveStudentMutation,
+} from '../../../store/features/teacherFeatures';
+import ErrorCustom from '../../../Error/ErrorCustom';
 
 const DATE_FORMAT = 'DD/MM/YYYY';
 const INITIAL_LOAD_COUNT = 3; // Number of students to load initially
@@ -33,7 +37,10 @@ const StudentsTeacher = () => {
   const {showToast} = useToast();
   const theme = useSelector(state => state.themeTeacher);
   const navigation = useNavigation();
-  const {data: allStudents, isError, isLoading} = useAllStudentsClassTeacherQuery();
+  const {
+    data: allStudents,
+    isLoading,
+  } = useAllStudentsClassTeacherQuery();
   const [RemoveStudent] = useRemoveStudentMutation();
   const [refreshing, setRefreshing] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -73,17 +80,9 @@ const StudentsTeacher = () => {
     allStudents?.data?.[0]?.length / numberOfItemsPerPage,
   );
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (isError) {
-    return <Text>{isError}</Text>;
-  }
-
-  const handleAddStudent = ()=>{
-    navigation.navigate("TeacherStack", {screen: 'AddStudent'})
-  }
+  const handleAddStudent = () => {
+    navigation.navigate('TeacherStack', {screen: 'AddStudent'});
+  };
 
   const handleVeiw = id => {
     navigation.navigate('TeacherStack', {
@@ -131,168 +130,182 @@ const StudentsTeacher = () => {
   };
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-      }>
-      <View style={styles.container}>
-        <View
-          style={[styles.searchContainer, {marginBottom: responsiveHeight(2)}]}>
-          <TextInput
-            autoCapitalize="none"
-            placeholder="Search"
-            placeholderTextColor={WHITE_BG}
-            style={[
-              styles.searchInput,
-              {
-                borderColor: theme.background,
-                backgroundColor: theme.background,
-                color: 'white',
-              },
-            ]}
-            value={searchTerm}
-            onChangeText={setSearchTerm}
-          />
-          <TouchableOpacity
-            style={[
-              styles.addButton,
-              {
-                backgroundColor: theme.background,
-                borderColor: theme.background ? 'white' : '',
-                borderWidth: theme.background ? 1 : 0,
-              },
-            ]}
-            onPress={handleAddStudent}>
-            <Text style={styles.addButtonText}>Add</Text>
-          </TouchableOpacity>
-        </View>
-
-        {filteredStudents?.length > 0 ? (
-          <DataTable>
-            {filteredStudents?.map(item => (
-              <View
-                key={item._id}
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : allStudents === undefined ? (
+        <ErrorCustom />
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+          }>
+          <View style={styles.container}>
+            <View
+              style={[
+                styles.searchContainer,
+                {marginBottom: responsiveHeight(2)},
+              ]}>
+              <TextInput
+                autoCapitalize="none"
+                placeholder="Search"
+                placeholderTextColor={WHITE_BG}
                 style={[
-                  styles.card,
+                  styles.searchInput,
                   {
-                    borderColor: theme.background ? 'white' : '',
+                    borderColor: theme.background,
                     backgroundColor: theme.background,
+                    color: 'white',
                   },
-                ]}>
-                <View style={styles.cardContent}>
-                  <Text
-                    style={[
-                      styles.cardTitle,
-                      {
-                        color: 'rgba(250,250,250,.9)',
-                        fontSize: responsiveFontSize(2.2),
-                      },
-                    ]}>
-                    {item.fullName}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.cardText,
-                      {
-                        color: 'rgba(250,250,250,.7)',
-                        fontSize: responsiveFontSize(2),
-                      },
-                    ]}>
-                    Roll No: {item.rollNo}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.cardText,
-                      {
-                        color: 'rgba(250,250,250,.7)',
-                        fontSize: responsiveFontSize(2),
-                      },
-                    ]}>
-                    Class: {item.className?.className?.toLowerCase()}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.cardText,
-                      {
-                        color: 'rgba(250,250,250,.7)',
-                        fontSize: responsiveFontSize(2),
-                      },
-                    ]}>
-                    Email: {item.email}
-                  </Text>
+                ]}
+                value={searchTerm}
+                onChangeText={setSearchTerm}
+              />
+              <TouchableOpacity
+                style={[
+                  styles.addButton,
+                  {
+                    backgroundColor: theme.background,
+                    borderColor: theme.background ? 'white' : '',
+                    borderWidth: theme.background ? 1 : 0,
+                  },
+                ]}
+                onPress={handleAddStudent}>
+                <Text style={styles.addButtonText}>Add</Text>
+              </TouchableOpacity>
+            </View>
 
-                  <Text
+            {filteredStudents?.length > 0 ? (
+              <DataTable>
+                {filteredStudents?.map(item => (
+                  <View
+                    key={item._id}
                     style={[
-                      styles.cardText,
+                      styles.card,
                       {
-                        color: 'rgba(250,250,250,.7)',
-                        fontSize: responsiveFontSize(2),
+                        borderColor: theme.background ? 'white' : '',
+                        backgroundColor: theme.background,
                       },
                     ]}>
-                    Gender: {item.gender}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.cardText,
-                      {
-                        color: 'rgba(250,250,250,.7)',
-                        fontSize: responsiveFontSize(2),
-                      },
-                    ]}>
-                    Date Added: {moment(item.createdAt).format(DATE_FORMAT)}
-                  </Text>
-                  <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                      style={[styles.button, styles.actionBTNStyle]}
-                      onPress={() => handleVeiw(item?._id)}>
-                      <Image
-                        style={styles.icon}
-                        source={require('../../../images/icons/view.png')}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.button, styles.actionBTNStyle]}
-                      onPress={() => handleEdit(item?._id)}>
-                      <Image
-                        style={styles.icon}
-                        source={require('../../../images/icons/pen.png')}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.button, styles.actionBTNStyle]}
-                      onPress={() => handleDelete(item?._id)}>
-                      <Image
-                        style={styles.icon}
-                        source={require('../../../images/icons/delete.png')}
-                      />
-                    </TouchableOpacity>
+                    <View style={styles.cardContent}>
+                      <Text
+                        style={[
+                          styles.cardTitle,
+                          {
+                            color: 'rgba(250,250,250,.9)',
+                            fontSize: responsiveFontSize(2.2),
+                          },
+                        ]}>
+                        {item.fullName}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.cardText,
+                          {
+                            color: 'rgba(250,250,250,.7)',
+                            fontSize: responsiveFontSize(2),
+                          },
+                        ]}>
+                        Roll No: {item.rollNo}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.cardText,
+                          {
+                            color: 'rgba(250,250,250,.7)',
+                            fontSize: responsiveFontSize(2),
+                          },
+                        ]}>
+                        Class: {item.className?.className?.toLowerCase()}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.cardText,
+                          {
+                            color: 'rgba(250,250,250,.7)',
+                            fontSize: responsiveFontSize(2),
+                          },
+                        ]}>
+                        Email: {item.email}
+                      </Text>
+
+                      <Text
+                        style={[
+                          styles.cardText,
+                          {
+                            color: 'rgba(250,250,250,.7)',
+                            fontSize: responsiveFontSize(2),
+                          },
+                        ]}>
+                        Gender: {item.gender}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.cardText,
+                          {
+                            color: 'rgba(250,250,250,.7)',
+                            fontSize: responsiveFontSize(2),
+                          },
+                        ]}>
+                        Date Added: {moment(item.createdAt).format(DATE_FORMAT)}
+                      </Text>
+                      <View style={styles.buttonContainer}>
+                        <TouchableOpacity
+                          style={[styles.button, styles.actionBTNStyle]}
+                          onPress={() => handleVeiw(item?._id)}>
+                          <Image
+                            style={styles.icon}
+                            source={require('../../../images/icons/view.png')}
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={[styles.button, styles.actionBTNStyle]}
+                          onPress={() => handleEdit(item?._id)}>
+                          <Image
+                            style={styles.icon}
+                            source={require('../../../images/icons/pen.png')}
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={[styles.button, styles.actionBTNStyle]}
+                          onPress={() => handleDelete(item?._id)}>
+                          <Image
+                            style={styles.icon}
+                            source={require('../../../images/icons/delete.png')}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
                   </View>
-                </View>
+                ))}
+              </DataTable>
+            ) : (
+              <View style={styles.noDataContainer}>
+                <Text
+                  style={[
+                    styles.noDataText,
+                    {fontSize: responsiveFontSize(2)},
+                  ]}>
+                  No Data
+                </Text>
               </View>
-            ))}
-          </DataTable>
-        ) : (
-          <View style={styles.noDataContainer}>
-            <Text
-              style={[styles.noDataText, {fontSize: responsiveFontSize(2)}]}>
-              No Data
-            </Text>
+            )}
+            {filteredStudents?.length > 3 && (
+              <CustomPagination
+                page={page}
+                numberOfPages={totalPages}
+                onPageChange={setPage}
+                label="Students"
+                numberOfItemsPerPageList={[3, 5, 10]}
+                numberOfItemsPerPage={numberOfItemsPerPage}
+                onItemsPerPageChange={setNumberOfItemsPerPage}
+              />
+            )}
           </View>
-        )}
-        {filteredStudents?.length > 0 && (
-          <CustomPagination
-            page={page}
-            numberOfPages={totalPages}
-            onPageChange={setPage}
-            label="Students"
-            numberOfItemsPerPageList={[3, 5, 10]}
-            numberOfItemsPerPage={numberOfItemsPerPage}
-            onItemsPerPageChange={setNumberOfItemsPerPage}
-          />
-        )}
-      </View>
-    </ScrollView>
+        </ScrollView>
+      )}
+    </>
   );
 };
 

@@ -39,7 +39,7 @@ const EditStudent = () => {
     isLoading,
     isError,
   } = useStudentDetailsClassQuery(id);
-  const [EditStudentDetails] = useUpdateStudentDetailsMutation();
+  const [EditStudentDetails,{isLoading: updatingLoad}] = useUpdateStudentDetailsMutation();
 
   const studentData = singleStudentData?.data || {};
 
@@ -165,7 +165,11 @@ const EditStudent = () => {
                  mode='outlined'
               contentStyle={{color:theme.background}}
                  style={{backgroundColor:WHITE_BG}}
-                value={formData[key]}
+                value={new Date(formData[key]).toLocaleString('en-US',{
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                })}
                 editable={false}
               />
             </TouchableOpacity>
@@ -185,7 +189,7 @@ const EditStudent = () => {
         </View>
       ))}
       <TouchableOpacity style={[styles.btn,{backgroundColor:theme.background}]} onPress={handleSubmit} >
-        <Text style={{color:Half_WHITE,fontWeight:"bold"}}>Save Changes</Text>
+        <Text style={{color:Half_WHITE,fontWeight:"bold"}}>{updatingLoad ? 'Updating...' : 'Save Changes'}</Text>
       </TouchableOpacity>
       <Modal
         visible={showDatePicker}
