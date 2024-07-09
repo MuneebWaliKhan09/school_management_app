@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Button, Avatar } from 'react-native-paper';
-import { launchImageLibrary } from 'react-native-image-picker';
-import { useToast } from '../../../context/ToastContext';
-import { Half_WHITE } from '../../../strings/Colors';
-import { useSelector } from 'react-redux';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {Button, Avatar} from 'react-native-paper';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {useToast} from '../../../context/ToastContext';
+import {Half_WHITE} from '../../../strings/Colors';
+import {useSelector} from 'react-redux';
 import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import { useUpdateStudentAvatarMutation } from '../../../store/features/teacherFeatures';
+import {useUpdateStudentAvatarMutation} from '../../../store/features/teacherFeatures';
 
 const EditAvatarStudent = () => {
   const theme = useSelector(state => state.themeTeacher);
   const navigation = useNavigation();
-  const { showToast } = useToast();
+  const {showToast} = useToast();
   const route = useRoute();
-  const { id, avatar } = route?.params;
-  const [editAvatarStudent, { isLoading }] = useUpdateStudentAvatarMutation();
+  const {id, avatar} = route?.params;
+  const [editAvatarStudent, {isLoading}] = useUpdateStudentAvatarMutation();
   const [selectedImage, setSelectedImage] = useState(avatar);
   const [showSelectBtn, setShowSelectBtn] = useState(true);
   const [imageFileName, setImageFileName] = useState(null);
   const [imageUri, setImageUri] = useState(null);
 
   const handleSelectImage = async () => {
-    const res = await launchImageLibrary({ mediaType: 'photo' });
+    const res = await launchImageLibrary({mediaType: 'photo'});
     if (!res.didCancel && res.assets && res.assets.length > 0) {
-      const { uri, fileName } = res.assets[0];
+      const {uri, fileName} = res.assets[0];
       setImageUri(uri);
       setSelectedImage(uri);
       setShowSelectBtn(false);
@@ -44,7 +44,7 @@ const EditAvatarStudent = () => {
         type: 'image/jpeg',
         name: imageFileName,
       });
-      const res = await editAvatarStudent({ id: id, formData: formData });
+      const res = await editAvatarStudent({id: id, formData: formData});
       if (res?.error) {
         showToast(res?.error.data.message, 'error');
         setShowSelectBtn(true);
@@ -58,10 +58,10 @@ const EditAvatarStudent = () => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
       <Avatar.Image
         size={responsiveWidth(60)}
-        source={{ uri: selectedImage }}
+        source={{uri: selectedImage}}
         style={styles.avatar}
       />
       {showSelectBtn && (
@@ -69,24 +69,24 @@ const EditAvatarStudent = () => {
           buttonColor={theme.background}
           mode="contained"
           onPress={handleSelectImage}
-          style={styles.button}
-        >
+          style={styles.button}>
           Select Image
         </Button>
       )}
-      <Button
-        buttonColor={theme.background}
-        mode="contained"
-        onPress={handleSubmit}
-        style={styles.button}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <Text style={styles.buttonText}>Updating Avatar...</Text>
-        ) : (
-          <Text style={styles.buttonText}>Submit</Text>
-        )}
-      </Button>
+      {imageUri !== null && (
+        <Button
+          buttonColor={theme.background}
+          mode="contained"
+          onPress={handleSubmit}
+          style={styles.button}
+          disabled={isLoading}>
+          {isLoading ? (
+            <Text style={styles.buttonText}>Updating Avatar...</Text>
+          ) : (
+            <Text style={styles.buttonText}>Submit</Text>
+          )}
+        </Button>
+      )}
     </View>
   );
 };

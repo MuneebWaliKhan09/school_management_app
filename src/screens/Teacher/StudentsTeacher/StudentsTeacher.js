@@ -291,7 +291,7 @@ const StudentsTeacher = () => {
                 </Text>
               </View>
             )}
-            {filteredStudents?.length > 3 && (
+            {allStudents?.data?.[0]?.length > 3 && (
               <CustomPagination
                 page={page}
                 numberOfPages={totalPages}

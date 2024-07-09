@@ -8,10 +8,10 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import {Half_WHITE, WHITE_BG} from '../../../strings/Colors';
+import { WHITE_BG} from '../../../strings/Colors';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {useAddAcademicRecordMutation} from '../../../store/features/adminFeatures';
 import {useToast} from '../../../context/ToastContext';
+import { useAddAcademicRecordMutation } from '../../../store/features/adminFeatures';
 
 const AcademicRecordSchema = Yup.object().shape({
   year: Yup.number().required('Year is required'),
@@ -38,9 +38,10 @@ const formFields = [
 const AcademicRecordForm = () => {
   const route = useRoute();
   const stId = route?.params;
+ 
   const {showToast} = useToast();
   const navigation = useNavigation();
-  const theme = useSelector(state => state.themeAdmin);
+  const theme = useSelector(state => state.themeTeacher);
   const [AddAcademicRecord, {isLoading}] = useAddAcademicRecordMutation();
 
 
@@ -69,6 +70,7 @@ const AcademicRecordForm = () => {
     <SafeAreaView style={{flex:1}}>
       <ScrollView style={{backgroundColor: WHITE_BG}}>
         <Formik
+        
           initialValues={{
             year: '',
             exam: '',
@@ -95,9 +97,9 @@ const AcademicRecordForm = () => {
                   <TextInput
                     label={field.label}
                     mode="outlined"
+                    outlineStyle={{borderColor:theme.background}}
                     onChangeText={handleChange(field.name)}
                     onBlur={handleBlur(field.name)}
-                    outlineStyle={{borderColor:theme.background}}
                     value={String(values[field.name])}
                     error={touched[field.name] && errors[field.name]}
                     theme={{

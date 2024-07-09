@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -6,8 +6,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  SafeAreaView,
 } from 'react-native';
-import {useRoute} from '@react-navigation/native';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {Half_WHITE, WHITE_BG} from '../../../strings/Colors';
 import {
@@ -15,17 +16,31 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import { useStudentDetailsClassQuery } from '../../../store/features/teacherFeatures';
 
-const AcademicHistory = ({navigation}) => {
+const AcademicHistory = () => {
+  const focus = useIsFocused()
+  const navigation = useNavigation()
   const theme = useSelector(state => state.themeTeacher);
   const route = useRoute();
-  const {academics} = route.params;
+  const {stId} = route.params;
+
+  const {refetch, data} = useStudentDetailsClassQuery(stId);
+
+  const [academicHistory, setAcademicHistory] = useState([]);
+
+  useEffect(() => {
+    if(focus){
+      refetch()
+      setAcademicHistory(data?.data?.academicHistory);
+    }
+  }, [data,focus]);
 
   return (
-    <View style={{flex: 1}}>
-      {academics?.length > 0 ? (
+    <SafeAreaView style={{flex: 1}}>
+      {academicHistory?.length > 0 ? (
         <ScrollView contentContainerStyle={styles.container}>
-          {academics?.map(record => (
+          {academicHistory?.map(record => (
             <View
               key={record._id}
               style={[styles.card, {backgroundColor: theme.background}]}>
@@ -192,10 +207,10 @@ const AcademicHistory = ({navigation}) => {
 
       <TouchableOpacity
         style={[styles.addButton]}
-        onPress={() => navigation.navigate('AddAcademicRecord')}>
+        onPress={() => navigation.navigate('AddAcademicRecord', stId)}>
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

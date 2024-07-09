@@ -25,7 +25,7 @@ const StudentDetails = () => {
   const [modalOpen, setmodalOpen] = useState(false);
   const [more, setmore] = useState('');
   const route = useRoute();
-  const {id} = route.params;
+  const {id} = route?.params;
   const {
     data: singleStudentData,
     isLoading,
@@ -54,7 +54,7 @@ const StudentDetails = () => {
   };
 
 
-  const data = singleStudentData?.data || '';
+  const data = singleStudentData?.data || null;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -335,10 +335,7 @@ const StudentDetails = () => {
             activeOpacity={0.6}
             style={[styles.button, {backgroundColor: theme.background}]}
             onPress={() =>
-              navigation.navigate('TeacherStack', {
-                screen: 'AcademicHistory',
-                params: {academics: data?.academicHistory},
-              })
+              navigation.navigate('AcademicHistory', {stId: data?._id})
             }>
             <Text style={[styles.buttonText]}>View Academic History</Text>
           </TouchableOpacity>

@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  SafeAreaView
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {Half_WHITE, WHITE_BG} from '../../../strings/Colors';
@@ -32,7 +33,7 @@ const AcademicHistory = () => {
   }, [data]);
 
   return (
-    <View style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
       {academicHistory?.length > 0 ? (
         <ScrollView contentContainerStyle={styles.container}>
           {academicHistory.map(record => (
@@ -205,7 +206,7 @@ const AcademicHistory = () => {
         onPress={() => navigation.navigate('AddAcademicRecord', stId)}>
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
