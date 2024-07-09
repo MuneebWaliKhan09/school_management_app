@@ -50,6 +50,14 @@ export const teacherApi = createApi({
       }),
       invalidatesTags: ['Student'],
     }),
+    CreatAcademicRecord: builder.mutation({
+      query: ({id, data}) => ({
+        url: `${teacher_End_Points}${id}`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Student'],
+    }),
   }),
 });
 

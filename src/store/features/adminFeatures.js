@@ -45,6 +45,14 @@ export const adminApi = createApi({
       }),
       invalidatesTags: ['Students'],
     }),
+    AddAcademicRecord: builder.mutation({
+      query: ({id, data}) => ({
+        url: `${admin_End_Points.student_routes.addStudentAcademicRecord}${id}`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Students'],
+    }),
   }),
 });
 
@@ -55,4 +63,5 @@ export const {
   useDeleteStudentMutation,
   useAddStudentMutation,
   useEditStudentAvatarMutation,
+  useAddAcademicRecordMutation
 } = adminApi;

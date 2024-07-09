@@ -9,6 +9,7 @@ import AcademicHistory from './StudentsAdmin/AcademicHistory';
 import EditStudent from './StudentsAdmin/EditStudent';
 import AddStudent from './StudentsAdmin/AddStudent';
 import EditAvatarStudent from './StudentsAdmin/EditAvatarStudent';
+import AddAcademicRecord from './StudentsAdmin/AddAcademicRecord';
 
 const Stack = createStackNavigator();
 
@@ -101,6 +102,17 @@ const AdminStack = () => {
         }}
         name="UpdateAvatarStudent"
         component={EditAvatarStudent}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Add Academic Record',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
+        name="AddAcademicRecord"
+        component={AddAcademicRecord}
       />
     </Stack.Navigator>
   );
