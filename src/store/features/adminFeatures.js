@@ -54,10 +54,9 @@ export const adminApi = createApi({
       invalidatesTags: ['Students'],
     }),
     DeleteAcademicRecord: builder.mutation({
-      query: ({id, data}) => ({
+      query: (id) => ({
         url: `${admin_End_Points.student_routes.deleteStudentAcademicRecord}${id}`,
         method: 'DELETE',
-        body: data,
       }),
       invalidatesTags: ['Students'],
     }),
@@ -80,5 +79,6 @@ export const {
   useAddStudentMutation,
   useEditStudentAvatarMutation,
   useAddAcademicRecordMutation,
-  useEditAcademicRecordMutation
+  useEditAcademicRecordMutation,
+  useDeleteAcademicRecordMutation
 } = adminApi;

@@ -10,24 +10,24 @@ export const API_CLASS_URL = BASE_URL + `/class`;
 
 
 export const user_End_Points = {
-    login: '/login',
+    login: '/login',// ✅
     register: '/register',
-    logout: '/logout',
-    getUserDetails: '/user/me',
-    changePassword: '/user/change-password',
-    updateProfile: '/user/update-profile',
+    logout: '/logout',// ✅
+    getUserDetails: '/user/me',// ✅
+    changePassword: '/user/change-password',// ✅
+    updateProfile: '/user/update-profile',// ✅
     updateUserAvatar: '/user/update-avatar',
 }
 
 
 export const teacher_End_Points = {
-    teacherProfile: '/teacher-profile',
-    allStudentsOfClass: '/all-students-class',
-    singleStudentDetail: '/single-student-detail/',
-    classTeacherAddStudent: '/class-teacher-add-student',
-    updateStudentClass: '/update-student-class/',
-    updateStudentAvatar: '/update-student-avatar/',
-    removeStudentClass: '/remove-student-class/',
+    teacherProfile: '/teacher-profile', // ✅
+    allStudentsOfClass: '/all-students-class',// ✅
+    singleStudentDetail: '/single-student-detail/',// ✅
+    classTeacherAddStudent: '/class-teacher-add-student',// ✅
+    updateStudentClass: '/update-student-class/',// ✅
+    updateStudentAvatar: '/update-student-avatar/',// ✅
+    removeStudentClass: '/remove-student-class/',// ✅
     takeAttendanceClass: '/take-attendance-class',
     attendanceClassToday: '/attendance-class-today',
     notifyStudentsAbsent: '/notify-students-absent',
@@ -51,7 +51,7 @@ export const teacher_End_Points = {
 
 
 export const student_End_Points = {
-    studentProfile: '/student-profile',
+    studentProfile: '/student-profile',// ✅
     studentAttendanceRecord: '/student-attendance-record',
     studentClassAssignments: '/student-class-assigments',
     studentClassNotifications: '/student-class-notifications',

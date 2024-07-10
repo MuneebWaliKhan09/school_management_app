@@ -6,7 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  SafeAreaView
+  SafeAreaView,
+  Alert,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {Half_WHITE, WHITE_BG} from '../../../strings/Colors';
@@ -15,15 +16,18 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import {useSingleStudentDetailsQuery} from '../../../store/features/adminFeatures';
-import { useNavigation, useRoute} from '@react-navigation/native';
+import {useDeleteAcademicRecordMutation, useSingleStudentDetailsQuery} from '../../../store/features/adminFeatures';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import { useToast } from '../../../context/ToastContext';
 
 const AcademicHistory = () => {
+  const {showToast}= useToast()
   const navigation = useNavigation();
   const route = useRoute();
   const theme = useSelector(state => state.themeAdmin);
   const {stId} = route.params;
   const {refetch, data} = useSingleStudentDetailsQuery(stId);
+  const [DeleteAcademicRecord] = useDeleteAcademicRecordMutation()
 
   const [academicHistory, setAcademicHistory] = useState([]);
 
@@ -32,6 +36,35 @@ const AcademicHistory = () => {
     setAcademicHistory(data?.data?.academicHistory);
   }, [data]);
 
+  const DeleteAcademicR = async recordId => {
+    const confirm = Alert.alert(
+      'Confirm Deletion',
+      'Are you sure you want to delete this item?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: async () => {
+            try {
+              const response = await DeleteAcademicRecord(recordId);
+              if (response?.error) {
+                showToast(response?.error?.data?.message, 'error');
+              } else {
+                showToast(response?.data?.message, 'success');
+              }
+            } catch (error) {
+              showToast('An error occurred while saving changes', 'error');
+            }
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
       {academicHistory?.length > 0 ? (
@@ -181,9 +214,7 @@ const AcademicHistory = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.button, styles.deleteButton]}
-                  onPress={() => {
-                    /* Handle delete action */
-                  }}>
+                  onPress={() => DeleteAcademicR(record?._id)}>
                   <Image
                     style={styles.icon}
                     source={require('../../../images/icons/delete.png')}
