@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: responsiveWidth(2),
     marginTop: responsiveHeight(1),
+    paddingVertical:7,
   },
   Image: {
     width: responsiveWidth(8.2),

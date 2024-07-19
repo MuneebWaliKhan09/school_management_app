@@ -17,10 +17,10 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import { useStudentDetailsClassQuery } from '../../../store/features/teacherFeatures';
+import {useStudentDetailsClassQuery} from '../../../store/features/teacherFeatures';
 
 const StudentDetails = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const theme = useSelector(state => state.themeTeacher);
   const [modalOpen, setmodalOpen] = useState(false);
   const [more, setmore] = useState('');
@@ -53,19 +53,18 @@ const StudentDetails = () => {
     });
   };
 
-
   const data = singleStudentData?.data || null;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={[styles.card, {backgroundColor: theme.background}]}>
-      <View style={styles.imageContainer}>
+        <View style={styles.imageContainer}>
           <View style={{position: 'relative'}}>
             <TouchableOpacity>
               <Image source={{uri: data.avatar}} style={styles.avatar} />
             </TouchableOpacity>
             <TouchableOpacity
-            onPress={handleEditAvatar}
+              onPress={handleEditAvatar}
               style={styles.editAvatarContainer}>
               <Image
                 style={styles.editAvatarImage}
@@ -400,19 +399,21 @@ const styles = StyleSheet.create({
     borderWidth: responsiveWidth(0.5),
     borderColor: '#dcdcdc',
   },
-  editAvatarContainer:{
-    height: responsiveHeight(4.5),
+  editAvatarContainer: {
+    height: responsiveHeight(4.8), // changes
     width: responsiveWidth(9),
     backgroundColor: Half_gray,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
     right: -9,
+    borderRadius: 5,
     top: 13,
   },
-  editAvatarImage:{
-    height: responsiveHeight(2.3),
-    width: responsiveWidth(4.5),
+  editAvatarImage: {
+    width: responsiveWidth(2),
+    height: responsiveHeight(2), // changes
+    padding: 10,
     tintColor: 'white',
   },
   detailsContainer: {

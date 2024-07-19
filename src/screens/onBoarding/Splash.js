@@ -38,7 +38,7 @@ const Splash = () => {
           nav.navigate('StudentHome');
           break;
         default:
-          console.error('Unknown role:', JSON.parse(userData)?.role);
+          console.error('Unknown role:', "no role");
       }
     } else {
       nav.navigate('Welcome');

@@ -304,8 +304,9 @@ const styles = StyleSheet.create({
     borderWidth: 0.7,
   },
   icon: {
-    width: responsiveWidth(5),
-    height: responsiveHeight(2.5),
+    width: responsiveWidth(2),
+    height: responsiveHeight(2), // changes
+    padding: 10,
     tintColor: Half_WHITE,
   },
   addButton: {

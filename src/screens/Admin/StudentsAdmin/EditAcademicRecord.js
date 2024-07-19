@@ -1,5 +1,11 @@
-import React, { useEffect } from 'react';
-import {View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import {TextInput, Button, Text} from 'react-native-paper';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -10,7 +16,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import {WHITE_BG} from '../../../strings/Colors';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import { useEditAcademicRecordMutation} from '../../../store/features/adminFeatures';
+import {useEditAcademicRecordMutation} from '../../../store/features/adminFeatures';
 import {useToast} from '../../../context/ToastContext';
 
 const AcademicRecordSchema = Yup.object().shape({
@@ -43,11 +49,10 @@ const EditAcademicRecord = () => {
   const theme = useSelector(state => state.themeAdmin);
   const [EditAcademicRecord, {isLoading}] = useEditAcademicRecordMutation();
 
-
   const handleSubmit = async values => {
-      const arr = {
-          ...values,
-          percentage: parseInt(values.percentage),
+    const arr = {
+      ...values,
+      percentage: parseInt(values.percentage),
       marksObtained: parseInt(values.marksObtained),
       totalMarks: parseInt(values.totalMarks),
     };
@@ -57,27 +62,30 @@ const EditAcademicRecord = () => {
         showToast(res.error.data.message, 'error');
       } else {
         showToast(res.data.message, 'success');
-        navigation.goBack()
+        navigation.goBack();
       }
     } catch (error) {
       showToast('An error occurred while saving changes', 'error');
     }
   };
 
- const initailState = {
+  const initailState = {
     year: record?.year || '',
     exam: record.exam || '',
-    pClass: record.pClass ||'',
+    pClass: record.pClass || '',
     grade: record?.grade || '',
     percentage: record?.percentage || 0,
     positionInClass: record?.positionInClass || '',
     marksObtained: record?.marksObtained || 0,
     totalMarks: record?.totalMarks || 0,
- }
+  };
 
   return (
-    <SafeAreaView style={{flex:1}}>
-      <ScrollView style={{backgroundColor: WHITE_BG}}>
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView
+        style={{
+          backgroundColor: WHITE_BG,
+        }}>
         <Formik
           initialValues={initailState}
           validationSchema={AcademicRecordSchema}
@@ -98,7 +106,7 @@ const EditAcademicRecord = () => {
                     mode="outlined"
                     onChangeText={handleChange(field.name)}
                     onBlur={handleBlur(field.name)}
-                    outlineStyle={{borderColor:theme.background}}
+                    outlineStyle={{borderColor: theme.background}}
                     value={String(values[field.name])}
                     error={touched[field.name] && errors[field.name]}
                     theme={{
@@ -123,7 +131,11 @@ const EditAcademicRecord = () => {
                 onPress={handleSubmit}
                 style={[styles.button, {backgroundColor: theme.background}]}
                 disabled={isLoading}>
-                {isLoading ? <Text style={{color:WHITE_BG}}>Submitting...</Text> : 'Submit'}
+                {isLoading ? (
+                  <Text style={{color: WHITE_BG}}>Submitting...</Text>
+                ) : (
+                  'Submit'
+                )}
               </Button>
             </View>
           )}
@@ -138,6 +150,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: responsiveWidth(5),
     backgroundColor: WHITE_BG,
+
   },
   title: {
     fontSize: responsiveFontSize(3),
@@ -158,5 +171,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
-export default EditAcademicRecord
+export default EditAcademicRecord;

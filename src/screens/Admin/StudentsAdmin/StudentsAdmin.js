@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     borderColor: '#bdc3c7',
     borderRadius: 8,
     paddingLeft: 15,
-    height: responsiveHeight(6),
+    // height: responsiveHeight(6), // changes
     backgroundColor: '#fff',
     fontSize: responsiveFontSize(2),
   },
@@ -377,8 +377,9 @@ const styles = StyleSheet.create({
     borderWidth: 0.7,
   },
   icon: {
-    width: responsiveWidth(5),
-    height: responsiveHeight(2.5),
+    width: responsiveWidth(2),
+    height: responsiveHeight(2), // changes
+    padding:10,
     tintColor: Half_WHITE,
   },
   noDataContainer: {

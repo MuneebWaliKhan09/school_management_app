@@ -417,18 +417,20 @@ const styles = StyleSheet.create({
     borderColor: '#dcdcdc',
   },
   editAvatarContainer: {
-    height: responsiveHeight(4.5),
+    height: responsiveHeight(4.8),// changes
     width: responsiveWidth(9),
     backgroundColor: Half_gray,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
     right: -9,
+    borderRadius:5,
     top: 13,
   },
   editAvatarImage: {
-    height: responsiveHeight(2.3),
-    width: responsiveWidth(4.5),
+    width: responsiveWidth(2),
+    height: responsiveHeight(2), // changes
+    padding:10,
     tintColor: 'white',
   },
   detailsContainer: {
