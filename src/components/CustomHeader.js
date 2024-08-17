@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {GHOST_WHITE} from '../strings/Colors';
 
-const CustomHeaderLeft = ({navigation}) => (
+const CustomHeader = ({navigation}) => (
   <TouchableOpacity onPress={() => navigation.openDrawer()}>
     <Image
       source={require('../images/icons/menu.png')}
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomHeaderLeft;
+export default CustomHeader

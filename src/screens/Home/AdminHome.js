@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import AdminMain from '../Admin/AdminMain';
+import BottomNav from '../Admin/BottomNav';
 import AdminDrawer from '../../components/AdminDrawer/AdminDrawer';
-import Profile from '../Admin/Porfile/Profile';
 import {GHOST_WHITE, THEME_COLOR} from '../../strings/Colors';
-import CustomHeaderLeft from '../../components/CustomHeaderLeft';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
+import Profile from '../Admin/Porfile/Profile.js';
 
 const Drawer = createDrawerNavigator();
 
@@ -19,26 +18,24 @@ const options = {
 };
 
 const AdminHome = () => {
-  const theme = useSelector((state)=> state.themeAdmin)
+  const theme = useSelector(state => state.themeAdmin);
 
   return (
-    <Drawer.Navigator drawerContent={props => <AdminDrawer {...props} />}>
+    <Drawer.Navigator
+      drawerContent={props => <AdminDrawer {...props} />}>
       <Drawer.Screen
         name="Dash-board"
-        options={{headerShown: false}}
-        component={AdminMain}
+        options={{
+          headerShown: false,
+        }}
+        component={BottomNav}
       />
       <Drawer.Screen
         name="Profile"
+        options={{
+          headerShown: false,
+        }}
         component={Profile}
-        options={({navigation}) => ({
-          ...options,
-          headerStyle: {
-            backgroundColor: theme.background,
-          },
-          headerTitle: 'My Profile',
-          headerLeft: () => <CustomHeaderLeft navigation={navigation}/>, // Custom header left component
-        })}
       />
     </Drawer.Navigator>
   );

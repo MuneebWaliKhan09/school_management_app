@@ -21,14 +21,14 @@ import {
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomDivider from '../CustomDivider';
 import {ResetNavigations} from '../../utils/ResetNavigations';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
-const AdminDrawer = props => {
-  const theme = useSelector((state)=> state.themeAdmin)
+const AdminDrawer = ({props}) => {
+  const theme = useSelector(state => state.themeAdmin);
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const isFocused = useIsFocused();
-  const [logoutUser,{isLoading}] = useLogoutUserMutation();
+  const [logoutUser, {isLoading}] = useLogoutUserMutation();
   const {data: userData} = useUserDetailsQuery();
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const AdminDrawer = props => {
         });
     };
     validateTokenAndFetchDetails();
-  }, [isFocused,userData]);
+  }, [isFocused, userData]);
 
   const getDetails = () => {
     setData(userData?.data);
@@ -64,12 +64,12 @@ const AdminDrawer = props => {
       });
   };
 
-  const handleThemeChange = ()=>{
-    navigation.navigate("AdminStack", {screen: "ThemeChangerAdmin"})
-  }
+  const handleThemeChange = () => {
+    navigation.navigate('AdminStack', {screen: 'ThemeChangerAdmin'});
+  };
 
   return (
-    <View style={[styles.container, {backgroundColor:theme.background}]}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
@@ -77,9 +77,7 @@ const AdminDrawer = props => {
               source={require('../../images/icons/profile.png')}
               size={80}
             />
-            <Title style={styles.title}>
-              {(data && data?.username) || ''}
-            </Title>
+            <Title style={styles.title}>{(data && data?.username) || ''}</Title>
             <Caption style={styles.caption}>
               {(data && data?.email) || ''}
             </Caption>
@@ -151,7 +149,7 @@ const AdminDrawer = props => {
               style={{width: size, height: size, tintColor: Half_WHITE}}
             />
           )}
-          label={isLoading ? "Loading..": "Logout"}
+          label={isLoading ? 'Loading..' : 'Logout'}
           labelStyle={{color: GHOST_WHITE}}
           onPress={handleLogout}
         />

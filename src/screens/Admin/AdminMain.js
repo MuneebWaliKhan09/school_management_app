@@ -114,59 +114,11 @@ const AdminMain = () => {
       />
       <SafeAreaView>
         {/* Top Section */}
-        <View style={[styles.topSection, {backgroundColor: theme.background}]}>
-          <TouchableOpacity onPress={() => nav.openDrawer()}>
-            <Image
-              style={styles.headerIcons}
-              source={require('../../images/icons/menu.png')}
-            />
-          </TouchableOpacity>
-
-          {/* avatar and welcome */}
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Animated.Image
-              source={adminIcon}
-              style={[
-                styles.avatar,
-                {
-                  transform: [
-                    {
-                      translateX: animations.avatar.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [-100, 0], // Start off-screen left, move to default position
-                      }),
-                    },
-                  ],
-                  opacity: animations.avatar,
-                },
-              ]}
-            />
-            <Animated.View
-              style={[
-                styles.welcomeMessage,
-                {
-                  transform: [
-                    {
-                      translateX: animations.welcomeText.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [-100, 0], // Start off-screen left, move to default position
-                      }),
-                    },
-                  ],
-                  opacity: animations.welcomeText,
-                },
-              ]}>
-              <Text style={styles.welcomeText}>Welcome Admin 👋</Text>
-            </Animated.View>
-          </View>
-
-          <TouchableOpacity>
-            <Image
-              style={styles.headerIcons}
-              source={require('../../images/icons/bell.png')}
-            />
-          </TouchableOpacity>
-        </View>
+        <View
+          style={[
+            // styles.topSection,
+            // {backgroundColor: theme.background},
+          ]}></View>
 
         <Text style={styles.heading}>Academics</Text>
         <View style={styles.grid}>

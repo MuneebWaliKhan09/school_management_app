@@ -2,10 +2,10 @@ import React, {useEffect} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Profile from '../Teacher/Profile/Profile';
 import {GHOST_WHITE, THEME_COLOR} from '../../strings/Colors';
-import CustomHeaderLeft from '../../components/CustomHeaderLeft';
-import TeacherMain from '../Teacher/TeacherMain';
+import CustomHeader from '../../components/CustomHeader';
 import TeacherDrawer from '../../components/TeacherDrawer/TeacherDrawer';
 import { useSelector } from 'react-redux';
+import BottomNav from '../Teacher/BottomNav';
 
 const Drawer = createDrawerNavigator();
 
@@ -29,7 +29,7 @@ const TeacherHome = () => {
       <Drawer.Screen
         name="Dash-board"
         options={{headerShown: false}}
-        component={TeacherMain}
+        component={BottomNav}
       />
       <Drawer.Screen
         name="Profile"
