@@ -4,22 +4,21 @@ import {useDispatch, useSelector} from 'react-redux';
 import {changeTheme} from '../../../store/Theme/ThemeAdmin';
 
 const colors = [
-  { label: 'Theme 1', value: { background: '#4774FF' } }, // Blue
-  { label: 'Theme 2', value: { background: '#900C3F' } }, // Dark Red
-  { label: 'Theme 3', value: { background: '#581845' } }, // Dark Purple
-  { label: 'Theme 4', value: { background: '#200906' } }, // Dark Brown
-  { label: 'Theme 5', value: { background: '#063970' } }, // Dark Blue
-  { label: 'Theme 6', value: { background: '#1D3557' } }, // Prussian Blue
-  { label: 'Theme 7', value: { background: '#457B9D' } }, // Steel Blue
-  { label: 'Theme 8', value: { background: '#2A9D8F' } }, // Persian Green
-  { label: 'Theme 9', value: { background: '#E76F51' } }, // Burnt Sienna
-  { label: 'Theme 10', value: { background: '#264653' } }, // Charcoal
-  { label: 'Theme 11', value: { background: '#6A994E' } }, // Moss Green
-  { label: 'Theme 12', value: { background: '#D4A5A5' } }, // Pastel Pink
-  { label: 'Theme 13', value: { background: '#FFB703' } }, // Vibrant Orange
-  { label: 'Theme 14', value: { background: '#8D99AE' } }, // Cool Gray
-  { label: 'Theme 15', value: { background: '#1B263B' } }, // Space Cadet
-  { label: 'Theme 16', value: { background: '#6200ee' } }, // Space Cadet
+  {label: 'Theme 1', value: {background: '#003366'}}, // Dark Blue
+  {label: 'Theme 2', value: {background: '#005f73'}}, // Deep Teal
+  {label: 'Theme 3', value: {background: '#0082c8'}}, // Bright Blue
+  {label: 'Theme 4', value: {background: '#006400'}}, // Dark Green
+  {label: 'Theme 5', value: {background: '#4b4b4b'}}, // Dark Gray
+  {label: 'Theme 6', value: {background: '#004d40'}}, // Deep Green Teal
+  {label: 'Theme 7', value: {background: '#005f6b'}}, // Muted Blue Teal
+  {label: 'Theme 8', value: {background: '#003d34'}}, // Deep Green
+  {label: 'Theme 9', value: {background: '#003b5c'}}, // Midnight Blue
+  {label: 'Theme 10', value: {background: '#0066cc'}}, // Medium Blue
+  {label: 'Theme 11', value: {background: '#002f3c'}}, // Dark Blue Gray
+  {label: 'Theme 12', value: {background: '#003b46'}}, // Dark Blue Teal
+  {label: 'Theme 13', value: {background: '#004d40'}}, // Deep Teal
+  {label: 'Theme 14', value: {background: '#004e92'}}, // Dark Blue
+  {label: 'Theme 15', value: {background: '#005b96'}}, // Medium Blue
 ];
 
 

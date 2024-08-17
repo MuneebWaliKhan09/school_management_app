@@ -27,7 +27,7 @@ let userSchema = object({
       /^(?=.*[A-Z])(?=.*\d{4})[A-Za-z\d]{6,}$/,
       'Username must contain one uppercase 4 digits',
     ),
-  email: string().email(),
+  email: string().email().required('please enter your email'),
   password: string().required('please enter your password'),
   firstName: string()
     .required('please enter your firstname')
