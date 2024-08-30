@@ -6,7 +6,7 @@ import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../../strings/Colors';
 import { useSelector } from 'react-redux';
 import CustomDivider from '../../CustomDivider';
 
-const PorfileCustomDrawer = props => {
+const StudentsCustomDrawer = props => {
   const theme = useSelector(state => state.themeAdmin);
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
@@ -17,9 +17,9 @@ const PorfileCustomDrawer = props => {
               source={require('../../../images/icons/profile.png')}
               size={80}
             />
-            <Title style={styles.title}>Admin Profile</Title>
+            <Title style={styles.title}>Students Admin</Title>
             <Caption style={styles.caption}>
-              AdminProfile@gmail.com
+              StudentsAdmin@gmail.com
             </Caption>
           </View>
           <CustomDivider />
@@ -76,4 +76,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PorfileCustomDrawer;
+
+export default StudentsCustomDrawer

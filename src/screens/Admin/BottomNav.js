@@ -8,6 +8,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import StudentsAdmin from './StudentsAdmin/StudentsAdmin';
 import LottieView from 'lottie-react-native';
 import PorfileDrawer from './drawers/ProfileDrawer';
+import StudentDrawerAdmin from './drawers/StudentDrawerAdmin';
 
 const Bottom = createBottomTabNavigator();
 
@@ -51,8 +52,8 @@ const BottomNav = () => {
       />
       <Bottom.Screen
         name="Students"
-        options={{headerShown: true}}
-        component={StudentsAdmin}
+        options={{headerShown: false}}
+        component={StudentDrawerAdmin}
       />
       <Bottom.Screen
         name="Profile"
