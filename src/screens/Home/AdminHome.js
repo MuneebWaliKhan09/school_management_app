@@ -4,8 +4,6 @@ import BottomNav from '../Admin/BottomNav';
 import AdminDrawer from '../../components/AdminDrawer/AdminDrawer';
 import {GHOST_WHITE, THEME_COLOR} from '../../strings/Colors';
 import {useSelector} from 'react-redux';
-import Profile from '../Admin/Porfile/Profile';
-import PorfileDrawer from '../Admin/drawers/ProfileDrawer';
 
 const Drawer = createDrawerNavigator();
 
