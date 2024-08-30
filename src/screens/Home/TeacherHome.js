@@ -31,17 +31,6 @@ const TeacherHome = () => {
         options={{headerShown: false}}
         component={BottomNav}
       />
-      <Drawer.Screen
-        name="Profile"
-        component={Profile}
-        options={({navigation}) => ({
-          ...options,
-          headerStyle: {
-            backgroundColor: theme.background,
-          },
-          headerLeft: () => <CustomHeaderLeft navigation={navigation} />, // Custom header left component
-        })}
-      />
     </Drawer.Navigator>
   );
 };

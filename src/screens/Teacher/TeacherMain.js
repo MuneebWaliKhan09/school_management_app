@@ -80,25 +80,25 @@ const TeacherMain = () => {
   const handlePress = item => {
     switch (item) {
       case 'Attendances':
-        nav.navigate('AdminAttendance');
+        nav.navigate('TeacherAttendance');
         break;
       case 'All Classes':
-        nav.navigate('AdminClasses');
+        nav.navigate('TeacherClasses');
         break;
       case 'Results':
-        nav.navigate('AdminResults');
+        nav.navigate('TeacherResults');
         break;
       case 'All Students':
         nav.navigate('TeacherStack', {screen: 'AllStudentsTeacher'});
         break;
       case 'All Teachers':
-        nav.navigate('AdminTeachers');
+        nav.navigate('TeacherTeachers');
         break;
       case 'All Users':
-        nav.navigate('AdminUsers');
+        nav.navigate('TeacherUsers');
         break;
       case 'All Subjects':
-        nav.navigate('AdminSubjects');
+        nav.navigate('TeacherSubjects');
         break;
       default:
         break;
@@ -113,60 +113,6 @@ const TeacherMain = () => {
       />
       <SafeAreaView>
         {/* Top Section */}
-        <View style={[styles.topSection, {backgroundColor: theme.background}]}>
-          <TouchableOpacity onPress={() => nav.openDrawer()}>
-            <Image
-              style={styles.headerIcons}
-              source={require('../../images/icons/menu.png')}
-            />
-          </TouchableOpacity>
-
-          {/* avatar and welcome */}
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Animated.Image
-              source={adminIcon}
-              style={[
-                styles.avatar,
-                {
-                  transform: [
-                    {
-                      translateX: animations.avatar.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [-100, 0], // Start off-screen left, move to default position
-                      }),
-                    },
-                  ],
-                  opacity: animations.avatar,
-                },
-              ]}
-            />
-            <Animated.View
-              style={[
-                styles.welcomeMessage,
-                {
-                  transform: [
-                    {
-                      translateX: animations.welcomeText.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [-100, 0], // Start off-screen left, move to default position
-                      }),
-                    },
-                  ],
-                  opacity: animations.welcomeText,
-                },
-              ]}>
-              <Text style={styles.welcomeText}>Welcome Teacher 👋</Text>
-            </Animated.View>
-          </View>
-
-          <TouchableOpacity>
-            <Image
-              style={styles.headerIcons}
-              source={require('../../images/icons/bell.png')}
-            />
-          </TouchableOpacity>
-        </View>
-
         <Text style={styles.heading}>Academics</Text>
         <View style={styles.grid}>
           {[
