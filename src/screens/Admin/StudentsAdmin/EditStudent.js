@@ -5,11 +5,10 @@ import {
   ScrollView,
   Modal,
   TouchableOpacity,
-  Button,
   Text,
   Image,
 } from 'react-native';
-import {TextInput, PaperTextInput} from 'react-native-paper';
+import {TextInput, PaperTextInput, Button} from 'react-native-paper';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {
@@ -55,7 +54,7 @@ const EditStudent = () => {
     isLoading,
     isError,
   } = useSingleStudentDetailsQuery(id);
-  const [EditStudentDetails] = useEditStudentDetailsMutation();
+  const [EditStudentDetails,{isLoading: isLoadingEdit}] = useEditStudentDetailsMutation();
   const studentData = singleStudentData?.data || {};
 
   const [formData, setFormData] = useState({
@@ -244,13 +243,15 @@ const EditStudent = () => {
           )}
         </View>
       ))}
-      <TouchableOpacity
-        style={[styles.btn, {backgroundColor: theme.background}]}
-        onPress={handleSubmit}>
-        <Text style={{color: Half_WHITE, fontWeight: 'bold'}}>
-          {updatingLoad ? 'Updating...' : 'Save Changes'}
-        </Text>
-      </TouchableOpacity>
+      <Button
+        mode="contained"
+        onPress={handleSubmit}
+        loading={isLoadingEdit}
+        disabled={isLoadingEdit}
+        contentStyle={{backgroundColor: theme.background}}
+        labelStyle={{color: Half_WHITE, fontWeight: 'bold'}}>
+        {isLoadingEdit ? 'Updating...' : 'Save Changes'}
+      </Button>
       <Modal
         visible={showDatePicker}
         transparent={true}

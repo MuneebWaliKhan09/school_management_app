@@ -30,7 +30,7 @@ const BottomNav = () => {
         name="Dashboard"
         options={({navigation}) => ({
           headerShown: true,
-          headerTitle: 'SMS Dashboard',
+          headerTitle: 'S.M.S Dashboard',
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontWeight: 'bold',
@@ -52,6 +52,16 @@ const BottomNav = () => {
       />
       <Bottom.Screen
         name="Students"
+        options={{headerShown: false}}
+        component={StudentDrawerAdmin}
+      />
+       <Bottom.Screen
+        name="Attendance"
+        options={{headerShown: false}}
+        component={StudentDrawerAdmin}
+      />
+      <Bottom.Screen
+        name="Classes"
         options={{headerShown: false}}
         component={StudentDrawerAdmin}
       />
