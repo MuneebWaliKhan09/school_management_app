@@ -25,13 +25,10 @@ import {
   responsiveHeight,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import CustomPagination from './CustomPagination'; // Adjust path as needed
 import {useToast} from '../../../context/ToastContext';
 import Pagination from './Pagination';
 
 const DATE_FORMAT = 'DD/MM/YYYY';
-const INITIAL_LOAD_COUNT = 3; // Number of students to load initially
-const LOAD_MORE_COUNT = 3; // Number of students to load on refresh
 
 const StudentsAdmin = () => {
   const {showToast} = useToast();

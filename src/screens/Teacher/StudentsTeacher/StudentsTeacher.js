@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -21,17 +21,16 @@ import {
   responsiveHeight,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import CustomPagination from './CustomPagination'; // Adjust path as needed
 import {useToast} from '../../../context/ToastContext';
 import {
   useAllStudentsClassTeacherQuery,
   useRemoveStudentMutation,
 } from '../../../store/features/teacherFeatures';
 import ErrorCustom from '../../../Error/ErrorCustom';
+import Pagination from './Pagination';
 
 const DATE_FORMAT = 'DD/MM/YYYY';
-const INITIAL_LOAD_COUNT = 3; // Number of students to load initially
-const LOAD_MORE_COUNT = 3; // Number of students to load on refresh
+
 
 const StudentsTeacher = () => {
   const {showToast} = useToast();
@@ -40,45 +39,49 @@ const StudentsTeacher = () => {
   const {
     data: allStudents,
     isLoading,
+    refetch,
   } = useAllStudentsClassTeacherQuery();
   const [RemoveStudent] = useRemoveStudentMutation();
-  const [refreshing, setRefreshing] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [studentsData, setStudentsData] = useState([]);
-  const [page, setPage] = useState(0); // Current page
-  const [numberOfItemsPerPage, setNumberOfItemsPerPage] =
-    useState(INITIAL_LOAD_COUNT); // Items per page
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('')
+  const [totalPages, setTotalPages] = useState(1);
+  const studentPerPage = 3
 
+
+
+  const filterStudents = (data)=>{
+    return data?.filter((items)=>{
+      const matchSearch = 
+        items.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        items.gender.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        items.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        items.rollNo.toString().includes(searchTerm.toLowerCase());
+        return matchSearch
+    })
+  }
+    
   useEffect(() => {
     if (allStudents?.data) {
-      const startIndex = page * numberOfItemsPerPage;
-      const slicedData = allStudents?.data?.[0]?.slice(
-        startIndex,
-        startIndex + numberOfItemsPerPage,
-      );
-      setStudentsData(slicedData);
+      const FilterStudent = filterStudents(allStudents?.data?.[0]);
+      const pages = Math.ceil(FilterStudent?.length / studentPerPage)
+      setTotalPages(pages)
     }
-  }, [allStudents, page, numberOfItemsPerPage]);
+  }, [allStudents,searchTerm]);
 
-  const handleRefresh = () => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setNumberOfItemsPerPage(prev => prev + LOAD_MORE_COUNT);
-      setRefreshing(false);
-    }, 1000);
-  };
+  const currentStudents = filterStudents(allStudents?.data?.[0])?.slice(
+    (currentPage - 1) * studentPerPage,
+    currentPage * studentPerPage,
+  )
 
-  const filteredStudents = studentsData?.filter(
-    item =>
-      item?.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item?.gender?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item?.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item?.rollNo?.toString().includes(searchTerm.toLowerCase()),
-  );
+  const onChangePage = (page)=>{
+    if(page >= 1 && page <= totalPages){
+      setCurrentPage(page)
+    }
+  }
 
-  const totalPages = Math.ceil(
-    allStudents?.data?.[0]?.length / numberOfItemsPerPage,
-  );
+  const handleRefresh = useCallback(() => {
+    refetch();
+  }, []);
 
   const handleAddStudent = () => {
     navigation.navigate('TeacherStack', {screen: 'AddStudent'});
@@ -139,7 +142,7 @@ const StudentsTeacher = () => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+            <RefreshControl refreshing={isLoading} onRefresh={handleRefresh} />
           }>
           <View style={styles.container}>
             <View
@@ -176,9 +179,9 @@ const StudentsTeacher = () => {
               </TouchableOpacity>
             </View>
 
-            {filteredStudents?.length > 0 ? (
+            {currentStudents?.length > 0 ? (
               <DataTable>
-                {filteredStudents?.map(item => (
+                {currentStudents?.map(item => (
                   <View
                     key={item._id}
                     style={[
@@ -291,15 +294,11 @@ const StudentsTeacher = () => {
                 </Text>
               </View>
             )}
-            {allStudents?.data?.[0]?.length > 3 && (
-              <CustomPagination
-                page={page}
-                numberOfPages={totalPages}
-                onPageChange={setPage}
-                label="Students"
-                numberOfItemsPerPageList={[3, 5, 10]}
-                numberOfItemsPerPage={numberOfItemsPerPage}
-                onItemsPerPageChange={setNumberOfItemsPerPage}
+            {totalPages !== 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onChangePage={onChangePage}
               />
             )}
           </View>
@@ -385,7 +384,7 @@ const styles = StyleSheet.create({
   icon: {
     width: responsiveWidth(2),
     height: responsiveHeight(2), // changes
-    padding:10,
+    padding: 10,
     tintColor: Half_WHITE,
   },
   noDataContainer: {
