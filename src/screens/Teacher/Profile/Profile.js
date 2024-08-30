@@ -38,17 +38,6 @@ const Profile = () => {
     }
   }, [userData, teacherDetails]);
 
-  const onEditProfile = () => {
-    nav.navigate('ActionsTeacherProfile', {
-      screen: 'EditProfileTeacher',
-      params: {userData: dataUser},
-    });
-  };
-
-  const onUpdatePassword = () => {
-    nav.navigate('ActionsTeacherProfile', {screen: 'EditPasswordTeacher'});
-  };
-
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -73,7 +62,7 @@ const Profile = () => {
       </View>
       <View style={{flex: 1}}>
         {selectedTab === 'user' ? (
-          <UserProfile dataUser={dataUser} onEditProfile={onEditProfile} onUpdatePassword={onUpdatePassword}/>
+          <UserProfile dataUser={dataUser}/>
         ) : (
           <TeacherProfile teacherData={teacherData} loadingTeacherData={loadingTeacherData}/>
         )}

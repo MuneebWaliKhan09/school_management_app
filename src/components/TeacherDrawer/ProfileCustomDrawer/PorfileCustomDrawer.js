@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Avatar, Caption, Drawer, Title} from 'react-native-paper';
@@ -6,9 +6,22 @@ import {useSelector} from 'react-redux';
 import CustomDivider from '../../CustomDivider';
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../../strings/Colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useUserDetailsQuery} from '../../../store/features/userFeatures';
 
 const ProfileCustomDrawer = props => {
   const theme = useSelector(state => state.themeTeacher);
+  const {
+    data: userData,
+    isLoading: loadingUserData,
+    isError,
+  } = useUserDetailsQuery();
+  const [dataUser, setdataUser] = useState(null);
+
+  useEffect(() => {
+    if (userData) {
+      setdataUser(userData && userData?.data);
+    }
+  }, [userData]);
 
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
@@ -29,28 +42,25 @@ const ProfileCustomDrawer = props => {
             <DrawerItem
               label="Edit Profile"
               onPress={() => {
-                props.navigation.navigate('EditProfile');
+                props.navigation.navigate('ActionsTeacherProfile', {
+                  screen: 'EditProfileTeacher',
+                  params: {userData: dataUser},
+                });
               }}
               icon={({color, size}) => (
-                <Icon
-                  name="account-edit"
-                  size={size}
-                  color={color}
-                />
+                <Icon name="account-edit" size={size} color={GHOST_WHITE} />
               )}
               labelStyle={styles.drawerItemLabel}
             />
             <DrawerItem
               label="Edit Password"
               onPress={() => {
-                props.navigation.navigate('EditPassword');
+                props.navigation.navigate('ActionsTeacherProfile', {
+                  screen: 'EditPasswordTeacher',
+                });
               }}
               icon={({color, size}) => (
-                <Icon
-                  name="lock-reset"
-                  size={size}
-                  color={color}
-                />
+                <Icon name="lock-reset" size={size} color={GHOST_WHITE} />
               )}
               labelStyle={styles.drawerItemLabel}
             />
@@ -64,7 +74,6 @@ const ProfileCustomDrawer = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: THEME_COLOR,
   },
   drawerContent: {
     flex: 1,
@@ -72,32 +81,31 @@ const styles = StyleSheet.create({
   userInfoSection: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 7,
+    paddingVertical: 20,
   },
   title: {
-    fontSize: 16,
-    marginTop: 3,
+    fontSize: 18,
+    marginTop: 10,
     fontWeight: 'bold',
     color: GHOST_WHITE,
   },
   caption: {
     fontSize: 14,
-    lineHeight: 14,
+    lineHeight: 16,
     color: Half_WHITE,
   },
   drawerSection: {
-    marginTop: 10,
+    marginTop: 20,
+    paddingHorizontal: 10,
   },
   drawerItemLabel: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: '400',
     color: GHOST_WHITE,
   },
   bottomDrawerSection: {
-    borderBottomWidth: 0.5,
-    marginBottom: 0.5,
-    borderBottomColor: Half_WHITE,
+    marginBottom: 15,
+    paddingHorizontal: 10,
   },
 });
 
