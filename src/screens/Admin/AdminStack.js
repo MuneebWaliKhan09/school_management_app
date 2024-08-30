@@ -24,7 +24,7 @@ const options = {
 };
 
 const AdminStack = () => {
-  const theme = useSelector((state)=> state.themeAdmin)
+  const theme = useSelector(state => state.themeAdmin);
   return (
     <Stack.Navigator>
       <Stack.Screen

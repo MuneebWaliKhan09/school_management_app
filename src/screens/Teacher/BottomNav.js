@@ -60,12 +60,12 @@ const BottomNav = () => {
       <Bottom.Screen
         name="Attendance"
         options={{headerShown: false}}
-        component={StudentMain}
+        component={StudentsDrawerTcr}
       />
       <Bottom.Screen
         name="Classes"
         options={{headerShown: false}}
-        component={StudentMain}
+        component={StudentsDrawerTcr}
       />
       <Bottom.Screen
         name="Profile"

@@ -24,7 +24,6 @@ import {
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 // Import images statically
-import adminIcon from '../../images/icons/admin2.png';
 import attendanceIcon from '../../images/icons/attendance.png';
 import classesIcon from '../../images/icons/classes.png';
 import resultsIcon from '../../images/icons/results.png';

@@ -3,7 +3,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import BottomNav from '../Admin/BottomNav';
 import {GHOST_WHITE, THEME_COLOR} from '../../strings/Colors';
 import {useSelector} from 'react-redux';
-import TeacherDrawer from '../../components/TeacherDrawer/TeacherDrawer';
+import AdminDrawer from '../../components/AdminDrawer/AdminDrawer';
 
 const Drawer = createDrawerNavigator();
 
@@ -21,7 +21,7 @@ const AdminHome = () => {
 
   return (
     <Drawer.Navigator
-      drawerContent={props => <TeacherDrawer {...props} />}>
+      drawerContent={props => <AdminDrawer {...props} />}>
       <Drawer.Screen
         name="Dash-board"
         options={{
