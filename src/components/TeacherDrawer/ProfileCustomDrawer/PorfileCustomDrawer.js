@@ -1,13 +1,15 @@
-import {View, Text, StyleSheet} from 'react-native';
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import React from 'react';
+import {View, StyleSheet} from 'react-native';
+import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Avatar, Caption, Drawer, Title} from 'react-native-paper';
-import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../../strings/Colors';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import CustomDivider from '../../CustomDivider';
+import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../../strings/Colors';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const PorfileCustomDrawer = props => {
+const ProfileCustomDrawer = props => {
   const theme = useSelector(state => state.themeTeacher);
+
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
       <DrawerContentScrollView {...props}>
@@ -18,11 +20,41 @@ const PorfileCustomDrawer = props => {
               size={80}
             />
             <Title style={styles.title}>Teacher</Title>
-            <Caption style={styles.caption}>
-              Teacher@gmail.com
-            </Caption>
+            <Caption style={styles.caption}>Teacher@gmail.com</Caption>
           </View>
+
           <CustomDivider />
+
+          <Drawer.Section style={styles.drawerSection}>
+            <DrawerItem
+              label="Edit Profile"
+              onPress={() => {
+                props.navigation.navigate('EditProfile');
+              }}
+              icon={({color, size}) => (
+                <Icon
+                  name="account-edit"
+                  size={size}
+                  color={color}
+                />
+              )}
+              labelStyle={styles.drawerItemLabel}
+            />
+            <DrawerItem
+              label="Edit Password"
+              onPress={() => {
+                props.navigation.navigate('EditPassword');
+              }}
+              icon={({color, size}) => (
+                <Icon
+                  name="lock-reset"
+                  size={size}
+                  color={color}
+                />
+              )}
+              labelStyle={styles.drawerItemLabel}
+            />
+          </Drawer.Section>
         </View>
       </DrawerContentScrollView>
     </View>
@@ -55,19 +87,12 @@ const styles = StyleSheet.create({
     color: Half_WHITE,
   },
   drawerSection: {
-    marginTop: 5,
+    marginTop: 10,
   },
-  preferencesTitle: {
+  drawerItemLabel: {
     fontSize: 14,
-    marginLeft: 19,
     fontWeight: '500',
-    color: GHOST_WHITE, // Customize the color here
-  },
-  preference: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 19,
+    color: GHOST_WHITE,
   },
   bottomDrawerSection: {
     borderBottomWidth: 0.5,
@@ -76,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PorfileCustomDrawer;
+export default ProfileCustomDrawer;
