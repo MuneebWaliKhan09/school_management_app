@@ -7,6 +7,7 @@ import {useSelector} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import StudentsAdmin from './StudentsAdmin/StudentsAdmin';
 import LottieView from 'lottie-react-native';
+import PorfileDrawer from './drawers/ProfileDrawer';
 
 const Bottom = createBottomTabNavigator();
 
@@ -54,26 +55,9 @@ const BottomNav = () => {
         component={StudentsAdmin}
       />
       <Bottom.Screen
-        name="Attendance"
-        options={{headerShown: false}}
-        component={AdminMain}
-      />
-      <Bottom.Screen
-        name="Classes"
-        options={{headerShown: false}}
-        component={AdminMain}
-      />
-
-      <Bottom.Screen
         name="Profile"
-        component={Profile}
-        options={({navigation}) => ({
-          ...options,
-          headerStyle: {
-            backgroundColor: theme.background,
-          },
-          headerLeft: () => <CustomHeader navigation={navigation} />, // Custom header left component
-        })}
+        component={PorfileDrawer}
+        options={{headerShown:false}}
       />
     </Bottom.Navigator>
   );
