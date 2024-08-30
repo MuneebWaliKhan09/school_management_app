@@ -1,13 +1,23 @@
 import {View, Text, StyleSheet} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {Avatar, Caption, Drawer, Title} from 'react-native-paper';
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../../strings/Colors';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import CustomDivider from '../../CustomDivider';
+import {useUserDetailsQuery} from '../../../store/features/userFeatures';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const PorfileCustomDrawer = props => {
   const theme = useSelector(state => state.themeAdmin);
+  const {data: userData, isLoading, isError} = useUserDetailsQuery();
+  const [dataUser, setDataUser] = useState(null);
+
+  useEffect(() => {
+    if (userData) {
+      setDataUser(userData?.data);
+    }
+  }, [userData]);
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
       <DrawerContentScrollView {...props}>
@@ -17,12 +27,39 @@ const PorfileCustomDrawer = props => {
               source={require('../../../images/icons/profile.png')}
               size={80}
             />
-            <Title style={styles.title}>Admin Profile</Title>
-            <Caption style={styles.caption}>
-              AdminProfile@gmail.com
-            </Caption>
+            <Title style={styles.title}>Admin</Title>
+            <Caption style={styles.caption}>Admin@gmail.com</Caption>
           </View>
+
           <CustomDivider />
+
+          <Drawer.Section style={styles.drawerSection}>
+            <DrawerItem
+              label="Edit Profile"
+              onPress={() => {
+                props.navigation.navigate('ActionsAdminProfile', {
+                  screen: 'EditProfileAdmin',
+                  params: {userData: dataUser}, // Pass userData as params
+                });
+              }}
+              icon={({color, size}) => (
+                <Icon name="account-edit" size={size} color={GHOST_WHITE} />
+              )}
+              labelStyle={styles.drawerItemLabel}
+            />
+            <DrawerItem
+              label="Edit Password"
+              onPress={() => {
+                props.navigation.navigate('ActionsAdminProfile', {
+                  screen: 'EditPasswordAdmin',
+                });
+              }}
+              icon={({color, size}) => (
+                <Icon name="lock-reset" size={size} color={GHOST_WHITE} />
+              )}
+              labelStyle={styles.drawerItemLabel}
+            />
+          </Drawer.Section>
         </View>
       </DrawerContentScrollView>
     </View>
@@ -32,7 +69,6 @@ const PorfileCustomDrawer = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: THEME_COLOR,
   },
   drawerContent: {
     flex: 1,
@@ -40,39 +76,31 @@ const styles = StyleSheet.create({
   userInfoSection: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 7,
+    paddingVertical: 20,
   },
   title: {
-    fontSize: 16,
-    marginTop: 3,
+    fontSize: 18,
+    marginTop: 10,
     fontWeight: 'bold',
     color: GHOST_WHITE,
   },
   caption: {
     fontSize: 14,
-    lineHeight: 14,
+    lineHeight: 16,
     color: Half_WHITE,
   },
   drawerSection: {
-    marginTop: 5,
+    marginTop: 20,
+    paddingHorizontal: 10,
   },
-  preferencesTitle: {
-    fontSize: 14,
-    marginLeft: 19,
-    fontWeight: '500',
-    color: GHOST_WHITE, // Customize the color here
-  },
-  preference: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 19,
+  drawerItemLabel: {
+    fontSize: 16,
+    fontWeight: '400',
+    color: GHOST_WHITE,
   },
   bottomDrawerSection: {
-    borderBottomWidth: 0.5,
-    marginBottom: 0.5,
-    borderBottomColor: Half_WHITE,
+    marginBottom: 15,
+    paddingHorizontal: 10,
   },
 });
 

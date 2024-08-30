@@ -24,17 +24,6 @@ const Profile = () => {
     }
   }, [userData]);
 
-  const onEditProfile = () => {
-    nav.navigate('ActionsAdminProfile', {
-      screen: 'EditProfileAdmin',
-      params: {userData: dataUser}, // Pass userData as params
-    });
-  };
-
-  const onUpdatePassword = () => {
-    nav.navigate('ActionsAdminProfile', {screen: 'EditPasswordAdmin'});
-  };
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <Divider />
@@ -43,8 +32,6 @@ const Profile = () => {
         <UserProfile
           dataUser={dataUser}
           isLoading={isLoading}
-          onEditProfile={onEditProfile}
-          onUpdatePassword={onUpdatePassword}
         />
       </View>
     </SafeAreaView>
