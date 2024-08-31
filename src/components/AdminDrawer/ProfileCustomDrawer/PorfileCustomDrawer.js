@@ -5,12 +5,15 @@ import {Avatar, Caption, Drawer, Title} from 'react-native-paper';
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../../strings/Colors';
 import {useSelector} from 'react-redux';
 import CustomDivider from '../../CustomDivider';
-import {useUserDetailsQuery} from '../../../store/features/userFeatures';
+import {useLogoutUserMutation, useUserDetailsQuery} from '../../../store/features/userFeatures';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ResetNavigations } from '../../../utils/ResetNavigations';
 
 const PorfileCustomDrawer = props => {
   const theme = useSelector(state => state.themeAdmin);
   const {data: userData, isLoading, isError} = useUserDetailsQuery();
+  const [logoutUser, {isLoading: logoutLoading}] = useLogoutUserMutation();
+
   const [dataUser, setDataUser] = useState(null);
 
   useEffect(() => {
@@ -18,6 +21,21 @@ const PorfileCustomDrawer = props => {
       setDataUser(userData?.data);
     }
   }, [userData]);
+
+
+  const handleLogout = async () => {
+    const logout = await logoutUser({})
+      .unwrap()
+      .then(async res => {
+        await AsyncStorage.clear();
+        ResetNavigations({navigation: navigation, routeName: 'Login'});
+        console.log('logout res', res.message);
+      })
+      .catch(error => {
+        console.log('logouterror', error);
+      });
+  };
+
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
       <DrawerContentScrollView {...props}>
