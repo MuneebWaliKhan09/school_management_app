@@ -24,10 +24,10 @@ const ProfileCustomDrawer = props => {
   const [dataUser, setdataUser] = useState(null);
 
   useEffect(() => {
-    if (dataUser) {
+    if (userData) {
       setdataUser(userData?.data);
     }
-  }, [dataUser]);
+  }, [userData]);
 
   const handleLogout = async () => {
     const logout = await logoutUser({})

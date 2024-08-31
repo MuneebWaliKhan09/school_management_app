@@ -24,10 +24,10 @@ const PorfileCustomDrawer = props => {
   const [dataUser, setDataUser] = useState(null);
 
   useEffect(() => {
-    if (dataUser) {
+    if (userData) {
       setDataUser(userData?.data);
     }
-  }, [dataUser]);
+  }, [userData]);
 
   const handleLogout = async () => {
     const logout = await logoutUser({})
