@@ -2,7 +2,7 @@ import {View, Text, Image} from 'react-native';
 import React from 'react';
 import { responsiveFontSize, responsiveScreenFontSize } from 'react-native-responsive-dimensions';
 
-const ErrorCustom = () => {
+const ErrorCustom = ({message}) => {
   return (
     <View
       style={{
@@ -25,7 +25,7 @@ const ErrorCustom = () => {
           padding:10,
           color: '#EE5253',
         }}>
-        You'r not yet Class Teacher of any class please contact admin !
+        {message}
       </Text>
     </View>
   );

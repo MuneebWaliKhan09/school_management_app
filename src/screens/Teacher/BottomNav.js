@@ -8,6 +8,7 @@ import PorfileDrawerTcr from './drawers/PorfileDrawerTcr';
 import StudentsDrawerTcr from './drawers/StudentsDrawerTcr';
 import CustomHeader from '../../components/CustomHeader';
 import LottieView from 'lottie-react-native';
+import AttendanceDrawerTcr from './drawers/AttendanceDrawerTcr';
 
 const Bottom = createBottomTabNavigator();
 
@@ -60,7 +61,7 @@ const BottomNav = () => {
       <Bottom.Screen
         name="Attendance"
         options={{headerShown: false}}
-        component={StudentsDrawerTcr}
+        component={AttendanceDrawerTcr}
       />
       <Bottom.Screen
         name="Classes"
