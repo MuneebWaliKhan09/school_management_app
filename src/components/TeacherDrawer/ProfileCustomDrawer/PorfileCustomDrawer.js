@@ -12,8 +12,11 @@ import {
 } from '../../../store/features/userFeatures';
 import {ResetNavigations} from '../../../utils/ResetNavigations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CheckTokenExp from '../../../utils/CheckTokenExp';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileCustomDrawer = props => {
+    const navigation = useNavigation()
   const theme = useSelector(state => state.themeTeacher);
   const {data: userData} = useUserDetailsQuery();
   const [logoutUser, {isLoading}] = useLogoutUserMutation();
@@ -21,26 +24,27 @@ const ProfileCustomDrawer = props => {
   const [dataUser, setdataUser] = useState(null);
 
   useEffect(() => {
-    if (userData) {
-      setdataUser(userData && userData?.data);
+    if (dataUser) {
+      setdataUser(userData?.data);
     }
-  }, [userData]);
+  }, [dataUser]);
 
   const handleLogout = async () => {
     const logout = await logoutUser({})
       .unwrap()
       .then(async res => {
-        await AsyncStorage.clear();
-        ResetNavigations({navigation: navigation, routeName: 'Login'});
+        await AsyncStorage.removeItem("accessToken");
+        await AsyncStorage.removeItem("userData");
+        ResetNavigations({navigation: navigation, routeName: 'Login'}); // reset the previous path route so wont go back
         console.log('logout res', res.message);
       })
       .catch(error => {
         console.log('logouterror', error);
       });
   };
-
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
+      <CheckTokenExp/>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>

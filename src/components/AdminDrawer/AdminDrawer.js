@@ -32,30 +32,17 @@ const AdminDrawer = ({props}) => {
   const {data: userData} = useUserDetailsQuery();
 
   useEffect(() => {
-    const validateTokenAndFetchDetails = async () => {
-      const isValidToken = await CheckTokenExp(navigation)
-        .then(async res => {
-          getDetails();
-        })
-        .catch(async error => {
-          if (error) {
-            const logout = await logoutUser({}).unwrap();
-            console.log('logoutdata', logout.data);
-          }
-        });
-    };
-    validateTokenAndFetchDetails();
-  }, [isFocused, userData]);
-
-  const getDetails = () => {
-    setData(userData?.data);
-  };
+    if (userData) {
+      setData(userData?.data);
+    }
+  }, [userData]);
 
   const handleLogout = async () => {
     const logout = await logoutUser({})
       .unwrap()
       .then(async res => {
-        await AsyncStorage.clear();
+        await AsyncStorage.removeItem('accessToken');
+        await AsyncStorage.removeItem('userData');
         ResetNavigations({navigation: navigation, routeName: 'Login'}); // reset the previous path route so wont go back
         console.log('logout res', res.message);
       })

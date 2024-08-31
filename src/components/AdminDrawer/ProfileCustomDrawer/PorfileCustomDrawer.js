@@ -12,8 +12,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ResetNavigations} from '../../../utils/ResetNavigations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import CheckTokenExp from '../../../utils/CheckTokenExp';
 
 const PorfileCustomDrawer = props => {
+    const navigation = useNavigation()
   const theme = useSelector(state => state.themeAdmin);
   const {data: userData, isError} = useUserDetailsQuery();
   const [logoutUser, {isLoading}] = useLogoutUserMutation();
@@ -21,17 +24,18 @@ const PorfileCustomDrawer = props => {
   const [dataUser, setDataUser] = useState(null);
 
   useEffect(() => {
-    if (userData) {
+    if (dataUser) {
       setDataUser(userData?.data);
     }
-  }, [userData]);
+  }, [dataUser]);
 
   const handleLogout = async () => {
     const logout = await logoutUser({})
       .unwrap()
       .then(async res => {
-        await AsyncStorage.clear();
-        ResetNavigations({navigation: navigation, routeName: 'Login'});
+        await AsyncStorage.removeItem("accessToken");
+        await AsyncStorage.removeItem("userData");
+        ResetNavigations({navigation: navigation, routeName: 'Login'}); // reset the previous path route so wont go back
         console.log('logout res', res.message);
       })
       .catch(error => {
@@ -41,6 +45,7 @@ const PorfileCustomDrawer = props => {
 
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
+      <CheckTokenExp/>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>

@@ -13,8 +13,10 @@ import {
 import {ResetNavigations} from '../../../utils/ResetNavigations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckTokenExp from '../../../utils/CheckTokenExp';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileCustomDrawer = props => {
+  const navigation = useNavigation()
   const theme = useSelector(state => state.themeStudent);
   const {data: userData} = useUserDetailsQuery();
   const [logoutUser, {isLoading}] = useLogoutUserMutation();
