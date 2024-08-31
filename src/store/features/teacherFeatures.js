@@ -4,12 +4,11 @@ import {teacher_End_Points, API_TEACHER_URL} from '../../strings/Strings';
 export const teacherApi = createApi({
   reducerPath: 'teacherApi',
   baseQuery: fetchBaseQuery({baseUrl: API_TEACHER_URL}),
-  tagTypes: ['Teacher', 'Student'],
+  tagTypes: ['Teacher', 'Student','Attendance'],
   endpoints: builder => ({
     teacherDetails: builder.query({
       query: () => teacher_End_Points.teacherProfile,
       providesTags: ['Teacher'],
-      keepUnusedDataFor: 0,
     }),
     allStudentsClassTeacher: builder.query({
       query: () => teacher_End_Points.allStudentsOfClass,
@@ -50,6 +49,18 @@ export const teacherApi = createApi({
       }),
       invalidatesTags: ['Student'],
     }),
+    takeAttendance: builder.mutation({
+      query: (data) => ({
+        url: teacher_End_Points.takeAttendanceClass,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Attendance'],
+    }),
+    getTodayAttendace: builder.query({
+      query: () => teacher_End_Points.attendanceClassToday,
+      providesTags: ['Attendance'],
+    }),
   }),
 });
 
@@ -61,4 +72,6 @@ export const {
   useRemoveStudentMutation,
   useRegisterStudentToClassMutation,
   useUpdateStudentAvatarMutation,
+  useTakeAttendanceMutation,
+  useGetTodayAttendaceQuery
 } = teacherApi;

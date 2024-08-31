@@ -9,7 +9,6 @@ export const studentApi = createApi({
     studentDetails: builder.query({
       query: () => student_End_Points.studentProfile,
       providesTags: ['Student'],
-      keepUnusedDataFor: 0,
     }),
   }),
 });

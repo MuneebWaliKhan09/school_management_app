@@ -28,7 +28,7 @@ export const teacher_End_Points = {
     updateStudentClass: '/update-student-class/',// ✅
     updateStudentAvatar: '/update-student-avatar/',// ✅
     removeStudentClass: '/remove-student-class/',// ✅
-    takeAttendanceClass: '/take-attendance-class',
+    takeAttendanceClass: '/take-attendance-class',//❓
     attendanceClassToday: '/attendance-class-today',
     notifyStudentsAbsent: '/notify-students-absent',
     giveAssignmentClass: '/give-assigment-class',

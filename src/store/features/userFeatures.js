@@ -29,7 +29,6 @@ export const userApi = createApi({
     userDetails: builder.query({
       query: () => user_End_Points.getUserDetails,
       providesTags: ['User'],
-      keepUnusedDataFor: 0,
     }),
 
     changePasswordUser: builder.mutation({
