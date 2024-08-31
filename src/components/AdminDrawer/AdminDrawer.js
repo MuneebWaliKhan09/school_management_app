@@ -43,6 +43,9 @@ const AdminDrawer = ({props}) => {
       .then(async res => {
         await AsyncStorage.removeItem('accessToken');
         await AsyncStorage.removeItem('userData');
+        await AsyncStorage.removeItem("themeStudent")
+        await AsyncStorage.removeItem("themeAdmin")
+        await AsyncStorage.removeItem("themeTeacher")
         ResetNavigations({navigation: navigation, routeName: 'Login'}); // reset the previous path route so wont go back
         console.log('logout res', res.message);
       })
