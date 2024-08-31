@@ -90,16 +90,6 @@ const Loader = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar
-        barStyle={'light-content'}
-        backgroundColor={
-          role === 'admin'
-            ? themeA.background
-            : role === 'teacher'
-            ? themeT.background
-            : themeS.background
-        }
-      />
       <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
         <Animated.Text
           style={[
