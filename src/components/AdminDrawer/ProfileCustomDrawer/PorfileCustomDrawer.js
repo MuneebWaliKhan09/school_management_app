@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   drawerItemLabel: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '400',
     color: GHOST_WHITE,
   },
