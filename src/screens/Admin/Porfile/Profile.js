@@ -11,13 +11,24 @@ import {
 } from 'react-native-responsive-dimensions';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import Loader from '../../../Loaders/Loader';
 
 const Profile = () => {
   const theme = useSelector(state => state.themeAdmin);
   const nav = useNavigation();
-  const {data: userData, isLoading, isError} = useUserDetailsQuery();
+  const {
+    data: userData,
+    isLoading,
+    isError,
+    isFetching,
+  } = useUserDetailsQuery();
   const [dataUser, setDataUser] = useState(null);
 
+
+  if(isLoading || isFetching){
+    return <Loader/>
+  }
+  
   useEffect(() => {
     if (userData) {
       setDataUser(userData?.data);
@@ -27,12 +38,10 @@ const Profile = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Divider />
-      <View style={[styles.topNav, {backgroundColor: theme?.background}]}></View>
+      <View
+        style={[styles.topNav, {backgroundColor: theme?.background}]}></View>
       <View style={{flex: 1}}>
-        <UserProfile
-          dataUser={dataUser}
-          isLoading={isLoading}
-        />
+          <UserProfile dataUser={dataUser} isLoading={isLoading} />
       </View>
     </SafeAreaView>
   );

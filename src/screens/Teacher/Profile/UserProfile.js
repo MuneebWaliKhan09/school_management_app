@@ -20,7 +20,6 @@ const UserProfile = ({ dataUser }) => {
   const userData = dataUser ? dataUser : null;
   const theme = useSelector((state)=> state.themeTeacher)
 
-
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>

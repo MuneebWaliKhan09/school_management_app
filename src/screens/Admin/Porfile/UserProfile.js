@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 const UserProfile = ({ dataUser }) => {
   const userData = dataUser ? dataUser : null;
   const theme = useSelector((state)=> state.themeAdmin)
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>

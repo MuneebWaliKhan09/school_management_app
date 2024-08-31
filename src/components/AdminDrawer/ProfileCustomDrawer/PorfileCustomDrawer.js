@@ -27,8 +27,8 @@ const PorfileCustomDrawer = props => {
               source={require('../../../images/icons/profile.png')}
               size={80}
             />
-            <Title style={styles.title}>Admin</Title>
-            <Caption style={styles.caption}>Admin@gmail.com</Caption>
+            <Title style={styles.title}>{userData?.data?.username || ''}</Title>
+            <Caption style={styles.caption}>{userData?.data?.email ||''}</Caption>
           </View>
 
           <CustomDivider />

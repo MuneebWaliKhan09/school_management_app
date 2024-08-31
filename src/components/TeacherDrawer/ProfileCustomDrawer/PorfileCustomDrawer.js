@@ -12,8 +12,6 @@ const ProfileCustomDrawer = props => {
   const theme = useSelector(state => state.themeTeacher);
   const {
     data: userData,
-    isLoading: loadingUserData,
-    isError,
   } = useUserDetailsQuery();
   const [dataUser, setdataUser] = useState(null);
 
@@ -32,8 +30,8 @@ const ProfileCustomDrawer = props => {
               source={require('../../../images/icons/profile.png')}
               size={80}
             />
-            <Title style={styles.title}>Teacher</Title>
-            <Caption style={styles.caption}>Teacher@gmail.com</Caption>
+            <Title style={styles.title}>{userData?.data?.username || ''}</Title>
+            <Caption style={styles.caption}>{userData?.data?.email || ''}</Caption>
           </View>
 
           <CustomDivider />
@@ -99,7 +97,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   drawerItemLabel: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '400',
     color: GHOST_WHITE,
   },

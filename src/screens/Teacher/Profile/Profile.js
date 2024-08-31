@@ -19,6 +19,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import Loader from '../../../Loaders/Loader';
 
 const Profile = () => {
   const theme = useSelector(state => state.themeTeacher);
@@ -28,6 +29,10 @@ const Profile = () => {
   const {data: teacherDetails, isError: teacherErrorProfile,isLoading:loadingTeacherData} = useTeacherDetailsQuery();
   const [dataUser, setdataUser] = useState(null);
   const [teacherData, setteacherData] = useState(null);
+
+  if(loadingUserData || loadingTeacherData){
+    return <Loader/>
+  }
 
   useEffect(() => {
     if (teacherDetails) {
@@ -62,9 +67,9 @@ const Profile = () => {
       </View>
       <View style={{flex: 1}}>
         {selectedTab === 'user' ? (
-          <UserProfile dataUser={dataUser}/>
+          <UserProfile dataUser={dataUser} />
         ) : (
-          <TeacherProfile teacherData={teacherData} loadingTeacherData={loadingTeacherData}/>
+          <TeacherProfile teacherData={teacherData} />
         )}
       </View>
     </SafeAreaView>
