@@ -24,16 +24,15 @@ const Profile = () => {
   } = useUserDetailsQuery();
   const [dataUser, setDataUser] = useState(null);
 
-
-  if(isLoading || isFetching){
-    return <Loader/>
-  }
-  
   useEffect(() => {
     if (userData) {
       setDataUser(userData?.data);
     }
   }, [userData]);
+
+  if (isLoading || isFetching) {
+    return <Loader />;
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -41,7 +40,7 @@ const Profile = () => {
       <View
         style={[styles.topNav, {backgroundColor: theme?.background}]}></View>
       <View style={{flex: 1}}>
-          <UserProfile dataUser={dataUser} isLoading={isLoading} />
+        <UserProfile dataUser={dataUser} isLoading={isLoading} />
       </View>
     </SafeAreaView>
   );

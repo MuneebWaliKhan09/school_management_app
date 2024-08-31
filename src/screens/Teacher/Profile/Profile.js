@@ -11,28 +11,32 @@ import TeacherProfile from './TeacherProfile';
 import {THEME_COLOR} from '../../../strings/Colors';
 import {Divider} from 'react-native-paper';
 import {useUserDetailsQuery} from '../../../store/features/userFeatures';
-import { useTeacherDetailsQuery } from '../../../store/features/teacherFeatures';
+import {useTeacherDetailsQuery} from '../../../store/features/teacherFeatures';
 import {
   responsiveWidth,
   responsiveHeight,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 import Loader from '../../../Loaders/Loader';
 
 const Profile = () => {
   const theme = useSelector(state => state.themeTeacher);
-  const nav = useNavigation()
+  const nav = useNavigation();
   const [selectedTab, setSelectedTab] = useState('user');
-  const {data: userData, isLoading:loadingUserData, isError} = useUserDetailsQuery();
-  const {data: teacherDetails, isError: teacherErrorProfile,isLoading:loadingTeacherData} = useTeacherDetailsQuery();
+  const {
+    data: userData,
+    isLoading: loadingUserData,
+    isError,
+  } = useUserDetailsQuery();
+  const {
+    data: teacherDetails,
+    isError: teacherErrorProfile,
+    isLoading: loadingTeacherData,
+  } = useTeacherDetailsQuery();
   const [dataUser, setdataUser] = useState(null);
   const [teacherData, setteacherData] = useState(null);
-
-  if(loadingUserData || loadingTeacherData){
-    return <Loader/>
-  }
 
   useEffect(() => {
     if (teacherDetails) {
@@ -43,11 +47,14 @@ const Profile = () => {
     }
   }, [userData, teacherDetails]);
 
+  if (loadingUserData || loadingTeacherData) {
+    return <Loader />;
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <Divider />
-      <View style={[styles.topNav, {backgroundColor:theme.background}]}>
+      <View style={[styles.topNav, {backgroundColor: theme.background}]}>
         <TouchableOpacity
           style={[
             styles.navButton,

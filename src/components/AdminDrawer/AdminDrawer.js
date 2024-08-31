@@ -39,7 +39,7 @@ const AdminDrawer = ({props}) => {
         })
         .catch(async error => {
           if (error) {
-            const logout = await logoutUser({});
+            const logout = await logoutUser({}).unwrap();
             console.log('logoutdata', logout.data);
           }
         });
@@ -149,7 +149,7 @@ const AdminDrawer = ({props}) => {
               style={{width: size, height: size, tintColor: Half_WHITE}}
             />
           )}
-          label={isLoading ? 'Loading..' : 'Logout'}
+          label={isLoading ? 'Loading...' : 'Logout'}
           labelStyle={{color: GHOST_WHITE}}
           onPress={handleLogout}
         />
