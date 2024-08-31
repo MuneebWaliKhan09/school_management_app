@@ -14,45 +14,35 @@ import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckTokenExp from '../../utils/CheckTokenExp';
 import {useNavigation} from '@react-navigation/native';
-import {useLogoutUserMutation, useUserDetailsQuery} from '../../store/features/userFeatures';
+import {
+  useLogoutUserMutation,
+  useUserDetailsQuery,
+} from '../../store/features/userFeatures';
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomDivider from '../CustomDivider';
 import {ResetNavigations} from '../../utils/ResetNavigations';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const StudentDrawer = props => {
-  const theme = useSelector((state)=> state.themeStudent)
+  const theme = useSelector(state => state.themeStudent);
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const isFocused = useIsFocused();
-  const [logoutUser,{isLoading}] = useLogoutUserMutation();
+  const [logoutUser, {isLoading}] = useLogoutUserMutation();
   const {data: userData} = useUserDetailsQuery();
 
   useEffect(() => {
-    const validateTokenAndFetchDetails = async () => {
-      const isValidToken = await CheckTokenExp(navigation)
-        .then(res => {
-          getDetails();
-        })
-        .catch(async error => {
-          if (error) {
-            const logout = await logoutUser({});
-            console.log('logoutdata', logout.data);
-          }
-        });
-    };
-    validateTokenAndFetchDetails();
-  }, [isFocused,userData]);
-
-  const getDetails = () => {
-    setData(userData?.data);
-  };
+    if (userData) {
+      setData(userData?.data);
+    }
+  }, [userData]);
 
   const handleLogout = async () => {
     const logout = await logoutUser({})
       .unwrap()
       .then(async res => {
-        await AsyncStorage.clear();
+        await AsyncStorage.removeItem("accessToken");
+        await AsyncStorage.removeItem("userData");
         ResetNavigations({navigation: navigation, routeName: 'Login'}); // reset the previous path route so wont go back
         console.log('logout res', res.message);
       })
@@ -61,12 +51,13 @@ const StudentDrawer = props => {
       });
   };
 
-  const handleThemeChange = ()=>{
-    navigation.navigate("StudentStack", {screen: "ThemeChangerStudent"})
-  }
+  const handleThemeChange = () => {
+    navigation.navigate('StudentStack', {screen: 'ThemeChangerStudent'});
+  };
 
   return (
-    <View style={[styles.container, {backgroundColor:theme.background}]}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
+      <CheckTokenExp/>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
@@ -148,7 +139,7 @@ const StudentDrawer = props => {
               style={{width: size, height: size, tintColor: Half_WHITE}}
             />
           )}
-          label={isLoading ? "Loading..": "Logout"}
+          label={isLoading ? 'Loading..' : 'Logout'}
           labelStyle={{color: GHOST_WHITE}}
           onPress={handleLogout}
         />

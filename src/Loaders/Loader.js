@@ -40,33 +40,23 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {THEME_COLOR} from '../strings/Colors';
 import {useSelector} from 'react-redux';
+import {useUserDetailsQuery} from '../store/features/userFeatures';
 
 const Loader = () => {
+  const {data: userData} = useUserDetailsQuery();
   const themeA = useSelector(state => state.themeAdmin);
   const themeT = useSelector(state => state.themeTeacher);
   const themeS = useSelector(state => state.themeStudent);
+  const [role, setrole] = useState('');
 
-  const [themeselector, setthemeselector] = useState('');
-
-  console.log('themA', themeA);
-  console.log('themT', themeT);
-  console.log('themS', themeS);
-
-  const defaultTheme = '#063970';
   useEffect(() => {
-    if (themeA === defaultTheme) {
-      setthemeselector(themeA);
-    } else if (themeT) {
-      setthemeselector(themeT);
-    } else if (themeS) {
-      setthemeselector(themeS);
-    } else {
-      setthemeselector(defaultTheme);
+    if (userData && userData?.role) {
+      setrole(userData?.role);
     }
-  }, []);
+  }, [userData,role]);
 
   // Dots animation
   const opacityAnim1 = useRef(new Animated.Value(1)).current;
@@ -102,28 +92,66 @@ const Loader = () => {
     <View style={styles.container}>
       <StatusBar
         barStyle={'light-content'}
-        backgroundColor={themeS?.background}
+        backgroundColor={
+          role === 'admin'
+            ? themeA.background
+            : role === 'teacher'
+            ? themeT.background
+            : themeS.background
+        }
       />
       <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
         <Animated.Text
           style={[
             styles.dot,
-            {opacity: opacityAnim1, backgroundColor: themeS.background},
+            {
+              opacity: opacityAnim1,
+              backgroundColor:
+                role === 'admin'
+                  ? themeA.background
+                  : role === 'teacher'
+                  ? themeT.background
+                  : themeS.background,
+            },
           ]}></Animated.Text>
         <Animated.Text
           style={[
             styles.dot,
-            {opacity: opacityAnim2, backgroundColor: themeS.background},
+            {
+              opacity: opacityAnim2,
+              backgroundColor:
+                role === 'admin'
+                  ? themeA.background
+                  : role === 'teacher'
+                  ? themeT.background
+                  : themeS.background,
+            },
           ]}></Animated.Text>
         <Animated.Text
           style={[
             styles.dot,
-            {opacity: opacityAnim3, backgroundColor: themeS.background},
+            {
+              opacity: opacityAnim3,
+              backgroundColor:
+                role === 'admin'
+                  ? themeA.background
+                  : role === 'teacher'
+                  ? themeT.background
+                  : themeS.background,
+            },
           ]}></Animated.Text>
         <Animated.Text
           style={[
             styles.dot,
-            {opacity: opacityAnim4, backgroundColor: themeS.background},
+            {
+              opacity: opacityAnim4,
+              backgroundColor:
+                role === 'admin'
+                  ? themeA.background
+                  : role === 'teacher'
+                  ? themeT.background
+                  : themeS.background,
+            },
           ]}></Animated.Text>
       </View>
     </View>

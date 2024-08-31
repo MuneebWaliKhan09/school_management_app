@@ -1,23 +1,44 @@
+// CheckTokenExp.js
+import React, {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
+import {useNavigation} from '@react-navigation/native';
 
-const CheckTokenExp = async (navigation) => {
+const CheckTokenExp = () => {
+  const navigation = useNavigation();
 
-  const token = await AsyncStorage.getItem('accessToken');
-  if (!token) {
-    return false; // No token found
-  }
+  const checkTokenExp = async () => {
+    try {
+      const token = await AsyncStorage.getItem('accessToken');
 
-  const decodedToken = jwtDecode(token);
-  const currentTime = Date.now() / 1000;
+      if (!token) {
+        return false;
+      }
 
-  // Check if token is expired
-  if (decodedToken.exp < currentTime) {
-    await AsyncStorage.clear();
-    navigation.navigate('Welcome');
-  }
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
 
-  return true; // Token is valid
+      if (decodedToken.exp < currentTime) {
+        console.log('Token expired');
+        await AsyncStorage.removeItem('accessToken');
+        navigation.navigate('Welcome');
+        return false;
+      } else {
+        console.log('valid token');
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error checkTokenExp:', error);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    checkTokenExp();
+  }, []);
+
+  return null;
 };
 
 export default CheckTokenExp;

@@ -4,7 +4,6 @@ import Profile from '../Student/Profile/Profile';
 import {GHOST_WHITE, THEME_COLOR} from '../../strings/Colors';
 import CustomHeader from '../../components/CustomHeader';
 import StudentDrawer from '../../components/StudentDrawer/StudentDrawer';
-import StudentMain from '../Student/StudentMain';
 import { useSelector } from 'react-redux';
 import BottomNav from '../Student/BottomNav';
 

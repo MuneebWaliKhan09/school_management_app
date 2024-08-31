@@ -11,6 +11,7 @@ import {
   useUserDetailsQuery,
 } from '../../../store/features/userFeatures';
 import {ResetNavigations} from '../../../utils/ResetNavigations';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileCustomDrawer = props => {
   const theme = useSelector(state => state.themeTeacher);
