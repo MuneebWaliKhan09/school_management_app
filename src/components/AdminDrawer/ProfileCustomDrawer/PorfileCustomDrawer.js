@@ -1,18 +1,21 @@
 import {View, Text, StyleSheet} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {Avatar, Caption, Drawer, Title} from 'react-native-paper';
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../../strings/Colors';
 import {useSelector} from 'react-redux';
 import CustomDivider from '../../CustomDivider';
-import {useLogoutUserMutation, useUserDetailsQuery} from '../../../store/features/userFeatures';
+import {
+  useLogoutUserMutation,
+  useUserDetailsQuery,
+} from '../../../store/features/userFeatures';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ResetNavigations } from '../../../utils/ResetNavigations';
+import {ResetNavigations} from '../../../utils/ResetNavigations';
 
 const PorfileCustomDrawer = props => {
   const theme = useSelector(state => state.themeAdmin);
-  const {data: userData, isLoading, isError} = useUserDetailsQuery();
-  const [logoutUser, {isLoading: logoutLoading}] = useLogoutUserMutation();
+  const {data: userData, isError} = useUserDetailsQuery();
+  const [logoutUser, {isLoading}] = useLogoutUserMutation();
 
   const [dataUser, setDataUser] = useState(null);
 
@@ -21,7 +24,6 @@ const PorfileCustomDrawer = props => {
       setDataUser(userData?.data);
     }
   }, [userData]);
-
 
   const handleLogout = async () => {
     const logout = await logoutUser({})
@@ -46,38 +48,54 @@ const PorfileCustomDrawer = props => {
               size={80}
             />
             <Title style={styles.title}>{userData?.data?.username || ''}</Title>
-            <Caption style={styles.caption}>{userData?.data?.email ||''}</Caption>
+            <Caption style={styles.caption}>
+              {userData?.data?.email || ''}
+            </Caption>
           </View>
 
           <CustomDivider />
 
-          <Drawer.Section style={styles.drawerSection}>
+          <View
+            style={{
+              flexDirection: 'column',
+            }}>
+            <Drawer.Section style={styles.drawerSection}>
+              <DrawerItem
+                label="Edit Profile"
+                onPress={() => {
+                  props.navigation.navigate('ActionsAdminProfile', {
+                    screen: 'EditProfileAdmin',
+                    params: {userData: dataUser}, // Pass userData as params
+                  });
+                }}
+                icon={({color, size}) => (
+                  <Icon name="account-edit" size={size} color={GHOST_WHITE} />
+                )}
+                labelStyle={styles.drawerItemLabel}
+              />
+              <DrawerItem
+                label="Edit Password"
+                onPress={() => {
+                  props.navigation.navigate('ActionsAdminProfile', {
+                    screen: 'EditPasswordAdmin',
+                  });
+                }}
+                icon={({color, size}) => (
+                  <Icon name="lock-reset" size={size} color={GHOST_WHITE} />
+                )}
+                labelStyle={styles.drawerItemLabel}
+              />
+            </Drawer.Section>
             <DrawerItem
-              label="Edit Profile"
-              onPress={() => {
-                props.navigation.navigate('ActionsAdminProfile', {
-                  screen: 'EditProfileAdmin',
-                  params: {userData: dataUser}, // Pass userData as params
-                });
-              }}
+              style={styles.bottomDrawerSection}
+              label={isLoading ? 'Loading...' : 'Logout'}
+              onPress={() => handleLogout()}
               icon={({color, size}) => (
-                <Icon name="account-edit" size={size} color={GHOST_WHITE} />
+                <Icon name="logout" size={size} color={GHOST_WHITE} />
               )}
               labelStyle={styles.drawerItemLabel}
             />
-            <DrawerItem
-              label="Edit Password"
-              onPress={() => {
-                props.navigation.navigate('ActionsAdminProfile', {
-                  screen: 'EditPasswordAdmin',
-                });
-              }}
-              icon={({color, size}) => (
-                <Icon name="lock-reset" size={size} color={GHOST_WHITE} />
-              )}
-              labelStyle={styles.drawerItemLabel}
-            />
-          </Drawer.Section>
+          </View>
         </View>
       </DrawerContentScrollView>
     </View>

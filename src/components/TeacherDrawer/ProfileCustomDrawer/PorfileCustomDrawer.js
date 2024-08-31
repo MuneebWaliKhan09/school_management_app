@@ -6,13 +6,17 @@ import {useSelector} from 'react-redux';
 import CustomDivider from '../../CustomDivider';
 import {GHOST_WHITE, Half_WHITE, THEME_COLOR} from '../../../strings/Colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useUserDetailsQuery} from '../../../store/features/userFeatures';
+import {
+  useLogoutUserMutation,
+  useUserDetailsQuery,
+} from '../../../store/features/userFeatures';
+import {ResetNavigations} from '../../../utils/ResetNavigations';
 
 const ProfileCustomDrawer = props => {
   const theme = useSelector(state => state.themeTeacher);
-  const {
-    data: userData,
-  } = useUserDetailsQuery();
+  const {data: userData} = useUserDetailsQuery();
+  const [logoutUser, {isLoading}] = useLogoutUserMutation();
+
   const [dataUser, setdataUser] = useState(null);
 
   useEffect(() => {
@@ -20,6 +24,19 @@ const ProfileCustomDrawer = props => {
       setdataUser(userData && userData?.data);
     }
   }, [userData]);
+
+  const handleLogout = async () => {
+    const logout = await logoutUser({})
+      .unwrap()
+      .then(async res => {
+        await AsyncStorage.clear();
+        ResetNavigations({navigation: navigation, routeName: 'Login'});
+        console.log('logout res', res.message);
+      })
+      .catch(error => {
+        console.log('logouterror', error);
+      });
+  };
 
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
@@ -31,38 +48,52 @@ const ProfileCustomDrawer = props => {
               size={80}
             />
             <Title style={styles.title}>{userData?.data?.username || ''}</Title>
-            <Caption style={styles.caption}>{userData?.data?.email || ''}</Caption>
+            <Caption style={styles.caption}>
+              {userData?.data?.email || ''}
+            </Caption>
           </View>
 
           <CustomDivider />
 
-          <Drawer.Section style={styles.drawerSection}>
+          <View
+            style={{justifyContent: 'space-between', flexDirection: 'column'}}>
+            <Drawer.Section style={styles.drawerSection}>
+              <DrawerItem
+                label="Edit Profile"
+                onPress={() => {
+                  props.navigation.navigate('ActionsTeacherProfile', {
+                    screen: 'EditProfileTeacher',
+                    params: {userData: dataUser},
+                  });
+                }}
+                icon={({color, size}) => (
+                  <Icon name="account-edit" size={size} color={GHOST_WHITE} />
+                )}
+                labelStyle={styles.drawerItemLabel}
+              />
+              <DrawerItem
+                label="Edit Password"
+                onPress={() => {
+                  props.navigation.navigate('ActionsTeacherProfile', {
+                    screen: 'EditPasswordTeacher',
+                  });
+                }}
+                icon={({color, size}) => (
+                  <Icon name="lock-reset" size={size} color={GHOST_WHITE} />
+                )}
+                labelStyle={styles.drawerItemLabel}
+              />
+            </Drawer.Section>
             <DrawerItem
-              label="Edit Profile"
-              onPress={() => {
-                props.navigation.navigate('ActionsTeacherProfile', {
-                  screen: 'EditProfileTeacher',
-                  params: {userData: dataUser},
-                });
-              }}
+              style={styles.bottomDrawerSection}
+              label={isLoading ? 'Loading...' : 'Logout'}
+              onPress={() => handleLogout()}
               icon={({color, size}) => (
-                <Icon name="account-edit" size={size} color={GHOST_WHITE} />
+                <Icon name="logout" size={size} color={GHOST_WHITE} />
               )}
               labelStyle={styles.drawerItemLabel}
             />
-            <DrawerItem
-              label="Edit Password"
-              onPress={() => {
-                props.navigation.navigate('ActionsTeacherProfile', {
-                  screen: 'EditPasswordTeacher',
-                });
-              }}
-              icon={({color, size}) => (
-                <Icon name="lock-reset" size={size} color={GHOST_WHITE} />
-              )}
-              labelStyle={styles.drawerItemLabel}
-            />
-          </Drawer.Section>
+          </View>
         </View>
       </DrawerContentScrollView>
     </View>
