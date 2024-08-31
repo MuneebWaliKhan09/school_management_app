@@ -16,7 +16,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import { useSelector } from 'react-redux';
 
-const UserProfile = ({ dataUser, onEditProfile, onUpdatePassword }) => {
+const UserProfile = ({ dataUser }) => {
   const userData = dataUser ? dataUser : null;
   const theme = useSelector((state)=> state.themeStudent)
 
@@ -79,22 +79,6 @@ const UserProfile = ({ dataUser, onEditProfile, onUpdatePassword }) => {
           </View>
         </View>
       </ScrollView>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button,{backgroundColor:theme.background}]} onPress={onEditProfile}>
-          <Image
-            style={styles.buttonIcon}
-            source={require('../../../images/icons/edit.png')}
-          />
-          <Text style={styles.buttonText}>Edit Profile</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button,{backgroundColor:theme.background}]} onPress={onUpdatePassword}>
-          <Image
-            style={styles.buttonIcon}
-            source={require('../../../images/icons/password.png')}
-          />
-          <Text style={styles.buttonText}>Edit Password</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
@@ -169,35 +153,6 @@ const styles = StyleSheet.create({
   },
   value: {
     color: THEME_COLOR2,
-  },
-  buttonContainer: {
-    flex:1/9,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: responsiveWidth(5),
-    width: '100%',
-    backgroundColor: WHITE_BG,
-  },
-  button: {
-    width:responsiveWidth(38),
-    height: responsiveHeight(5.5),
-    marginHorizontal: responsiveWidth(2),
-    backgroundColor: THEME_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: responsiveWidth(2),
-    flexDirection: 'row',
-  },
-  buttonIcon: {
-    width: responsiveWidth(5),
-    height: responsiveHeight(2.5),
-    marginRight: responsiveWidth(2),
-    resizeMode: 'contain',
-    tintColor:WHITE_BG
-  },
-  buttonText: {
-    color: WHITE_BG,
-    fontSize: responsiveFontSize(1.8),
   },
 });
 

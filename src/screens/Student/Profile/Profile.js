@@ -19,13 +19,14 @@ import {
 } from 'react-native-responsive-dimensions';
 import {useNavigation} from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import Loader from '../../../Loaders/Loader';
 
 const Profile = () => {
   const theme = useSelector(state => state.themeStudent);
   const nav = useNavigation();
   const [selectedTab, setSelectedTab] = useState('user');
-  const {data: userData, isLoading, isError} = useUserDetailsQuery();
-  const {data: studentDetails, isError: studentErrorProfile} =
+  const {data: userData, isLoading: isLoadingUser} = useUserDetailsQuery();
+  const {data: studentDetails, isLoading: isLoadingStudent} =
     useStudentDetailsQuery();
   const [dataUser, setdataUser] = useState(null);
   const [studentData, setstudentData] = useState(null);
@@ -39,16 +40,9 @@ const Profile = () => {
     }
   }, [userData, studentDetails]);
 
-  const onEditProfile = () => {
-    nav.navigate('ActionsStudentProfile', {
-      screen: 'EditProfileStudent',
-      params: {userData: dataUser},
-    });
-  };
-
-  const onUpdatePassword = () => {
-    nav.navigate('ActionsStudentProfile', {screen: 'EditPasswordStudent'});
-  };
+  if(isLoadingUser || isLoadingStudent){
+    return <Loader/>
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -75,9 +69,6 @@ const Profile = () => {
         {selectedTab === 'user' ? (
           <UserProfile
             dataUser={dataUser}
-            isLoading={isLoading}
-            onEditProfile={onEditProfile}
-            onUpdatePassword={onUpdatePassword}
           />
         ) : (
           <StudentProfile studentData={studentData} />

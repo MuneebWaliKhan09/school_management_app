@@ -34,15 +34,40 @@
 //   },
 // });
 
-import { View, StatusBar, StyleSheet } from 'react-native';
-import { Animated } from 'react-native';
-import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-import React, { useEffect, useRef } from 'react';
-import { THEME_COLOR } from '../strings/Colors';
-import { useSelector } from 'react-redux';
+import {View, StatusBar, StyleSheet} from 'react-native';
+import {Animated} from 'react-native';
+import {
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+import React, {useEffect, useRef} from 'react';
+import {THEME_COLOR} from '../strings/Colors';
+import {useSelector} from 'react-redux';
 
 const Loader = () => {
-  const theme = useSelector((state)=> state.themeAdmin)
+  const themeA = useSelector(state => state.themeAdmin);
+  const themeT = useSelector(state => state.themeTeacher);
+  const themeS = useSelector(state => state.themeStudent);
+
+  const [themeselector, setthemeselector] = useState('');
+
+  console.log('themA', themeA);
+  console.log('themT', themeT);
+  console.log('themS', themeS);
+
+  const defaultTheme = '#063970';
+  useEffect(() => {
+    if (themeA === defaultTheme) {
+      setthemeselector(themeA);
+    } else if (themeT) {
+      setthemeselector(themeT);
+    } else if (themeS) {
+      setthemeselector(themeS);
+    } else {
+      setthemeselector(defaultTheme);
+    }
+  }, []);
+
   // Dots animation
   const opacityAnim1 = useRef(new Animated.Value(1)).current;
   const opacityAnim2 = useRef(new Animated.Value(1)).current;
@@ -62,7 +87,7 @@ const Loader = () => {
           duration: 500,
           useNativeDriver: true,
         }),
-      ])
+      ]),
     );
   };
 
@@ -75,12 +100,31 @@ const Loader = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle={'light-content'} backgroundColor={theme?.background} />
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <Animated.Text style={[styles.dot, { opacity: opacityAnim1 }]}></Animated.Text>
-        <Animated.Text style={[styles.dot, { opacity: opacityAnim2 }]}></Animated.Text>
-        <Animated.Text style={[styles.dot, { opacity: opacityAnim3 }]}></Animated.Text>
-        <Animated.Text style={[styles.dot, { opacity: opacityAnim4 }]}></Animated.Text>
+      <StatusBar
+        barStyle={'light-content'}
+        backgroundColor={themeS?.background}
+      />
+      <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
+        <Animated.Text
+          style={[
+            styles.dot,
+            {opacity: opacityAnim1, backgroundColor: themeS.background},
+          ]}></Animated.Text>
+        <Animated.Text
+          style={[
+            styles.dot,
+            {opacity: opacityAnim2, backgroundColor: themeS.background},
+          ]}></Animated.Text>
+        <Animated.Text
+          style={[
+            styles.dot,
+            {opacity: opacityAnim3, backgroundColor: themeS.background},
+          ]}></Animated.Text>
+        <Animated.Text
+          style={[
+            styles.dot,
+            {opacity: opacityAnim4, backgroundColor: themeS.background},
+          ]}></Animated.Text>
       </View>
     </View>
   );

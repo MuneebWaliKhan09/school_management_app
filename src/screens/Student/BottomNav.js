@@ -3,9 +3,8 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import StudentMain from './StudentMain';
 import {GHOST_WHITE, THEME_COLOR} from '../../strings/Colors';
-import Profile from './Profile/Profile';
 import {useSelector} from 'react-redux';
-import CustomHeader from '../../components/CustomHeader';
+import PorfileDrawer from './drawers/ProfileDrawer';
 
 const Bottom = createBottomTabNavigator();
 
@@ -34,14 +33,8 @@ const BottomNav = () => {
 
       <Bottom.Screen
         name="Profile"
-        component={Profile}
-        options={({navigation}) => ({
-          ...options,
-          headerStyle: {
-            backgroundColor: theme.background,
-          },
-          headerLeft: () => <CustomHeader navigation={navigation} />, // Custom header left component
-        })}
+        component={PorfileDrawer}
+        options={{headerShown:false}}
       />
     </Bottom.Navigator>
   );
