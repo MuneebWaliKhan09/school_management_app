@@ -9,6 +9,7 @@ import {useDispatch} from 'react-redux';
 import {loadTheme as adminLoadTheme} from '../../store/Theme/ThemeAdmin';
 import {loadTheme as studentLoadTheme} from '../../store/Theme/ThemeStudent';
 import {loadTheme as teacherLoadTheme} from '../../store/Theme/ThemeTeacher';
+import CheckTokenExp from '../../utils/CheckTokenExp';
 
 const Splash = () => {
   const screenFocused = useIsFocused();
@@ -47,6 +48,7 @@ const Splash = () => {
 
   return (
     <View style={styles.container}>
+    <CheckTokenExp/>
       {/* status bar is top layer where time,network,battery shows */}
       <StatusBar barStyle={'light-content'} backgroundColor={THEME_COLOR} />
       {/* <Image  style={styles.logo} source={require("../../images/splash.png")}/> */}

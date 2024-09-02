@@ -1,304 +1,35 @@
-// import React from 'react';
-// import {View, StyleSheet, ActivityIndicator} from 'react-native';
-// import {Card, Text, Avatar, Title, Paragraph} from 'react-native-paper';
-// import {useGetTodayAttendaceQuery} from '../../../store/features/teacherFeatures';
-// import {THEME_COLOR, GHOST_WHITE, Half_WHITE} from '../../../strings/Colors';
-// import ErrorCustom from '../../../Error/ErrorCustom';
-
-// const dummyTodayAttendance = [
-//   {
-//     studentName: 'Ali Khan',
-//     studentEmail: 'alikhan@gmail.com',
-//     AttClass: 'CLASS 2',
-//     date: '2024-03-22T05:40:02.146+00:00',
-//     status: 'present',
-//     markedBy: 'Naseeb Khan',
-//   },
-//   {
-//     studentName: 'Sara Ahmed',
-//     studentEmail: 'saraahmed@gmail.com',
-//     AttClass: 'CLASS 2',
-//     date: '2024-03-22T05:40:02.146+00:00',
-//     status: 'absent',
-//     markedBy: 'Naseeb Khan',
-//   },
-//   {
-//     studentName: 'Umar Farooq',
-//     studentEmail: 'umarfarooq@gmail.com',
-//     AttClass: 'CLASS 2',
-//     date: '2024-03-22T05:40:02.146+00:00',
-//     status: 'present',
-//     markedBy: 'Naseeb Khan',
-//   },
-//   {
-//     studentName: 'Aisha Ali',
-//     studentEmail: 'aishaali@gmail.com',
-//     AttClass: 'CLASS 2',
-//     date: '2024-03-22T05:40:02.146+00:00',
-//     status: 'present',
-//     markedBy: 'Naseeb Khan',
-//   },
-//   {
-//     studentName: 'Zainab Bibi',
-//     studentEmail: 'zainabbibi@gmail.com',
-//     AttClass: 'CLASS 2',
-//     date: '2024-03-22T05:40:02.146+00:00',
-//     status: 'absent',
-//     markedBy: 'Naseeb Khan',
-//   },
-//   {
-//     studentName: 'Hassan Ali',
-//     studentEmail: 'hassanal@gmail.com',
-//     AttClass: 'CLASS 2',
-//     date: '2024-03-22T05:40:02.146+00:00',
-//     status: 'present',
-//     markedBy: 'Naseeb Khan',
-//   },
-//   {
-//     studentName: 'Fatima Noor',
-//     studentEmail: 'fatimanoor@gmail.com',
-//     AttClass: 'CLASS 2',
-//     date: '2024-03-22T05:40:02.146+00:00',
-//     status: 'present',
-//     markedBy: 'Naseeb Khan',
-//   },
-//   {
-//     studentName: 'Bilal Khan',
-//     studentEmail: 'bilalkhan@gmail.com',
-//     AttClass: 'CLASS 2',
-//     date: '2024-03-22T05:40:02.146+00:00',
-//     status: 'present',
-//     markedBy: 'Naseeb Khan',
-//   },
-//   {
-//     studentName: 'Rabia Sheikh',
-//     studentEmail: 'rabiasheikh@gmail.com',
-//     AttClass: 'CLASS 2',
-//     date: '2024-03-22T05:40:02.146+00:00',
-//     status: 'absent',
-//     markedBy: 'Naseeb Khan',
-//   },
-//   {
-//     studentName: 'Ahmed Shah',
-//     studentEmail: 'ahmedshah@gmail.com',
-//     AttClass: 'CLASS 2',
-//     date: '2024-03-22T05:40:02.146+00:00',
-//     status: 'present',
-//     markedBy: 'Naseeb Khan',
-//   },
-// ];
-
-
-// const Attendance = () => {
-//   const {
-//     data: todayAttendance,
-//     isLoading,
-//   } = useGetTodayAttendaceQuery();
-//   console.log('attendance', todayAttendance);
-
-//   if (isLoading) {
-//     return (
-//       <View style={styles.loaderContainer}>
-//         <ActivityIndicator size="large" color={THEME_COLOR} />
-//       </View>
-//     );
-//   }
-
-//   return (
-//     <View style={styles.container}>
-//       {dummyTodayAttendance && dummyTodayAttendance?.length > 0 ? (
-//         dummyTodayAttendance.map((attendance, index) => (
-//           <Card key={index} style={styles.card}>
-//             <Card.Content>
-//               <View style={styles.cardHeader}>
-//                 <Avatar.Text
-//                   size={40}
-//                   label={attendance.studentName.charAt(0)}
-//                 />
-//                 <Title style={styles.cardTitle}>{attendance.studentName}</Title>
-//               </View>
-//               <Paragraph style={styles.paragraph}>
-//                 Email: {attendance.studentEmail}
-//               </Paragraph>
-//               <Paragraph style={styles.paragraph}>
-//                 Class: {attendance.AttClass}
-//               </Paragraph>
-//               <Paragraph style={styles.paragraph}>
-//                 Date: {new Date(attendance.date).toLocaleDateString()}
-//               </Paragraph>
-//               <Paragraph style={styles.paragraph}>
-//                 Status: {attendance.status}
-//               </Paragraph>
-//               <Paragraph style={styles.paragraph}>
-//                 Marked By: {attendance.markedBy}
-//               </Paragraph>
-//             </Card.Content>
-//           </Card>
-//         ))
-//       ) : (
-//         <ErrorCustom message={"Attendance Not Taken Today !"}/>
-//       )}
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 16,
-//     backgroundColor: GHOST_WHITE,
-//   },
-//   header: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     color: THEME_COLOR,
-//     marginBottom: 16,
-//     textAlign: 'center',
-//   },
-//   loaderContainer: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: 'rgba(255, 255, 255, 0.7)', // White with 70% opacity
-//     position: 'absolute',
-//     top: 0,
-//     left: 0,
-//     right: 0,
-//     bottom: 0,
-//   },
-//   errorContainer: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   errorText: {
-//     fontSize: 16,
-//     color: 'red',
-//   },
-//   card: {
-//     marginBottom: 16,
-//     backgroundColor: Half_WHITE,
-//     borderRadius: 10,
-//     padding: 10,
-//   },
-//   cardHeader: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     marginBottom: 10,
-//   },
-//   cardTitle: {
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//     marginLeft: 10,
-//     color: THEME_COLOR,
-//   },
-//   paragraph: {
-//     fontSize: 14,
-//     color: THEME_COLOR,
-//   },
-// });
-
-// export default Attendance;
-
-
 import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
-import { DataTable } from 'react-native-paper';
-import { useGetTodayAttendaceQuery } from '../../../store/features/teacherFeatures';
-import { THEME_COLOR, GHOST_WHITE, Half_WHITE } from '../../../strings/Colors';
+import {useGetTodayAttendaceQuery} from '../../../store/features/teacherFeatures';
+import {THEME_COLOR, GHOST_WHITE, WHITE_BG, Half_WHITE, Half_gray, THEME_COLOR2} from '../../../strings/Colors';
+import ErrorCustom from '../../../Error/ErrorCustom';
 
 const dummyTodayAttendance = [
-  {
-    studentName: 'Ali Khan',
-    studentEmail: 'alikhan@gmail.com',
-    AttClass: 'CLASS 2',
-    date: '2024-03-22T05:40:02.146+00:00',
-    status: 'present',
-    markedBy: 'Naseeb Khan',
-  },
-  {
-    studentName: 'Sara Ahmed',
-    studentEmail: 'saraahmed@gmail.com',
-    AttClass: 'CLASS 2',
-    date: '2024-03-22T05:40:02.146+00:00',
-    status: 'absent',
-    markedBy: 'Naseeb Khan',
-  },
-  {
-    studentName: 'Umar Farooq',
-    studentEmail: 'umarfarooq@gmail.com',
-    AttClass: 'CLASS 2',
-    date: '2024-03-22T05:40:02.146+00:00',
-    status: 'present',
-    markedBy: 'Naseeb Khan',
-  },
-  {
-    studentName: 'Aisha Ali',
-    studentEmail: 'aishaali@gmail.com',
-    AttClass: 'CLASS 2',
-    date: '2024-03-22T05:40:02.146+00:00',
-    status: 'present',
-    markedBy: 'Naseeb Khan',
-  },
-  {
-    studentName: 'Zainab Bibi',
-    studentEmail: 'zainabbibi@gmail.com',
-    AttClass: 'CLASS 2',
-    date: '2024-03-22T05:40:02.146+00:00',
-    status: 'absent',
-    markedBy: 'Naseeb Khan',
-  },
-  {
-    studentName: 'Hassan Ali',
-    studentEmail: 'hassanal@gmail.com',
-    AttClass: 'CLASS 2',
-    date: '2024-03-22T05:40:02.146+00:00',
-    status: 'present',
-    markedBy: 'Naseeb Khan',
-  },
-  {
-    studentName: 'Fatima Noor',
-    studentEmail: 'fatimanoor@gmail.com',
-    AttClass: 'CLASS 2',
-    date: '2024-03-22T05:40:02.146+00:00',
-    status: 'present',
-    markedBy: 'Naseeb Khan',
-  },
-  {
-    studentName: 'Bilal Khan',
-    studentEmail: 'bilalkhan@gmail.com',
-    AttClass: 'CLASS 2',
-    date: '2024-03-22T05:40:02.146+00:00',
-    status: 'present',
-    markedBy: 'Naseeb Khan',
-  },
-  {
-    studentName: 'Rabia Sheikh',
-    studentEmail: 'rabiasheikh@gmail.com',
-    AttClass: 'CLASS 2',
-    date: '2024-03-22T05:40:02.146+00:00',
-    status: 'absent',
-    markedBy: 'Naseeb Khan',
-  },
-  {
-    studentName: 'Ahmed Shah',
-    studentEmail: 'ahmedshah@gmail.com',
-    AttClass: 'CLASS 2',
-    date: '2024-03-22T05:40:02.146+00:00',
-    status: 'present',
-    markedBy: 'Naseeb Khan',
-  },
+  {studentName: 'Ali Khan', status: 'present'},
+  {studentName: 'Sara Ahmed', status: 'absent'},
+  {studentName: 'John Doe', status: 'present'},
+  {studentName: 'Jane Smith', status: 'absent'},
+  {studentName: 'Michael Brown', status: 'present'},
+  {studentName: 'Emily Davis', status: 'absent'},
+  {studentName: 'David Wilson', status: 'present'},
+  {studentName: 'Linda Johnson', status: 'present'},
+  {studentName: 'Chris Lee', status: 'absent'},
+  {studentName: 'Chris Lee', status: 'absent'},
+  {studentName: 'Chris Lee', status: 'absent'},
+  {studentName: 'Patricia Kim', status: 'present'},
+  {studentName: 'Patricia Kim', status: 'present'},
+  {studentName: 'Patricia Kim', status: 'present'},
+  {studentName: 'Patricia Kim', status: 'present'},
 ];
 
-
 const Attendance = () => {
-  const { data: todayAttendance, isLoading } = useGetTodayAttendaceQuery();
-  console.log('attendance', todayAttendance);
+  const {data: todayAttendance, isLoading} = useGetTodayAttendaceQuery();
 
   if (isLoading) {
     return (
@@ -308,39 +39,39 @@ const Attendance = () => {
     );
   }
 
+  const currentClass = dummyTodayAttendance[0]?.AttClass || 'Class not found';
+  const currentDate =
+    new Date(dummyTodayAttendance[0]?.date).toLocaleDateString() ||
+    'Date not found';
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Attendance</Text>
-      {dummyTodayAttendance && dummyTodayAttendance.length > 0 ? (
-        <DataTable>
-          <DataTable.Header style={styles.tableHeader}>
-            <DataTable.Title>Name</DataTable.Title>
-            <DataTable.Title>Email</DataTable.Title>
-            <DataTable.Title>Class</DataTable.Title>
-            <DataTable.Title>Date</DataTable.Title>
-            <DataTable.Title>Status</DataTable.Title>
-          </DataTable.Header>
+      <View style={styles.headerContainer}>
+        <Text style={styles.dateText}>
+          Date: {new Date().toLocaleDateString()}
+        </Text>
+        <Text style={styles.classText}>Class: 2</Text>
+      </View>
 
-          {dummyTodayAttendance.map((attendance, index) => (
-            <DataTable.Row key={index}>
-              <DataTable.Cell>{attendance.studentName}</DataTable.Cell>
-              <DataTable.Cell>{attendance.studentEmail}</DataTable.Cell>
-              <DataTable.Cell>{attendance.AttClass}</DataTable.Cell>
-              <DataTable.Cell>{new Date(attendance.date).toLocaleDateString()}</DataTable.Cell>
-              <DataTable.Cell style={{
-                color: attendance.status === 'present' ? 'green' : 'red',
-                fontWeight: 'bold',
-              }}>
-                {attendance.status}
-              </DataTable.Cell>
-            </DataTable.Row>
-          ))}
-        </DataTable>
-      ) : (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>Attendance Not Taken Today!</Text>
-        </View>
-      )}
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContainer}
+        showsVerticalScrollIndicator={false}>
+        {dummyTodayAttendance.map((item, index) => (
+          <View key={index} style={styles.row}>
+            <Text style={styles.name}>{item.studentName}</Text>
+            <Text
+              style={[
+                styles.status,
+                item.status === 'present' ? styles.present : styles.absent,
+              ]}>
+              {item.status[0].toUpperCase() + item.status.slice(1)}
+            </Text>
+          </View>
+        ))}
+        {dummyTodayAttendance.length === 0 && (
+          <ErrorCustom message={'Attendance Not Taken Today !'} />
+        )}
+      </ScrollView>
     </View>
   );
 };
@@ -349,28 +80,60 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: GHOST_WHITE,
+    backgroundColor:WHITE_BG
   },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: THEME_COLOR,
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 16,
-    textAlign: 'center',
+    paddingHorizontal: 2,
+    height:20,
+  },
+  dateText: {
+    fontSize: 16,
+    color: THEME_COLOR,
+    fontWeight: '900',
+  },
+  classText: {
+    fontSize: 16,
+    color: THEME_COLOR,
+    fontWeight: '900',
   },
   loaderContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.7)', // White with 70% opacity
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
   },
-  tableHeader: {
-    backgroundColor: Half_WHITE,
+  scrollViewContainer: {
+    paddingBottom: 20,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center', // Ensures text alignment vertically centered
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    paddingHorizontal: 2,
+    borderBottomColor: THEME_COLOR,
+  },
+  name: {
+    flex: 1, // Allows name to occupy remaining space
+    fontSize: 15,
+    color: THEME_COLOR2,
+    fontWeight: '500',
+  },
+  status: {
+    width: 60,
+    textAlign: 'center', 
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  present: {
+    color: 'green',
+  },
+  absent: {
+    color: 'red',
   },
   errorContainer: {
     flex: 1,
