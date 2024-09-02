@@ -5,6 +5,9 @@ import {
   useTakeAttendanceMutation,
 } from '../../../store/features/teacherFeatures';
 import {THEME_COLOR, GHOST_WHITE} from '../../../strings/Colors';
+import Loader from '../../../Loaders/Loader';
+import { useToast } from '../../../context/ToastContext';
+import { useNavigation } from '@react-navigation/native';
 
 const dummyStudents = [
   {studentID: '1', studentName: 'Ali Khan', studentEmail: 'ali@example.com'},
@@ -40,21 +43,23 @@ const dummyStudents = [
 ];
 
 const TakeAttendance = () => {
-  const {data: allStudents} = useAllStudentsClassTeacherQuery();
+    const {showToast} = useToast()
+    const nav = useNavigation()
+  const {data: allStudents, isLoading: isLoadingSt} = useAllStudentsClassTeacherQuery();
   const [TakeStudentAttendance, {isLoading}] = useTakeAttendanceMutation();
   const [attendance, setAttendance] = useState([]);
 
   useEffect(() => {
-    if (dummyStudents && dummyStudents) {
-      const initailStudent = dummyStudents?.map(student => ({
-        studentID: student.studentID,
+    if (allStudents && allStudents?.data?.[0]) {
+      const initailStudent = allStudents?.data?.[0].map(student => ({
+        studentID: student._id,
         status: 'present',
-        studentName: student.studentName,
-        studentEmail: student?.studentEmail,
+        studentName: student?.fullName,
+        studentEmail: student?.email,
       }));
       setAttendance(initailStudent);
     }
-  }, [dummyStudents]);
+  }, [allStudents?.data?.[0]]);
 
   const toggleAttendance = (studentID, value, studentName, studentEmail) => {
     setAttendance(prev =>
@@ -73,15 +78,23 @@ const TakeAttendance = () => {
 
   const handleSubmit = async () => {
     try {
-      //   const data = await TakeStudentAttendance(attendance).unwrap();
-      console.log(attendance);
-
-      //   console.log('Attendance submitted successfully', data);
+        const data = await TakeStudentAttendance(attendance)
+        
+     if(data?.error){
+        showToast(data?.error?.data?.message)
+     }
+     else{
+        showToast(data?.data?.message)
+        nav.navigate("Attendance")
+     }
     } catch (error) {
       console.error('Error taking attendance:', error);
     }
   };
 
+  if(isLoadingSt){
+    return <Loader/>
+  }
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -96,31 +109,39 @@ const TakeAttendance = () => {
         {/* <Text style={styles.classText}>{item.AttClass}</Text> */}
       </View>
       <ScrollView style={styles.scrollView}>
-        {dummyStudents.map((student, index) => (
-          <View key={student.studentID} style={styles.row}>
-            <Text style={styles.studentName}>{student.studentName}</Text>
-            <Switch
-              thumbColor={
-                attendance.find(att => att.studentID === student.studentID)
-                  ?.status === 'present'
-                  ? 'seagreen'
-                  : 'red'
-              }
-              value={
-                attendance?.find(att => att.studentID === student?.studentID)
-                  ?.status === 'present'
-              }
-              onValueChange={value =>
-                toggleAttendance(
-                  student.studentID,
-                  value,
-                  student.studentName,
-                  student.studentEmail,
-                )
-              }
-            />
-          </View>
-        ))}
+        {allStudents &&  allStudents?.data?.length > 0 ? (
+           allStudents?.data?.[0].map((student, index) => (
+            <View key={student._id} style={styles.row}>
+              <Text style={styles.studentName}>{student.fullName}</Text>
+              <Switch
+                thumbColor={
+                  attendance.find(att => att.studentID === student?._id)
+                    ?.status === 'present'
+                    ? 'seagreen'
+                    : 'red'
+                }
+                value={
+                  attendance?.find(att => att.studentID === student?._id)
+                    ?.status === 'present'
+                }
+                onValueChange={value =>
+                  toggleAttendance(
+                    student?._id,
+                    value,
+                    student.fullName,
+                    student.email,
+                  )
+                }
+              />
+            </View>
+          ))
+        ) : (
+          <>
+          <Text>
+            No Students fOUND
+          </Text>
+          </>
+        )}
       </ScrollView>
       <Button
         title={isLoading ? 'Submitting...' : 'Submit Attendance'}

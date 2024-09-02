@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,46 +7,58 @@ import {
   ScrollView,
 } from 'react-native';
 import {useGetTodayAttendaceQuery} from '../../../store/features/teacherFeatures';
-import {
-  THEME_COLOR,
-  WHITE_BG,
-  THEME_COLOR2,
-} from '../../../strings/Colors';
+import {THEME_COLOR, WHITE_BG, THEME_COLOR2} from '../../../strings/Colors';
 import NotFound from '../../../Error/NotFound';
 import Loader from '../../../Loaders/Loader';
 
-
 const Attendance = () => {
   const {data: todayAttendance, isLoading} = useGetTodayAttendaceQuery();
+  const [classinfo, setclassinfo] = useState('');
+
+  useEffect(() => {
+    if (todayAttendance && todayAttendance.data) {
+      const classIn = [
+        ...new Set(todayAttendance?.data?.map(cls => cls.AttClass)),
+      ];
+      const uniqueCls = classIn.join(',');
+      setclassinfo(uniqueCls);
+    }
+  }, [todayAttendance]);
 
   if (isLoading) {
-    return <Loader/>
+    return <Loader />;
   }
 
   return (
     <View style={styles.container}>
-      {todayAttendance && todayAttendance?.length > 0 ? (
-        todayAttendance?.map((item, index) => (
-          <>
-            <View style={styles.headerContainer}>
-              <Text style={styles.dateText}>Date: {item.date}</Text>
-              <Text style={styles.classText}>{item.AttClass}</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.dateText}>
+          Date:{' '}
+          {new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          })}
+        </Text>
+        <Text style={styles.classText}>{classinfo}</Text>
+      </View>
+      {todayAttendance && todayAttendance.data?.length > 0 ? (
+        todayAttendance?.data?.map((item, index) => (
+          <ScrollView
+            key={index}
+            contentContainerStyle={styles.scrollViewContainer}
+            showsVerticalScrollIndicator={false}>
+            <View style={styles.row}>
+              <Text style={styles.name}>{item.studentName}</Text>
+              <Text
+                style={[
+                  styles.status,
+                  item.status === 'present' ? styles.present : styles.absent,
+                ]}>
+                {item.status[0].toUpperCase() + item.status.slice(1)}
+              </Text>
             </View>
-            <ScrollView
-              contentContainerStyle={styles.scrollViewContainer}
-              showsVerticalScrollIndicator={false}>
-              <View key={index} style={styles.row}>
-                <Text style={styles.name}>{item.studentName}</Text>
-                <Text
-                  style={[
-                    styles.status,
-                    item.status === 'present' ? styles.present : styles.absent,
-                  ]}>
-                  {item.status[0].toUpperCase() + item.status.slice(1)}
-                </Text>
-              </View>
-            </ScrollView>
-          </>
+          </ScrollView>
         ))
       ) : (
         <View style={{alignSelf: 'center'}}>
