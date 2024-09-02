@@ -7,26 +7,13 @@ import {
   ScrollView,
 } from 'react-native';
 import {useGetTodayAttendaceQuery} from '../../../store/features/teacherFeatures';
-import {THEME_COLOR, GHOST_WHITE, WHITE_BG, Half_WHITE, Half_gray, THEME_COLOR2} from '../../../strings/Colors';
-import ErrorCustom from '../../../Error/ErrorCustom';
+import {
+  THEME_COLOR,
+  WHITE_BG,
+  THEME_COLOR2,
+} from '../../../strings/Colors';
+import NotFound from '../../../Error/NotFound';
 
-const dummyTodayAttendance = [
-  {studentName: 'Ali Khan', status: 'present'},
-  {studentName: 'Sara Ahmed', status: 'absent'},
-  {studentName: 'John Doe', status: 'present'},
-  {studentName: 'Jane Smith', status: 'absent'},
-  {studentName: 'Michael Brown', status: 'present'},
-  {studentName: 'Emily Davis', status: 'absent'},
-  {studentName: 'David Wilson', status: 'present'},
-  {studentName: 'Linda Johnson', status: 'present'},
-  {studentName: 'Chris Lee', status: 'absent'},
-  {studentName: 'Chris Lee', status: 'absent'},
-  {studentName: 'Chris Lee', status: 'absent'},
-  {studentName: 'Patricia Kim', status: 'present'},
-  {studentName: 'Patricia Kim', status: 'present'},
-  {studentName: 'Patricia Kim', status: 'present'},
-  {studentName: 'Patricia Kim', status: 'present'},
-];
 
 const Attendance = () => {
   const {data: todayAttendance, isLoading} = useGetTodayAttendaceQuery();
@@ -39,39 +26,36 @@ const Attendance = () => {
     );
   }
 
-  const currentClass = dummyTodayAttendance[0]?.AttClass || 'Class not found';
-  const currentDate =
-    new Date(dummyTodayAttendance[0]?.date).toLocaleDateString() ||
-    'Date not found';
-
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.dateText}>
-          Date: {new Date().toLocaleDateString()}
-        </Text>
-        <Text style={styles.classText}>Class: 2</Text>
-      </View>
-
-      <ScrollView
-        contentContainerStyle={styles.scrollViewContainer}
-        showsVerticalScrollIndicator={false}>
-        {dummyTodayAttendance.map((item, index) => (
-          <View key={index} style={styles.row}>
-            <Text style={styles.name}>{item.studentName}</Text>
-            <Text
-              style={[
-                styles.status,
-                item.status === 'present' ? styles.present : styles.absent,
-              ]}>
-              {item.status[0].toUpperCase() + item.status.slice(1)}
-            </Text>
-          </View>
-        ))}
-        {dummyTodayAttendance.length === 0 && (
-          <ErrorCustom message={'Attendance Not Taken Today !'} />
-        )}
-      </ScrollView>
+      {todayAttendance && todayAttendance?.length > 0 ? (
+        todayAttendance?.map((item, index) => (
+          <>
+            <View style={styles.headerContainer}>
+              <Text style={styles.dateText}>Date: {item.date}</Text>
+              <Text style={styles.classText}>{item.AttClass}</Text>
+            </View>
+            <ScrollView
+              contentContainerStyle={styles.scrollViewContainer}
+              showsVerticalScrollIndicator={false}>
+              <View key={index} style={styles.row}>
+                <Text style={styles.name}>{item.studentName}</Text>
+                <Text
+                  style={[
+                    styles.status,
+                    item.status === 'present' ? styles.present : styles.absent,
+                  ]}>
+                  {item.status[0].toUpperCase() + item.status.slice(1)}
+                </Text>
+              </View>
+            </ScrollView>
+          </>
+        ))
+      ) : (
+        <View style={{alignSelf: 'center'}}>
+          <NotFound message={'Attendance Not Taken Today !'} />
+        </View>
+      )}
     </View>
   );
 };
@@ -80,14 +64,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor:WHITE_BG
+    backgroundColor: WHITE_BG,
   },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 16,
     paddingHorizontal: 2,
-    height:20,
+    height: 20,
   },
   dateText: {
     fontSize: 16,
@@ -125,7 +109,7 @@ const styles = StyleSheet.create({
   },
   status: {
     width: 60,
-    textAlign: 'center', 
+    textAlign: 'center',
     fontSize: 14,
     fontWeight: '500',
   },

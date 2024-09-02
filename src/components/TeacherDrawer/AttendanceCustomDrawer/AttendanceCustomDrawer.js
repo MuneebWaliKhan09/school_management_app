@@ -73,10 +73,8 @@ const AttendanceCustomDrawer = props => {
               <DrawerItem
                 label="Today Attendance"
                 onPress={() => {
-                  props.navigation.navigate('ActionsTeacherProfile', {
-                    screen: 'EditProfileTeacher',
-                    params: {userData: dataUser},
-                  });
+                  props.navigation.navigate('Attendance'),
+                  props.navigation.closeDrawer()
                 }}
                 icon={({color, size}) => (
                   <FontAwesome name="calendar" size={20} color={GHOST_WHITE} />
@@ -86,13 +84,16 @@ const AttendanceCustomDrawer = props => {
               <DrawerItem
                 label="Take Attendance"
                 onPress={() => {
-                  props.navigation.navigate('ActionsTeacherProfile', {
-                    screen: 'EditProfileTeacher',
-                    params: {userData: dataUser},
+                  props.navigation.navigate('TeacherStack', {
+                    screen: 'TakeStudentAttendance',
                   });
                 }}
                 icon={({color, size}) => (
-                  <FontAwesome name="calendar-check-o" size={20} color={GHOST_WHITE} />
+                  <FontAwesome
+                    name="calendar-check-o"
+                    size={20}
+                    color={GHOST_WHITE}
+                  />
                 )}
                 labelStyle={styles.drawerItemLabel}
               />
@@ -104,7 +105,11 @@ const AttendanceCustomDrawer = props => {
                   });
                 }}
                 icon={({color, size}) => (
-                  <MaterialCommunityIcons name="calendar-month" size={20} color={GHOST_WHITE} />
+                  <MaterialCommunityIcons
+                    name="calendar-month"
+                    size={20}
+                    color={GHOST_WHITE}
+                  />
                 )}
                 labelStyle={styles.drawerItemLabel}
               />

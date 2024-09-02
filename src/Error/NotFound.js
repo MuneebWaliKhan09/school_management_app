@@ -1,8 +1,9 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
 import { responsiveFontSize, responsiveScreenFontSize } from 'react-native-responsive-dimensions';
+import { THEME_COLOR } from '../strings/Colors';
 
-const ErrorCustom = ({message}) => {
+const NotFound = ({message}) => {
   return (
     <View
       style={{
@@ -12,10 +13,6 @@ const ErrorCustom = ({message}) => {
         flexDirection: 'column',
         gap:20
       }}>
-      <Image
-        source={require('../images/icons/warning.png')}
-        style={{width: 50, height: 50}}
-      />
       <Text
         style={{
           fontSize: responsiveScreenFontSize(2),
@@ -23,7 +20,7 @@ const ErrorCustom = ({message}) => {
           textAlign: 'center',
           lineHeight: 23,
           padding:10,
-          color: '#EE5253',
+          color: THEME_COLOR,
         }}>
         {message}
       </Text>
@@ -31,4 +28,6 @@ const ErrorCustom = ({message}) => {
   );
 };
 
-export default ErrorCustom;
+
+
+export default NotFound

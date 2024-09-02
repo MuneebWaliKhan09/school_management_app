@@ -11,6 +11,7 @@ import AddStudent from './StudentsTeacher/AddStudent';
 import EditAvatarStudent from './StudentsTeacher/EditAvatarStudent';
 import AddAcademicRecord from './StudentsTeacher/AddAcademicRecord';
 import EditAcademicRecord from './StudentsTeacher/EditAcademicRecord';
+import TakeAttendance from './Attendance/TakeAttendance';
 
 const Stack = createStackNavigator();
 
@@ -125,6 +126,17 @@ const TeacherStack = () => {
         }}
         name="EditAcademicRecord"
         component={EditAcademicRecord}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Take Attendance',
+          ...options,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
+        }}
+        name="TakeStudentAttendance"
+        component={TakeAttendance}
       />
     </Stack.Navigator>
   );
