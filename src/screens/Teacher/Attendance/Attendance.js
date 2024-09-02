@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,17 +13,14 @@ import {
   THEME_COLOR2,
 } from '../../../strings/Colors';
 import NotFound from '../../../Error/NotFound';
+import Loader from '../../../Loaders/Loader';
 
 
 const Attendance = () => {
   const {data: todayAttendance, isLoading} = useGetTodayAttendaceQuery();
 
   if (isLoading) {
-    return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color={THEME_COLOR} />
-      </View>
-    );
+    return <Loader/>
   }
 
   return (
