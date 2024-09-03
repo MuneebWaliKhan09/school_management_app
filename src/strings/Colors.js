@@ -11,7 +11,7 @@
 // export const THEME_COLOR2 = "rgba(32, 9, 6, 0.9)"; // #200906
 
 export const THEME_COLOR = "#063970"
-export const THEME_COLOR2 = "rgba(6, 57, 112, 0.9)"; // #063970
+export const THEME_COLOR2 = "rgba(6, 57, 112, 0.8)"; // #063970
 
 
 export const SPLASH_COLOR = "white"

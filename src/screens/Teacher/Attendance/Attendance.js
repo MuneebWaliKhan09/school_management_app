@@ -16,8 +16,11 @@ import {
 import NotFound from '../../../Error/NotFound';
 import Loader from '../../../Loaders/Loader';
 import {RefreshControl} from 'react-native';
+import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import { useSelector } from 'react-redux';
 
 const Attendance = () => {
+  const theme = useSelector(state => state.themeTeacher);
   const {
     data: todayAttendance,
     isLoading,
@@ -51,7 +54,7 @@ const Attendance = () => {
         <RefreshControl refreshing={isFetching} onRefresh={onRefresh} />
       }>
       <View style={styles.headerContainer}>
-        <Text style={styles.dateText}>
+        <Text style={[styles.dateText]}>
           Date:{' '}
           {new Date().toLocaleDateString('en-US', {
             year: 'numeric',
@@ -59,7 +62,7 @@ const Attendance = () => {
             day: 'numeric',
           })}
         </Text>
-        <Text style={styles.classText}>{classinfo}</Text>
+        <Text style={[styles.classText]}>{classinfo}</Text>
       </View>
       {todayAttendance && todayAttendance.data?.length > 0 ? (
         todayAttendance?.data?.map((item, index) => (
@@ -68,7 +71,7 @@ const Attendance = () => {
             contentContainerStyle={styles.scrollViewContainer}
             showsVerticalScrollIndicator={false}>
             <View style={styles.row}>
-              <Text style={styles.name}>
+              <Text style={[styles.name, {color:theme.background}]}>
                 {item?.studentName[0]?.toUpperCase() +
                   item?.studentName?.slice(1)}
               </Text>
@@ -94,25 +97,25 @@ const Attendance = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: responsiveWidth(4), // 16
     backgroundColor: WHITE_BG,
   },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 30,
-    paddingHorizontal: 2,
-    height: 20,
+    marginBottom: responsiveHeight(6), // 30
+    paddingHorizontal: responsiveWidth(1), // 2
+    height: responsiveHeight(3), // 20
   },
   dateText: {
-    fontSize: 16,
-    color: THEME_COLOR,
-    fontWeight: '900',
+    fontSize: responsiveFontSize(2), // 16
+    color: THEME_COLOR2,
+    fontWeight: '700',
   },
   classText: {
-    fontSize: 16,
-    color: THEME_COLOR,
-    fontWeight: '900',
+    fontSize: responsiveFontSize(2), // 16
+    color: THEME_COLOR2,
+    fontWeight: '700',
   },
   loaderContainer: {
     flex: 1,
@@ -121,27 +124,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.7)', // White with 70% opacity
   },
   scrollViewContainer: {
-    paddingBottom: 20,
+    paddingBottom: responsiveHeight(5), // 20
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center', // Ensures text alignment vertically centered
-    paddingVertical: 10,
+    paddingBottom: responsiveHeight(1), // 10
     borderBottomWidth: 0.5,
-    paddingHorizontal: 2,
+    paddingHorizontal: responsiveWidth(1), // 2
     borderBottomColor: Half_gray,
   },
   name: {
     flex: 1, // Allows name to occupy remaining space
-    fontSize: 15,
+    fontSize: responsiveFontSize(1.9), // 15
     color: THEME_COLOR2,
     fontWeight: '600',
   },
   status: {
-    width: 60,
+    width: responsiveWidth(15), // 60
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: responsiveFontSize(1.8), // 14
     fontWeight: '600',
   },
   present: {
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   errorText: {
-    fontSize: 16,
+    fontSize: responsiveFontSize(2), // 16
     color: 'red',
   },
 });

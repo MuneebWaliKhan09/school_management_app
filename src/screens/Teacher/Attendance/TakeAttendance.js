@@ -9,6 +9,7 @@ import Loader from '../../../Loaders/Loader';
 import {useToast} from '../../../context/ToastContext';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 const TakeAttendance = () => {
   const theme = useSelector(state => state.themeTeacher);
@@ -115,7 +116,7 @@ const TakeAttendance = () => {
       <Button
         title={isLoading ? 'Submitting...' : 'Submit Attendance'}
         onPress={handleSubmit}
-        color={THEME_COLOR}
+        color={theme.background}
         disabled={isLoading}
       />
     </View>
@@ -125,46 +126,46 @@ const TakeAttendance = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: responsiveWidth(4), // 16
     backgroundColor: GHOST_WHITE,
   },
   title: {
-    fontSize: 20,
+    fontSize: responsiveFontSize(2.5), // 20
     fontWeight: 'bold',
     color: THEME_COLOR,
-    marginBottom: 16,
+    marginBottom: responsiveHeight(2), // 16
   },
   scrollView: {
-    marginBottom: 16,
+    marginBottom: responsiveHeight(2), // 16
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 2,
+    paddingVertical: responsiveHeight(2.5), // 10
+    paddingHorizontal: responsiveWidth(1), // 2
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
   },
   studentName: {
-    fontSize: 15,
+    fontSize: responsiveFontSize(1.9), // 15
     color: THEME_COLOR,
     fontWeight: '500',
   },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16,
-    paddingHorizontal: 2,
-    height: 20,
+    marginBottom: responsiveHeight(2), // 16
+    paddingHorizontal: responsiveWidth(1), // 2
+    height: responsiveHeight(3), // 20
   },
   dateText: {
-    fontSize: 16,
+    fontSize: responsiveFontSize(2), // 16
     color: THEME_COLOR,
     fontWeight: '900',
   },
   classText: {
-    fontSize: 16,
+    fontSize: responsiveFontSize(2), // 16
     color: THEME_COLOR,
     fontWeight: '900',
   },
