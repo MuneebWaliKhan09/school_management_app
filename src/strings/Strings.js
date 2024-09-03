@@ -28,9 +28,9 @@ export const teacher_End_Points = {
     updateStudentClass: '/update-student-class/',// ✅
     updateStudentAvatar: '/update-student-avatar/',// ✅
     removeStudentClass: '/remove-student-class/',// ✅
-    takeAttendanceClass: '/take-attendance-class',//❓
-    attendanceClassToday: '/attendance-class-today',// ❓
-    attendanceStudentMonthly: '/monthly-attendance-student/',// ❓
+    takeAttendanceClass: '/take-attendance-class',// ✅
+    attendanceClassToday: '/attendance-class-today',// ✅
+    attendanceStudentMonthly: '/monthly-attendance-student/',// ✅
     notifyStudentsAbsent: '/notify-students-absent',
     giveAssignmentClass: '/give-assigment-class',
     allAssignmentsClass: '/all-assigments-class',
@@ -103,7 +103,7 @@ export const admin_End_Points = {
         updateTeacher: '/update-teacher/',
         updateTeacherAvatar: '/update-avatar-teacher/',
         deleteTeacher: '/remove-teacher/',
-        allAttendancesOfClass: '/all-attendances-class/:className',
+        allAttendancesOfClass: '/all-attendances-class/:className', // ❓
         notifyTeachers: '/notify-teachers',
         notifySingleTeacher: '/notify-single-teacher',
         allNotifications: '/notifications-all',
@@ -115,7 +115,7 @@ export const admin_End_Points = {
     // Class Routes
     class_routes:{
         addClass: '/add-class',
-        allClasses: '/all-classes',
+        allClasses: '/all-classes', // ❓
         singleClass: '/single-class/',
         updateClass: '/update-class/',
         deleteClass: '/remove-class/',

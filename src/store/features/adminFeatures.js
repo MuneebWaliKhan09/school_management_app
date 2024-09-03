@@ -4,7 +4,7 @@ import {API_ADMIN_URL, admin_End_Points} from '../../strings/Strings';
 export const adminApi = createApi({
   reducerPath: 'adminApi',
   baseQuery: fetchBaseQuery({baseUrl: API_ADMIN_URL}),
-  tagTypes: ['Students'],
+  tagTypes: ['Students','Attendances'],
   endpoints: builder => ({
     allStudentsAdmin: builder.query({
       query: () => admin_End_Points.student_routes.allStudents,
@@ -68,6 +68,10 @@ export const adminApi = createApi({
       }),
       invalidatesTags: ['Students'],
     }),
+    getAttendanceByClass: builder.query({
+      query: className => `${admin_End_Points.attendance_routes.allAttendancesOfClass}${className}`,
+      providesTags: ['Attendances'],
+    })
   }),
 });
 
