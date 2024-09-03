@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,23 @@ import {
   ScrollView,
 } from 'react-native';
 import {useGetTodayAttendaceQuery} from '../../../store/features/teacherFeatures';
-import {THEME_COLOR, WHITE_BG, THEME_COLOR2} from '../../../strings/Colors';
+import {
+  THEME_COLOR,
+  WHITE_BG,
+  THEME_COLOR2,
+  Half_gray,
+} from '../../../strings/Colors';
 import NotFound from '../../../Error/NotFound';
 import Loader from '../../../Loaders/Loader';
+import {RefreshControl} from 'react-native';
 
 const Attendance = () => {
-  const {data: todayAttendance, isLoading} = useGetTodayAttendaceQuery();
+  const {
+    data: todayAttendance,
+    isLoading,
+    isFetching,
+    refetch,
+  } = useGetTodayAttendaceQuery();
   const [classinfo, setclassinfo] = useState('');
 
   useEffect(() => {
@@ -25,12 +36,20 @@ const Attendance = () => {
     }
   }, [todayAttendance]);
 
+  const onRefresh = useCallback(() => {
+    refetch();
+  }, []);
+
   if (isLoading) {
     return <Loader />;
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={isFetching} onRefresh={onRefresh} />
+      }>
       <View style={styles.headerContainer}>
         <Text style={styles.dateText}>
           Date:{' '}
@@ -49,7 +68,10 @@ const Attendance = () => {
             contentContainerStyle={styles.scrollViewContainer}
             showsVerticalScrollIndicator={false}>
             <View style={styles.row}>
-              <Text style={styles.name}>{item.studentName}</Text>
+              <Text style={styles.name}>
+                {item?.studentName[0]?.toUpperCase() +
+                  item?.studentName?.slice(1)}
+              </Text>
               <Text
                 style={[
                   styles.status,
@@ -65,7 +87,7 @@ const Attendance = () => {
           <NotFound message={'Attendance Not Taken Today !'} />
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -78,7 +100,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: 30,
     paddingHorizontal: 2,
     height: 20,
   },
@@ -106,21 +128,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center', // Ensures text alignment vertically centered
     paddingVertical: 10,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     paddingHorizontal: 2,
-    borderBottomColor: THEME_COLOR,
+    borderBottomColor: Half_gray,
   },
   name: {
     flex: 1, // Allows name to occupy remaining space
     fontSize: 15,
     color: THEME_COLOR2,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   status: {
     width: 60,
     textAlign: 'center',
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   present: {
     color: 'green',

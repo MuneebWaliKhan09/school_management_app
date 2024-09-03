@@ -61,6 +61,10 @@ export const teacherApi = createApi({
       query: () => teacher_End_Points.attendanceClassToday,
       providesTags: ['Attendance'],
     }),
+    attendanceStudentMonthly: builder.query({
+      query: id => `${teacher_End_Points.attendanceStudentMonthly}${id}`,
+      providesTags: ['Attendance'],
+    }),
   }),
 });
 

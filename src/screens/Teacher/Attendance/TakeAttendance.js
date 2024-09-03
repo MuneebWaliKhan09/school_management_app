@@ -6,46 +6,16 @@ import {
 } from '../../../store/features/teacherFeatures';
 import {THEME_COLOR, GHOST_WHITE} from '../../../strings/Colors';
 import Loader from '../../../Loaders/Loader';
-import { useToast } from '../../../context/ToastContext';
-import { useNavigation } from '@react-navigation/native';
-
-const dummyStudents = [
-  {studentID: '1', studentName: 'Ali Khan', studentEmail: 'ali@example.com'},
-  {studentID: '2', studentName: 'Sara Ahmed', studentEmail: 'sara@example.com'},
-  {studentID: '3', studentName: 'John Doe', studentEmail: 'john@example.com'},
-  {studentID: '4', studentName: 'Jane Smith', studentEmail: 'jane@example.com'},
-  {
-    studentID: '5',
-    studentName: 'Michael Brown',
-    studentEmail: 'michael@example.com',
-  },
-  {
-    studentID: '6',
-    studentName: 'Emily Davis',
-    studentEmail: 'emily@example.com',
-  },
-  {
-    studentID: '7',
-    studentName: 'David Wilson',
-    studentEmail: 'david@example.com',
-  },
-  {
-    studentID: '8',
-    studentName: 'Linda Johnson',
-    studentEmail: 'linda@example.com',
-  },
-  {studentID: '9', studentName: 'Chris Lee', studentEmail: 'chris@example.com'},
-  {
-    studentID: '10',
-    studentName: 'Patricia Kim',
-    studentEmail: 'patricia@example.com',
-  },
-];
+import {useToast} from '../../../context/ToastContext';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const TakeAttendance = () => {
-    const {showToast} = useToast()
-    const nav = useNavigation()
-  const {data: allStudents, isLoading: isLoadingSt} = useAllStudentsClassTeacherQuery();
+  const theme = useSelector(state => state.themeTeacher);
+  const {showToast} = useToast();
+  const nav = useNavigation();
+  const {data: allStudents, isLoading: isLoadingSt} =
+    useAllStudentsClassTeacherQuery();
   const [TakeStudentAttendance, {isLoading}] = useTakeAttendanceMutation();
   const [attendance, setAttendance] = useState([]);
 
@@ -78,22 +48,21 @@ const TakeAttendance = () => {
 
   const handleSubmit = async () => {
     try {
-        const data = await TakeStudentAttendance(attendance)
-        
-     if(data?.error){
-        showToast(data?.error?.data?.message)
-     }
-     else{
-        showToast(data?.data?.message)
-        nav.navigate("Attendance")
-     }
+      const data = await TakeStudentAttendance(attendance);
+
+      if (data?.error) {
+        showToast(data?.error?.data?.message, 'error');
+      } else {
+        showToast(data?.data?.message, 'success');
+        nav.navigate('Attendance');
+      }
     } catch (error) {
       console.error('Error taking attendance:', error);
     }
   };
 
-  if(isLoadingSt){
-    return <Loader/>
+  if (isLoadingSt) {
+    return <Loader />;
   }
   return (
     <View style={styles.container}>
@@ -109,10 +78,12 @@ const TakeAttendance = () => {
         {/* <Text style={styles.classText}>{item.AttClass}</Text> */}
       </View>
       <ScrollView style={styles.scrollView}>
-        {allStudents &&  allStudents?.data?.length > 0 ? (
-           allStudents?.data?.[0].map((student, index) => (
+        {allStudents && allStudents?.data?.length > 0 ? (
+          allStudents?.data?.[0].map((student, index) => (
             <View key={student._id} style={styles.row}>
-              <Text style={styles.studentName}>{student.fullName}</Text>
+              <Text style={[styles.studentName, {color: theme.background}]}>
+                {student.fullName[0].toUpperCase() + student?.fullName?.slice(1)}
+              </Text>
               <Switch
                 thumbColor={
                   attendance.find(att => att.studentID === student?._id)
@@ -137,9 +108,7 @@ const TakeAttendance = () => {
           ))
         ) : (
           <>
-          <Text>
-            No Students fOUND
-          </Text>
+            <Text>No Students fOUND</Text>
           </>
         )}
       </ScrollView>
@@ -173,12 +142,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
+    paddingHorizontal: 2,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
   },
   studentName: {
-    fontSize: 16,
-    color: '#333',
+    fontSize: 15,
+    color: THEME_COLOR,
+    fontWeight: '500',
   },
   headerContainer: {
     flexDirection: 'row',
