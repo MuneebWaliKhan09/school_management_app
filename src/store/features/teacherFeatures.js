@@ -77,5 +77,6 @@ export const {
   useRegisterStudentToClassMutation,
   useUpdateStudentAvatarMutation,
   useTakeAttendanceMutation,
-  useGetTodayAttendaceQuery
+  useGetTodayAttendaceQuery,
+  useAttendanceStudentMonthlyQuery
 } = teacherApi;

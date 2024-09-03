@@ -30,7 +30,7 @@ export const teacher_End_Points = {
     removeStudentClass: '/remove-student-class/',// ✅
     takeAttendanceClass: '/take-attendance-class',//❓
     attendanceClassToday: '/attendance-class-today',// ❓
-    attendanceStudentMonthly: '/monthly-attendance-student',// ❓
+    attendanceStudentMonthly: '/monthly-attendance-student/',// ❓
     notifyStudentsAbsent: '/notify-students-absent',
     giveAssignmentClass: '/give-assigment-class',
     allAssignmentsClass: '/all-assigments-class',

@@ -100,8 +100,8 @@ const AttendanceCustomDrawer = props => {
               <DrawerItem
                 label="Student Monthly Attendance"
                 onPress={() => {
-                  props.navigation.navigate('ActionsTeacherProfile', {
-                    screen: 'EditPasswordTeacher',
+                  props.navigation.navigate('TeacherStack', {
+                    screen: 'StudentMonthlyAttendance',
                   });
                 }}
                 icon={({color, size}) => (
