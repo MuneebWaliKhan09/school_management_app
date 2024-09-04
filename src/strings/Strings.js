@@ -103,7 +103,7 @@ export const admin_End_Points = {
         updateTeacher: '/update-teacher/',
         updateTeacherAvatar: '/update-avatar-teacher/',
         deleteTeacher: '/remove-teacher/',
-        allAttendancesOfClass: '/all-attendances-class/:className', // ❓
+        allAttendancesOfClass: '/all-attendances-class/', // pass className as a params ❓
         notifyTeachers: '/notify-teachers',
         notifySingleTeacher: '/notify-single-teacher',
         allNotifications: '/notifications-all',
