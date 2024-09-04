@@ -4,7 +4,7 @@ import {API_ADMIN_URL, admin_End_Points} from '../../strings/Strings';
 export const adminApi = createApi({
   reducerPath: 'adminApi',
   baseQuery: fetchBaseQuery({baseUrl: API_ADMIN_URL}),
-  tagTypes: ['Students','Attendances'],
+  tagTypes: ['Students','Attendances','Classes'],
   endpoints: builder => ({
     allStudentsAdmin: builder.query({
       query: () => admin_End_Points.student_routes.allStudents,
@@ -68,8 +68,12 @@ export const adminApi = createApi({
       }),
       invalidatesTags: ['Students'],
     }),
+    getAllClasses: builder.query({
+      query: () => admin_End_Points.class_routes.allClasses,
+      providesTags: ['Classes'],
+    }) ,
     getAttendanceByClass: builder.query({
-      query: className => `${admin_End_Points.attendance_routes.allAttendancesOfClass}${className}`,
+      query: className => `${admin_End_Points.teacher_routes.allAttendancesOfClass}${className}`,
       providesTags: ['Attendances'],
     })
   }),
@@ -84,5 +88,7 @@ export const {
   useEditStudentAvatarMutation,
   useAddAcademicRecordMutation,
   useEditAcademicRecordMutation,
-  useDeleteAcademicRecordMutation
+  useDeleteAcademicRecordMutation,
+  useGetAllClassesQuery,
+  useGetAttendanceByClassQuery
 } = adminApi;
